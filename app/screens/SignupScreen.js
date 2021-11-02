@@ -12,6 +12,9 @@ import {
   Platform,
 } from "react-native";
 
+import { COLORS, STYLES } from "../assets/saved";
+import { FontAwesome5 } from "@expo/vector-icons";
+
 function SignupScreen(props) {
   const [username, changeUsername] = React.useState("");
   const [email, changeEmail] = React.useState("");
@@ -105,10 +108,8 @@ function SignupScreen(props) {
               }
             }}
           >
-            <View style={[styles.signupButton, styles.btn]}>
-              <Text
-                style={{ color: "white", fontSize: 20, alignContent: "center" }}
-              >
+            <View style={[STYLES.lgButton, styles.btn]}>
+              <Text style={[{ color: COLORS.primary, fontSize: 30 }]}>
                 Sign up
               </Text>
             </View>
@@ -117,17 +118,12 @@ function SignupScreen(props) {
           <TouchableWithoutFeedback
             onPress={() => props.navigation.navigate("Welcome")}
           >
-            <View style={[styles.returnbtn]}>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 15,
-                  alignContent: "center",
-                  textAlign: "center",
-                }}
-              >
-                Return
-              </Text>
+            <View style={[STYLES.returnbtn]}>
+              <FontAwesome5
+                name="arrow-left"
+                color={COLORS.primary}
+                size={30}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -138,16 +134,11 @@ function SignupScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  separate: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderRadius: 20,
-    top: 15,
-  },
   background: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "stretch",
+    alignItems: "stretch", //stretch allows content to fill screen
+    backgroundColor: COLORS.primary,
   },
   content: {
     //used with spacer to push content up the screen
@@ -155,21 +146,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  spacer: {
-    //used with content ^ to push content up the screen
-    flex: 1,
-  },
   logo: {
     width: 275,
     height: 200,
     margin: 30,
   },
-  signupButton: {
-    top: 30,
-    width: "50%",
-    height: 70,
-    backgroundColor: "#CF1717",
-  },
+
   btn: {
     justifyContent: "center",
     alignItems: "center",
@@ -185,15 +167,6 @@ const styles = StyleSheet.create({
     margin: 4,
     borderRadius: 10,
     padding: 10,
-  },
-  returnbtn: {
-    position: "absolute",
-    left: 5,
-    top: 45,
-    width: "25%",
-    height: 20,
-    borderRadius: 20,
-    backgroundColor: "#CF1717",
   },
 });
 

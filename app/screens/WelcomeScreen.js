@@ -8,11 +8,14 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
+import { COLORS, STYLES } from "../assets/saved";
+import { FontAwesome5 } from "@expo/vector-icons";
+
 function WelcomeScreen(props) {
   return (
     <View style={styles.background}>
       <View style={{ margin: 30 }}>
-        <Text style={[styles.message, styles.font]}>
+        <Text style={[styles.message, STYLES.font]}>
           Welcome to Movie Night!
         </Text>
       </View>
@@ -21,9 +24,7 @@ function WelcomeScreen(props) {
         onPress={() => props.navigation.navigate("LogIn")}
       >
         <View style={[styles.loginButton, styles.btn]}>
-          <Text style={[styles.font, { color: "black", fontSize: 30 }]}>
-            Log In
-          </Text>
+          <Text style={[{ color: COLORS.primary, fontSize: 30 }]}>Log In</Text>
         </View>
       </TouchableWithoutFeedback>
 
@@ -50,17 +51,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#242322",
+    backgroundColor: COLORS.primary,
   },
   message: {
     color: "white",
     fontSize: 40,
     textAlign: "center",
-  },
-  font: {
-    fontFamily: "Didot",
-    letterSpacing: 1.2,
-    fontWeight: "bold",
   },
   loginButton: {
     top: 10,

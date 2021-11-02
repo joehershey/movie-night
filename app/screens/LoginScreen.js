@@ -11,6 +11,9 @@ import {
   Platform,
 } from "react-native";
 
+import { COLORS, STYLES } from "../assets/saved";
+import { FontAwesome5 } from "@expo/vector-icons";
+
 function LoginScreen(props) {
   const [username, changeUsername] = React.useState("");
   const [password, changePassword] = React.useState("");
@@ -88,10 +91,8 @@ function LoginScreen(props) {
             // onPress={() => props.navigation.navigate("Tenant home")}
             onPress={() => checkCredentials()} //checking w/ API and navigating
           >
-            <View style={[styles.loginButton, styles.btn]}>
-              <Text
-                style={{ color: "white", fontSize: 20, alignContent: "center" }}
-              >
+            <View style={[STYLES.lgButton, styles.btn]}>
+              <Text style={[{ color: COLORS.primary, fontSize: 30 }]}>
                 Log in
               </Text>
             </View>
@@ -99,22 +100,16 @@ function LoginScreen(props) {
           <TouchableWithoutFeedback
             onPress={() => props.navigation.navigate("Welcome")}
           >
-            <View style={[styles.returnbtn]}>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 15,
-                  alignContent: "center",
-                  textAlign: "center",
-                }}
-              >
-                Return
-              </Text>
+            <View style={[STYLES.returnbtn]}>
+              <FontAwesome5
+                name="arrow-left"
+                color={COLORS.primary}
+                size={30}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
-      <View style={styles.spacer}></View>
     </View>
   );
 }
@@ -124,6 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "stretch", //stretch allows content to fill screen
+    backgroundColor: COLORS.primary,
   },
   content: {
     //used with spacer to push content up the screen
@@ -131,26 +127,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  spacer: {
-    //used with content ^ to push content up the screen
-    flex: 2,
-  },
   logo: {
     width: 275,
     height: 200,
     margin: 30,
-  },
-  loginButton: {
-    top: 30,
-    width: "50%",
-    height: 70,
-    backgroundColor: "#CF1717",
-  },
-  registerButton: {
-    top: 30,
-    width: "50%",
-    height: 70,
-    backgroundColor: "#202020",
   },
   btn: {
     justifyContent: "center",
@@ -168,15 +148,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 10,
     padding: 10,
-  },
-  returnbtn: {
-    position: "absolute",
-    left: 5,
-    top: 45,
-    width: "25%",
-    height: 20,
-    borderRadius: 20,
-    backgroundColor: "#CF1717",
   },
 });
 
