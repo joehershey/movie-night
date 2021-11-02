@@ -6,6 +6,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./app/screens/LoginScreen";
 import SignupScreen from "./app/screens/SignupScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
+import GroupSettingsScreen from "./app/screens/GroupSettingsScreen";
+import SearchMoviesScreen from "./app/screens/SearchMoviesScreen";
+import GroupQueueScreen from "./app/screens/GroupQueueScreen";
+import ScheduleScreen from "./app/screens/ScheduleScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +60,42 @@ export default function App() {
         <Stack.Screen name="Welcome">
           {(props) => (
             <WelcomeScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="GroupSettings">
+          {(props) => (
+            <GroupSettingsScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="SearchMovies">
+          {(props) => (
+            <SearchMoviesScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="GroupQueue">
+          {(props) => (
+            <GroupQueueScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Schedule">
+          {(props) => (
+            <ScheduleScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
             />

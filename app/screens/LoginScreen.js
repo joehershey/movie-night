@@ -54,6 +54,7 @@ function LoginScreen(props) {
   function checkCredentials() {
     loginAPITest(username, password);
     //loginAPI(username, password);
+    props.navigation.navigate("Schedule");
   }
 
   //just testing where the information goes, and that it comes in correct

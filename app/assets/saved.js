@@ -43,4 +43,27 @@ export const STYLES = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  topBar: {
+    flex: 1,
+    backgroundColor: COLORS.primary,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  tabBar: {
+    flex: 1,
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  content: {
+    flex: 11,
+    backgroundColor: "white",
+  },
+  container: {
+    backgroundColor: COLORS.primary,
+    flexDirection: "column",
+    justifyContent: "center",
+    flex: 1,
+  },
 });
