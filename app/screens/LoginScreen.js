@@ -96,7 +96,6 @@ function LoginScreen(props) {
               </Text>
             </View>
           </TouchableWithoutFeedback>
-          <Text>slatt{props.username}</Text>
           <TouchableWithoutFeedback
             onPress={() => props.navigation.navigate("Welcome")}
           >
