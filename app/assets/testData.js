@@ -349,19 +349,27 @@ const TEST_DATA = {
             event_id: 1,
             tmdb_movie_id: 1000,
         },
-        {
-            event_id: 2,
-            tmdb_movie_id: 1000,
-        },
-        {
-            event_id: 2,
-            tmdb_movie_id: 1001,
-        },
-        {
-            event_id: 2,
-            tmdb_movie_id: 1002,
-        },
     ],
+    event_movie_ratings = [
+        {
+            event_id: 1,
+            user_id: 1,
+            tmdb_movie_id: 1000,
+            rating: 2, // 0-2
+        },
+        {
+            event_id: 1,
+            user_id: 3,
+            tmdb_movie_id: 1000,
+            rating: 2, // 0-2
+        },
+        {
+            event_id: 1,
+            user_id: 4,
+            tmdb_movie_id: 1000,
+            rating: 1, // 0-2
+        },
+    ]
 }
 
 export default testData;
