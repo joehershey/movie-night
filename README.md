@@ -1,5 +1,5 @@
 Movie Night Front End
 
-(sudo) npm install
-expo start
-Scan QR
+1. (sudo) npm install
+2. expo start
+3. Scan QR
