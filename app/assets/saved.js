@@ -2,16 +2,16 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 export const COLORS = {
-  primary: "#242322",
+  primary: "#1d1f1e",
+  secondary: "#166fdb",
 };
-
 export const STYLES = StyleSheet.create({
-  font: {
+  fontPrimary: {
     fontFamily: "Didot",
     letterSpacing: 1.2,
     fontWeight: "bold",
   },
-  returnbtn: {
+  returnBtn: {
     backgroundColor: "white",
     position: "absolute",
     left: 20,
@@ -24,6 +24,6 @@ export const STYLES = StyleSheet.create({
     top: 30,
     width: "50%",
     height: 70,
-    backgroundColor: "white",
+    backgroundColor: COLORS.secondary,
   },
 });

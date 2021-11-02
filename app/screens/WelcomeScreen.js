@@ -15,7 +15,7 @@ function WelcomeScreen(props) {
   return (
     <View style={styles.background}>
       <View style={{ margin: 30 }}>
-        <Text style={[styles.message, STYLES.font]}>
+        <Text style={[styles.message, STYLES.fontPrimary]}>
           Welcome to Movie Night!
         </Text>
       </View>
@@ -35,7 +35,7 @@ function WelcomeScreen(props) {
           <Text
             style={[
               styles.font,
-              { color: "white", fontSize: 20, fontStyle: "italic" },
+              { color: COLORS.secondary, fontSize: 20, fontStyle: "italic" },
             ]}
           >
             New here? Sign up!

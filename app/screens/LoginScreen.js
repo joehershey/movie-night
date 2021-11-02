@@ -88,19 +88,16 @@ function LoginScreen(props) {
           />
 
           <TouchableWithoutFeedback
-            // onPress={() => props.navigation.navigate("Tenant home")}
             onPress={() => checkCredentials()} //checking w/ API and navigating
           >
             <View style={[STYLES.lgButton, styles.btn]}>
-              <Text style={[{ color: COLORS.primary, fontSize: 30 }]}>
-                Log in
-              </Text>
+              <Text style={[{ color: "white", fontSize: 30 }]}>Log In</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback
             onPress={() => props.navigation.navigate("Welcome")}
           >
-            <View style={[STYLES.returnbtn]}>
+            <View style={[STYLES.returnBtn]}>
               <FontAwesome5
                 name="arrow-left"
                 color={COLORS.primary}

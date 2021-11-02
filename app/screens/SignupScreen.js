@@ -109,16 +109,14 @@ function SignupScreen(props) {
             }}
           >
             <View style={[STYLES.lgButton, styles.btn]}>
-              <Text style={[{ color: COLORS.primary, fontSize: 30 }]}>
-                Sign up
-              </Text>
+              <Text style={[{ color: "white", fontSize: 30 }]}>Sign Up</Text>
             </View>
           </TouchableWithoutFeedback>
 
           <TouchableWithoutFeedback
             onPress={() => props.navigation.navigate("Welcome")}
           >
-            <View style={[STYLES.returnbtn]}>
+            <View style={[STYLES.returnBtn]}>
               <FontAwesome5
                 name="arrow-left"
                 color={COLORS.primary}
