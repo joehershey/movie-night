@@ -78,21 +78,21 @@ function SignupScreen(props) {
       <TouchableWithoutFeedback onPress={keyboardControl}>
         <View style={styles.content}>
           <TextInput
-            style={styles.input}
+            style={STYLES.input}
             onChangeText={changeUsername}
             value={username}
             placeholder="Enter username:"
           />
 
           <TextInput
-            style={styles.input}
+            style={STYLES.input}
             onChangeText={changeEmail}
             value={email}
             placeholder="Enter email:"
           />
 
           <TextInput
-            style={styles.input}
+            style={STYLES.input}
             onChangeText={changePassword}
             value={password}
             placeholder="Enter password:"
@@ -108,7 +108,7 @@ function SignupScreen(props) {
               }
             }}
           >
-            <View style={[STYLES.lgButton, styles.btn]}>
+            <View style={[STYLES.lgButton, STYLES.btn]}>
               <Text style={[{ color: "white", fontSize: 30 }]}>Sign Up</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -145,26 +145,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
+    //to be added
     width: 275,
     height: 200,
     margin: 30,
-  },
-
-  btn: {
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 5,
-    borderRadius: 20,
-  },
-  input: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    height: 50,
-    width: "60%",
-    margin: 4,
-    borderRadius: 10,
-    padding: 10,
   },
 });
 

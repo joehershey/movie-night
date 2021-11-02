@@ -23,7 +23,7 @@ function WelcomeScreen(props) {
       <TouchableWithoutFeedback
         onPress={() => props.navigation.navigate("LogIn")}
       >
-        <View style={[styles.loginButton, styles.btn]}>
+        <View style={[styles.loginButton, STYLES.btn]}>
           <Text style={[{ color: COLORS.primary, fontSize: 30 }]}>Log In</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -31,7 +31,7 @@ function WelcomeScreen(props) {
       <TouchableWithoutFeedback
         onPress={() => props.navigation.navigate("SignUp")}
       >
-        <View style={[styles.registerButton, styles.btn]}>
+        <View style={[styles.registerButton, STYLES.btn]}>
           <Text
             style={[
               styles.font,
@@ -68,12 +68,6 @@ const styles = StyleSheet.create({
     top: 10,
     width: "60%",
     height: 70,
-  },
-  btn: {
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 5,
-    borderRadius: 20,
   },
 });
 

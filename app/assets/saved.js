@@ -20,10 +20,27 @@ export const STYLES = StyleSheet.create({
     padding: 10,
     margin: 10,
   },
+  btn: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 5,
+    borderRadius: 20,
+  },
   lgButton: {
     top: 30,
     width: "50%",
     height: 70,
     backgroundColor: COLORS.secondary,
+  },
+  input: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    height: 50,
+    width: "60%",
+    margin: 4,
+    borderWidth: 0,
+    borderRadius: 10,
+    padding: 10,
   },
 });
