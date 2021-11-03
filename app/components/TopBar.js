@@ -29,25 +29,23 @@ function TopBar(props) {
       </TouchableWithoutFeedback>
 
       {/* Logo */}
-      <TouchableWithoutFeedback onPress={() => console.log("pressed2")}>
-        <View
+      <View
+        style={{
+          flex: 2,
+          alignItems: "center",
+          paddingBottom: 10,
+        }}
+      >
+        <Image
           style={{
-            flex: 2,
-            alignItems: "center",
-            paddingBottom: 10,
+            flex: 1,
+            width: 100,
+            height: 50,
+            marginBottom: 0,
           }}
-        >
-          <Image
-            style={{
-              flex: 1,
-              width: 100,
-              height: 50,
-              marginBottom: 0,
-            }}
-            source={require("../assets/MovieNightLogo2.png")}
-          ></Image>
-        </View>
-      </TouchableWithoutFeedback>
+          source={require("../assets/MovieNightLogo2.png")}
+        ></Image>
+      </View>
 
       {/* This code checks if the current screen is the landing page or not, displaying 
             a link to the user's profile if yes and blank space if no. */}
