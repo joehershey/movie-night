@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Modal as MobileModal,
   TextInput,
+  Platform,
 } from "react-native";
 
 import { COLORS, STYLES } from "../assets/saved";
