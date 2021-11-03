@@ -15,8 +15,7 @@ import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
 import { useLinkProps } from "@react-navigation/native";
 
-function ScheduleScreen(props) {
-  console.log("on schedule");
+function ProfileSettingsScreen(props) {
   return (
     <SafeAreaView style={STYLES.container}>
       {/* Top Bar */}
@@ -27,10 +26,8 @@ function ScheduleScreen(props) {
       ></TopBar>
       {/* Content */}
       <View style={STYLES.content}></View>
-      {/* Tabs */}
-      <TabBar navigation={props.navigation} screen="schedule"></TabBar>
     </SafeAreaView>
   );
 }
 
-export default ScheduleScreen;
+export default ProfileSettingsScreen;

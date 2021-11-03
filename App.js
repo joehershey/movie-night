@@ -6,10 +6,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./app/screens/LoginScreen";
 import SignupScreen from "./app/screens/SignupScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
+import LandingScreen from "./app/screens/LandingScreen";
 import GroupSettingsScreen from "./app/screens/GroupSettingsScreen";
 import SearchMoviesScreen from "./app/screens/SearchMoviesScreen";
 import GroupQueueScreen from "./app/screens/GroupQueueScreen";
 import ScheduleScreen from "./app/screens/ScheduleScreen";
+import ProfileSettingsScreen from "./app/screens/ProfileSettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +62,24 @@ export default function App() {
         <Stack.Screen name="Welcome">
           {(props) => (
             <WelcomeScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Landing">
+          {(props) => (
+            <LandingScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Profile">
+          {(props) => (
+            <ProfileSettingsScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
             />
