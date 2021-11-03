@@ -13,8 +13,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
+import { useLinkProps } from "@react-navigation/native";
 
-function GroupSettingsScreen(props) {
+function ProfileSettingsScreen(props) {
   return (
     <SafeAreaView style={STYLES.container}>
       {/* Top Bar */}
@@ -25,10 +26,8 @@ function GroupSettingsScreen(props) {
       ></TopBar>
       {/* Content */}
       <View style={STYLES.content}></View>
-      {/* Tabs */}
-      <TabBar navigation={props.navigation} screen="settings"></TabBar>
     </SafeAreaView>
   );
 }
 
-export default GroupSettingsScreen;
+export default ProfileSettingsScreen;

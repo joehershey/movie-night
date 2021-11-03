@@ -20,7 +20,11 @@ function ScheduleScreen(props) {
   return (
     <SafeAreaView style={STYLES.container}>
       {/* Top Bar */}
-      <TopBar navigation={props.navigation} screen="group"></TopBar>
+      <TopBar
+        navigation={props.navigation}
+        screen="Landing"
+        message="Groups"
+      ></TopBar>
       {/* Content */}
       <View style={STYLES.content}></View>
       {/* Tabs */}
