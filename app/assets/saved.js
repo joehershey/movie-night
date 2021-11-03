@@ -43,6 +43,11 @@ export const STYLES = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  settingsInput: {
+    borderColor: "grey",
+    borderWidth: 1,
+    width: "100%",
+  },
   topBar: {
     flex: 1,
     backgroundColor: COLORS.primary,
