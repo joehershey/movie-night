@@ -388,7 +388,7 @@ export var TEST_DATA = {
       {
         user_id: 4,
         display_name: "alias41",
-        is_admin: 0,
+        is_admin: 1,
       },
       {
         user_id: 5,
