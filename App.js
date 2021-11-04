@@ -16,7 +16,7 @@ import ProfileSettingsScreen from "./app/screens/ProfileSettingsScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const URL = ""; //FIXME: Update with URL for APU calls
+  const URL = "https://movienightapi.azurewebsites.net/"; //FIXME: Update with URL for APU calls
 
   //save states that need to be accessed throughout app
   //state.abcd -> access here, props.abcd access in screens
