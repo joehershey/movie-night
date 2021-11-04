@@ -12,18 +12,27 @@ import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "modal-react-native-web";
 
-function CreateGroupPopup(props) {
+function ChangePassword(props) {
   const showPopup = props.showPopup;
   const toggleShowPopup = props.toggleShowPopup;
 
   const [showConfirm, toggleShowConfirm] = React.useState(false);
-  const [groupName, changeGroupName] = React.useState("");
-  const [alias, changeAlias] = React.useState("");
+  const [currentPassword, changeCurrentPassword] = React.useState("");
+  const [confirmPassword, changeConfirmPassword] = React.useState("");
+  const [newPassword, changeNewPassword] = React.useState("");
 
   const onSubmit = () => {
-    if (groupName.trim() <= 0) {
-      alert("Please enter a group name.");
-    } else {
+    if (
+      currentPassword.trim() <= 0 ||
+      confirmPassword.trim() <= 0 ||
+      newPassword.trim() <= 0
+    ) {
+      alert("Please fill out all fields.");
+    } else if (newPassword != confirmPassword) {
+      alert("Password confirmation unsuccessful.");
+    }
+    // check if current password is correct -- database call
+    else {
       toggleShowPopup(false);
 
       // here we would do a backend request to create a new group
@@ -31,8 +40,8 @@ function CreateGroupPopup(props) {
       toggleShowConfirm(true);
 
       // erase values or else they will be stored
-      changeGroupName("");
-      changeAlias("");
+      changeCurrentPassword("");
+      changeConfirmPassword("");
     }
   };
 
@@ -46,53 +55,65 @@ function CreateGroupPopup(props) {
       {Platform.OS == "web" ? (
         <View>
           <Modal visible={showPopup} transparent={true}>
+            {/* MOBILE MODAL */}
             <View style={STYLES.centeredModalView}>
               <View style={STYLES.webModalView}>
                 <View
                   style={{
-                    marginLeft: 40,
-                    paddingBottom: 30,
+                    marginLeft: 30,
+                    paddingBottom: 10,
                   }}
                 >
-                  <Text style={{ fontSize: 30 }}>Create a Group</Text>
+                  <Text style={{ fontSize: 30 }}>Change Password</Text>
                 </View>
-                <Text style={{ fontSize: 20 }}>Enter Group Name:</Text>
+                <Text style={{ fontSize: 20 }}>Current Password:</Text>
                 <View
                   style={{
                     height: 45,
                     width: 275,
-                    marginBottom: 20,
+                    marginBottom: 5,
                   }}
                 >
                   <TextInput
                     style={STYLES.textInput}
                     placeholder={"Group Name"}
                     placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeGroupName}
+                    onChangeText={changeCurrentPassword}
                   ></TextInput>
                 </View>
 
-                <Text style={{ fontSize: 20 }}>
-                  Enter Your Alias for the Group (Optional):
-                </Text>
+                <Text style={{ fontSize: 20 }}>New Password:</Text>
                 <View
                   style={{
                     height: 45,
                     width: 275,
-                    marginBottom: 20,
+                    marginBottom: 5,
                   }}
                 >
                   <TextInput
                     style={STYLES.textInput}
-                    placeholder={"Alias"}
+                    placeholder={"New Password"}
                     placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeAlias}
+                    onChangeText={changeNewPassword}
+                  ></TextInput>
+                </View>
+                <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
+                <View
+                  style={{
+                    height: 45,
+                    width: 275,
+                    marginBottom: 5,
+                  }}
+                >
+                  <TextInput
+                    style={STYLES.textInput}
+                    placeholder={"New Password"}
+                    placeholderTextColor={"#D3D3D3"}
+                    onChangeText={changeConfirmPassword}
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableWithoutFeedback
-                    onPress={() => toggleShowPopup(!showPopup)}
-                  >
+                  <TouchableWithoutFeedback onPress={onSubmit}>
                     <View style={[STYLES.submitButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -135,13 +156,10 @@ function CreateGroupPopup(props) {
                   }}
                 >
                   <Text style={{ fontSize: 30 }}>
-                    Successful Group Creation!
+                    You have changed your password!
                   </Text>
                 </View>
-                <Text style={{ fontSize: 20 }}>
-                  Your group code is: 2020. Use it to invite other members! You
-                  can also view it later in your Group Settings.
-                </Text>
+
                 <TouchableWithoutFeedback
                   onPress={() => toggleShowConfirm(!showConfirm)}
                 >
@@ -169,43 +187,56 @@ function CreateGroupPopup(props) {
               <View style={STYLES.mobileModalView}>
                 <View
                   style={{
-                    marginLeft: 40,
-                    paddingBottom: 30,
+                    marginLeft: 30,
+                    paddingBottom: 10,
                   }}
                 >
-                  <Text style={{ fontSize: 30 }}>Create a Group</Text>
+                  <Text style={{ fontSize: 30 }}>Change Password</Text>
                 </View>
-                <Text style={{ fontSize: 20 }}>Enter Group Name:</Text>
+                <Text style={{ fontSize: 20 }}>Current Password:</Text>
                 <View
                   style={{
                     height: 45,
                     width: 275,
-                    marginBottom: 20,
+                    marginBottom: 5,
                   }}
                 >
                   <TextInput
                     style={STYLES.textInput}
                     placeholder={"Group Name"}
                     placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeGroupName}
+                    onChangeText={changeCurrentPassword}
                   ></TextInput>
                 </View>
 
-                <Text style={{ fontSize: 20 }}>
-                  Enter Your Alias for the Group (Optional):
-                </Text>
+                <Text style={{ fontSize: 20 }}>New Password:</Text>
                 <View
                   style={{
                     height: 45,
                     width: 275,
-                    marginBottom: 20,
+                    marginBottom: 5,
                   }}
                 >
                   <TextInput
                     style={STYLES.textInput}
-                    placeholder={"Alias"}
+                    placeholder={"New Password"}
                     placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeAlias}
+                    onChangeText={changeNewPassword}
+                  ></TextInput>
+                </View>
+                <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
+                <View
+                  style={{
+                    height: 45,
+                    width: 275,
+                    marginBottom: 5,
+                  }}
+                >
+                  <TextInput
+                    style={STYLES.textInput}
+                    placeholder={"New Password"}
+                    placeholderTextColor={"#D3D3D3"}
+                    onChangeText={changeConfirmPassword}
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
@@ -252,13 +283,9 @@ function CreateGroupPopup(props) {
                   }}
                 >
                   <Text style={{ fontSize: 30 }}>
-                    Successful Group Creation!
+                    You have changed your password!
                   </Text>
                 </View>
-                <Text style={{ fontSize: 20 }}>
-                  Your group code is: 2020. Use it to invite other members! You
-                  can also view it later in your Group Settings.
-                </Text>
                 <TouchableWithoutFeedback
                   onPress={() => toggleShowConfirm(!showConfirm)}
                 >
@@ -283,4 +310,4 @@ function CreateGroupPopup(props) {
   );
 }
 
-export default CreateGroupPopup;
+export default ChangePassword;

@@ -47,6 +47,12 @@ export const STYLES = StyleSheet.create({
     height: 70,
     backgroundColor: "white",
   },
+  settingsButtons: {
+    top: 10,
+    width: "60%",
+    height: 70,
+    backgroundColor: COLORS.secondary,
+  },
   input: {
     justifyContent: "center",
     alignItems: "center",
