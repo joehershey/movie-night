@@ -38,7 +38,7 @@ function ProfileSettingsScreen(props) {
       {/* Content */}
       <View style={styles.content}>
         <Text style={{ fontSize: 50 }}>{"Profile Settings"}</Text>
-        <Text style={{ fontSize: 30 }}>{"Username: tony"}</Text>
+        <Text style={{ fontSize: 30 }}>{"Username: " + props.username}</Text>
 
         <View style={{ width: "100%", alignItems: "center" }}>
           <TouchableWithoutFeedback onPress={() => toggleShowPopup(!showPopup)}>

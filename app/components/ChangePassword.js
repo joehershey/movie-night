@@ -6,6 +6,7 @@ import {
   Modal as MobileModal,
   TextInput,
   Platform,
+  Keyboard,
 } from "react-native";
 
 import { COLORS, STYLES } from "../assets/saved";
@@ -20,6 +21,13 @@ function ChangePassword(props) {
   const [currentPassword, changeCurrentPassword] = React.useState("");
   const [confirmPassword, changeConfirmPassword] = React.useState("");
   const [newPassword, changeNewPassword] = React.useState("");
+
+  const keyboardControl = () => {
+    if (Platform.OS == "web") {
+    } else {
+      Keyboard.dismiss();
+    }
+  };
 
   const onSubmit = () => {
     if (
@@ -42,7 +50,15 @@ function ChangePassword(props) {
       // erase values or else they will be stored
       changeCurrentPassword("");
       changeConfirmPassword("");
+      changeNewPassword("");
     }
+  };
+
+  const onClose = () => {
+    toggleShowPopup(false);
+    changeCurrentPassword("");
+    changeConfirmPassword("");
+    changeNewPassword("");
   };
 
   return (
@@ -76,9 +92,10 @@ function ChangePassword(props) {
                 >
                   <TextInput
                     style={STYLES.textInput}
-                    placeholder={"Group Name"}
+                    placeholder={"Current Password"}
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeCurrentPassword}
+                    secureTextEntry={true}
                   ></TextInput>
                 </View>
 
@@ -95,6 +112,7 @@ function ChangePassword(props) {
                     placeholder={"New Password"}
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeNewPassword}
+                    secureTextEntry={true}
                   ></TextInput>
                 </View>
                 <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
@@ -110,6 +128,7 @@ function ChangePassword(props) {
                     placeholder={"New Password"}
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeConfirmPassword}
+                    secureTextEntry={true}
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
@@ -126,9 +145,7 @@ function ChangePassword(props) {
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback
-                    onPress={() => toggleShowPopup(!showPopup)}
-                  >
+                  <TouchableWithoutFeedback onPress={onClose}>
                     <View style={[STYLES.closeButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -183,94 +200,97 @@ function ChangePassword(props) {
         <View>
           <MobileModal visible={showPopup} transparent={true}>
             {/* MOBILE MODAL */}
-            <View style={STYLES.centeredModalView}>
-              <View style={STYLES.mobileModalView}>
-                <View
-                  style={{
-                    marginLeft: 30,
-                    paddingBottom: 10,
-                  }}
-                >
-                  <Text style={{ fontSize: 30 }}>Change Password</Text>
-                </View>
-                <Text style={{ fontSize: 20 }}>Current Password:</Text>
-                <View
-                  style={{
-                    height: 45,
-                    width: 275,
-                    marginBottom: 5,
-                  }}
-                >
-                  <TextInput
-                    style={STYLES.textInput}
-                    placeholder={"Group Name"}
-                    placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeCurrentPassword}
-                  ></TextInput>
-                </View>
-
-                <Text style={{ fontSize: 20 }}>New Password:</Text>
-                <View
-                  style={{
-                    height: 45,
-                    width: 275,
-                    marginBottom: 5,
-                  }}
-                >
-                  <TextInput
-                    style={STYLES.textInput}
-                    placeholder={"New Password"}
-                    placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeNewPassword}
-                  ></TextInput>
-                </View>
-                <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
-                <View
-                  style={{
-                    height: 45,
-                    width: 275,
-                    marginBottom: 5,
-                  }}
-                >
-                  <TextInput
-                    style={STYLES.textInput}
-                    placeholder={"New Password"}
-                    placeholderTextColor={"#D3D3D3"}
-                    onChangeText={changeConfirmPassword}
-                  ></TextInput>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <TouchableWithoutFeedback onPress={onSubmit}>
-                    <View style={[STYLES.submitButton, STYLES.btn]}>
-                      <Text
-                        style={{
-                          color: "white",
-                          fontSize: 20,
-                          alignContent: "center",
-                        }}
-                      >
-                        Submit
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback
-                    onPress={() => toggleShowPopup(!showPopup)}
+            <TouchableWithoutFeedback onPress={keyboardControl}>
+              <View style={STYLES.centeredModalView}>
+                <View style={STYLES.mobileModalView}>
+                  <View
+                    style={{
+                      marginLeft: 30,
+                      paddingBottom: 10,
+                    }}
                   >
-                    <View style={[STYLES.closeButton, STYLES.btn]}>
-                      <Text
-                        style={{
-                          color: "white",
-                          fontSize: 20,
-                          alignContent: "center",
-                        }}
-                      >
-                        Close
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
+                    <Text style={{ fontSize: 30 }}>Change Password</Text>
+                  </View>
+                  <Text style={{ fontSize: 20 }}>Current Password:</Text>
+                  <View
+                    style={{
+                      height: 45,
+                      width: 275,
+                      marginBottom: 5,
+                    }}
+                  >
+                    <TextInput
+                      style={STYLES.textInput}
+                      placeholder={"Current Password"}
+                      placeholderTextColor={"#D3D3D3"}
+                      onChangeText={changeCurrentPassword}
+                      secureTextEntry={true}
+                    ></TextInput>
+                  </View>
+
+                  <Text style={{ fontSize: 20 }}>New Password:</Text>
+                  <View
+                    style={{
+                      height: 45,
+                      width: 275,
+                      marginBottom: 5,
+                    }}
+                  >
+                    <TextInput
+                      style={STYLES.textInput}
+                      placeholder={"New Password"}
+                      placeholderTextColor={"#D3D3D3"}
+                      onChangeText={changeNewPassword}
+                      secureTextEntry={true}
+                    ></TextInput>
+                  </View>
+                  <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
+                  <View
+                    style={{
+                      height: 45,
+                      width: 275,
+                      marginBottom: 5,
+                    }}
+                  >
+                    <TextInput
+                      style={STYLES.textInput}
+                      placeholder={"New Password"}
+                      placeholderTextColor={"#D3D3D3"}
+                      onChangeText={changeConfirmPassword}
+                      secureTextEntry={true}
+                    ></TextInput>
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+                    <TouchableWithoutFeedback onPress={onSubmit}>
+                      <View style={[STYLES.submitButton, STYLES.btn]}>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 20,
+                            alignContent: "center",
+                          }}
+                        >
+                          Submit
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={onClose}>
+                      <View style={[STYLES.closeButton, STYLES.btn]}>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 20,
+                            alignContent: "center",
+                          }}
+                        >
+                          Close
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
                 </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </MobileModal>
 
           <MobileModal visible={showConfirm} transparent={true}>
