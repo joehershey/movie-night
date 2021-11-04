@@ -22,32 +22,50 @@ import JoinGroupPopup from "../components/JoinGroupPopup";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useLinkProps } from "@react-navigation/native";
+import { TEST_DATA } from "../assets/testData";
 
 function LandingScreen(props) {
+  const [isLoaded, setLoaded] = React.useState(false);
   const [showCreateGroup, toggleShowCreateGroup] = React.useState(false);
   const [showJoinGroup, toggleShowJoinGroup] = React.useState(false);
-
-  const keyboardControl = () => {
-    if (Platform.OS == "web") {
-    } else {
-      Keyboard.dismiss();
-    }
-  };
 
   const testGroups = [
     {
       group_name: "Spooky Sunday",
       group_id: 1,
-      admin_name: "Griffin",
+      created_by: 1,
     },
     {
       group_name: "Mystery Monday",
       group_id: 2,
-      admin_name: "Tony",
+      created_by: 2,
     },
   ];
 
   const [groupsToRender, setGroups] = React.useState(testGroups);
+
+  if (!isLoaded) {
+    getGroupsAPI();
+    setLoaded(!isLoaded);
+  }
+
+  function getGroupsAPI() {
+    // fetch(props.url + "user/" + props.user_id + "/groups", {
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json; charset=utf-8",
+    //     },
+    //     method: "GET",
+    //   })
+    //     .then((response) => response.json())
+    //     .then((responseJson) => {
+    //       () => setGroups(responseJson);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    () => setGroups(TEST_DATA.groups);
+  }
 
   const groupsToRenderHTML = [];
   for (const [i, group] of groupsToRender.entries()) {
@@ -57,7 +75,6 @@ function LandingScreen(props) {
       <Card>
         <Card.Title>{group.group_name}</Card.Title>
         <Card.Divider />
-        <Text>Group Admin:{group.admin_name}</Text>
         <TouchableWithoutFeedback
           onPress={() => {
             props.setGroup(group.group_id);
@@ -100,6 +117,8 @@ function LandingScreen(props) {
         <CreateGroupPopup
           showPopup={showCreateGroup}
           toggleShowPopup={toggleShowCreateGroup}
+          url={props.url}
+          user_id={props.user_id}
         ></CreateGroupPopup>
         <JoinGroupPopup
           showPopup={showJoinGroup}
