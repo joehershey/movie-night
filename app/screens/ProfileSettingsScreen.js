@@ -25,9 +25,16 @@ function ProfileSettingsScreen(props) {
         message="Groups"
       ></TopBar>
       {/* Content */}
-      <View style={STYLES.content}></View>
+      <View style={styles.content}></View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 12,
+    backgroundColor: "white",
+  },
+});
 
 export default ProfileSettingsScreen;

@@ -27,49 +27,6 @@ function LandingScreen(props) {
   const [showCreateGroup, toggleShowCreateGroup] = React.useState(false);
   const [showJoinGroup, toggleShowJoinGroup] = React.useState(false);
 
-  //this is
-  function loginAPI(user, pass) {
-    fetch(props.url + "login", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        username: user,
-        password: pass,
-      }),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        if (responseJson.user_id === undefined) {
-          alert("Username or password is incorrect");
-        } else {
-          props.setId(responseJson.user_id);
-          if (responseJson.is_manager) {
-            props.navigation.navigate("Manager home");
-          } else {
-            props.navigation.navigate("Tenant home");
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  //called by the login button
-  function checkCredentials() {
-    loginAPITest(username, password);
-    //loginAPI(username, password);
-  }
-
-  //just testing where the information goes, and that it comes in correct
-  function loginAPITest(user, pass) {
-    props.setUser(1, user); // 1 as a test for user_id
-  }
-
   const keyboardControl = () => {
     if (Platform.OS == "web") {
     } else {
@@ -80,10 +37,12 @@ function LandingScreen(props) {
   const testGroups = [
     {
       group_name: "Spooky Sunday",
+      group_id: 1,
       admin_name: "Griffin",
     },
     {
       group_name: "Mystery Monday",
+      group_id: 2,
       admin_name: "Tony",
     },
   ];
@@ -101,6 +60,7 @@ function LandingScreen(props) {
         <Text>Group Admin:{group.admin_name}</Text>
         <TouchableWithoutFeedback
           onPress={() => {
+            props.setGroup(group.group_id);
             props.navigation.navigate("Schedule");
           }}
         >
@@ -120,7 +80,6 @@ function LandingScreen(props) {
                 alignContent: "center",
               }}
             >
-              {/* Opens payment window */}
               View Group
             </Text>
           </View>
@@ -168,7 +127,7 @@ function LandingScreen(props) {
 const styles = StyleSheet.create({
   content: {
     //used with spacer to push content up the screen
-    flex: 10,
+    flex: 12,
     justifyContent: "center",
     alignItems: "center",
   },

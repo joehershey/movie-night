@@ -24,13 +24,23 @@ export default function App() {
     user_id: -1, //initially empty, initialized with login/signup (props.user_id)
     username: "", //same as above (but accessed via props.username)
     user_token: "", //keep track of token IF backend wants this functionality
+    group_id: -1,
   });
 
   //changes the state of user_id in this component (props.user_id in screens)
   function setUser(id, user) {
+    console.log(id + user);
     //takes previous state, only overrites passed info (with param)
     setState((prevState) => {
       return { ...prevState, user_id: id, username: user };
+    });
+  }
+
+  function setGroup(set_id) {
+    console.log(set_id);
+    //takes previous state, only overrites passed info (with param)
+    setState((prevState) => {
+      return { ...prevState, group_id: set_id };
     });
   }
   return (
@@ -72,7 +82,11 @@ export default function App() {
           {(props) => (
             <LandingScreen
               {...props}
+              setGroup={(group_id) => setGroup(group_id)}
               url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
             />
           )}
         </Stack.Screen>
@@ -82,6 +96,9 @@ export default function App() {
             <ProfileSettingsScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
             />
           )}
         </Stack.Screen>
@@ -91,6 +108,10 @@ export default function App() {
             <GroupSettingsScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
+              group_id={state.group_id}
             />
           )}
         </Stack.Screen>
@@ -100,6 +121,10 @@ export default function App() {
             <SearchMoviesScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
+              group_id={state.group_id}
             />
           )}
         </Stack.Screen>
@@ -109,6 +134,10 @@ export default function App() {
             <GroupQueueScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
+              group_id={state.group_id}
             />
           )}
         </Stack.Screen>
@@ -118,6 +147,10 @@ export default function App() {
             <ScheduleScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
+              group_id={state.group_id}
             />
           )}
         </Stack.Screen>

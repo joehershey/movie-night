@@ -4,6 +4,9 @@ import { StyleSheet } from "react-native";
 export const COLORS = {
   primary: "#1d1f1e",
   secondary: "#166fdb",
+  danger: "#b81f00",
+  happy: "green",
+  neutral: "#d5db0f",
 };
 export const STYLES = StyleSheet.create({
   fontPrimary: {
