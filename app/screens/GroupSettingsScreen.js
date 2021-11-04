@@ -20,6 +20,7 @@ import TopBar from "../components/TopBar";
 import MemberInfo from "../components/MemberInfo";
 
 function GroupSettingsScreen(props) {
+  const [loaded, setLoaded] = useState(false);
   const [edit, setEdit] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [groupMembers, setGroupMembers] = useState([]);
@@ -28,9 +29,9 @@ function GroupSettingsScreen(props) {
 
   /* This hook insures getUsersAPI() is only automatically called on the 
   first render (because of the empty array as the second argument) */
-  useEffect(() => {
+  if (loaded == false) {
     getMembersAPI();
-  }, []);
+  }
 
   /* Getss all members of the group from API */
   function getMembersAPI() {
@@ -38,9 +39,8 @@ function GroupSettingsScreen(props) {
 
     //code below should be done in the .then code block
     setGroupMembers(TEST_DATA.group_data.members); //replace arg with responseJson
-    console.log(TEST_DATA.group_data.members);
-    getGroupInfoAPI();
     checkAdminStatus(TEST_DATA.group_data.members); //replace arg with responseJson
+    getGroupInfoAPI();
   }
 
   /* Gets group settings information from the API */
@@ -50,19 +50,21 @@ function GroupSettingsScreen(props) {
     //      setMaxMovies(responseJson.max_user_movies.toString());
     setGroupName(TEST_DATA.group_data.group_name);
     setMaxMovies(TEST_DATA.group_data.max_user_movies.toString());
+    setLoaded(true);
   }
 
   /* Sets group settings information through the API */
   function changeGroupSettingsAPI() {
     //TODO: Call PATCH @ ~ /group/props.group_id
-    //      params-> max_user_movies: (if != "") parseInt(maxMovies), group_name: groupName
+    //      params-> max_user_movies: (if < 1 -> = 1) parseInt(maxMovies), group_name: groupName
     //      .then getMembersAPI(); //refresh page
     TEST_DATA.group_data.group_name = groupName;
-    if (maxMovies != "") {
+    if (parseInt(maxMovies) > 0) {
       TEST_DATA.group_data.max_user_movies = parseInt(maxMovies);
-      //else
+    } else {
+      TEST_DATA.group_data.max_user_movies = 1;
     }
-    getMembersAPI();
+    setLoaded(false);
   }
 
   /* removes current user (leaving group) or other user (kicking) from group */
@@ -79,7 +81,7 @@ function GroupSettingsScreen(props) {
       }
     }
     TEST_DATA.group_data.members = members;
-    getMembersAPI();
+    setLoaded(false);
   }
 
   function setAdminStatusAPI(user_id, is_admin) {
@@ -96,7 +98,7 @@ function GroupSettingsScreen(props) {
       }
     }
     TEST_DATA.group_data.members = members;
-    getMembersAPI();
+    setLoaded(false);
   }
 
   function setAliasAPI(alias) {
@@ -113,7 +115,7 @@ function GroupSettingsScreen(props) {
       }
     }
     TEST_DATA.group_data.members = members;
-    getMembersAPI();
+    setLoaded(false);
   }
 
   /* AUXILLARY FUNCTIONS */
@@ -121,7 +123,7 @@ function GroupSettingsScreen(props) {
   /* Removes user from group and navigates to the landing page */
   function leaveGroup() {
     removeFromGroupAPI(props.user_id);
-    //props.navigation.navigate("Landing");
+    props.navigation.navigate("Landing");
   }
 
   /* Sets whether or not the user is an admin and thus has the ability to edit */
@@ -157,10 +159,12 @@ function GroupSettingsScreen(props) {
           member={member}
           isAdmin={isAdmin}
           isUser={false}
-          removeFromGroupAPI={(user_id) => removeFromGroupAPI(user_id)}
-          setAdminStatusAPI={(user_id, is_admin) =>
-            setAdminStatusAPI(user_id, is_admin)
-          }
+          removeFromGroupAPI={(user_id) => {
+            removeFromGroupAPI(user_id);
+          }}
+          setAdminStatusAPI={(user_id, is_admin) => {
+            setAdminStatusAPI(user_id, is_admin);
+          }}
         ></MemberInfo>
       );
     }
@@ -227,7 +231,14 @@ function GroupSettingsScreen(props) {
 
                 {edit && (
                   <TextInput
-                    style={[STYLES.input, STYLES.settingsInput]}
+                    style={[
+                      STYLES.input,
+                      STYLES.settingsInput,
+                      {
+                        borderColor:
+                          groupName.length < 1 ? COLORS.danger : "lightgrey",
+                      },
+                    ]}
                     onChangeText={setGroupName}
                     textAlign="center"
                     value={groupName}
@@ -266,7 +277,14 @@ function GroupSettingsScreen(props) {
 
                 {edit && (
                   <TextInput
-                    style={[STYLES.input, STYLES.settingsInput]}
+                    style={[
+                      STYLES.input,
+                      STYLES.settingsInput,
+                      {
+                        borderColor:
+                          maxMovies.length < 1 ? COLORS.danger : "lightgrey",
+                      },
+                    ]}
                     onChangeText={setMaxMovies}
                     value={maxMovies}
                     textAlign="center"
@@ -293,7 +311,10 @@ function GroupSettingsScreen(props) {
                   alignItems: "center",
                   alignSelf: "center",
                   justifyContent: "center",
-                  backgroundColor: COLORS.secondary,
+                  backgroundColor:
+                    maxMovies.length < 1 || groupName.length < 1
+                      ? "lightgrey"
+                      : COLORS.secondary,
                   borderRadius: 10,
                   width: "20%",
                   paddingLeft: 10,
