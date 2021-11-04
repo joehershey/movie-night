@@ -7,6 +7,7 @@ export const COLORS = {
   danger: "#b81f00",
   happy: "green",
   neutral: "#d5db0f",
+  lg: "#f0f0f0",
 };
 export const STYLES = StyleSheet.create({
   fontPrimary: {

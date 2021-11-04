@@ -15,10 +15,11 @@ import { FontAwesome5 } from "@expo/vector-icons";
 function MemberInfo(props) {
   const [editAlias, setEditAlias] = useState(false); //if alias editing is on
   const [alias, setAlias] = useState(""); //used when editing alias
+  const [expanded, setExpanded] = useState(false); //used when editing alias
   return (
     <View>
       {props.isUser ? (
-        <Card>
+        <Card containerStyle={{ marginTop: 10 }}>
           <View
             style={{
               flexDirection: "row",
@@ -27,11 +28,51 @@ function MemberInfo(props) {
               marginBottom: 10,
             }}
           >
+            {/* hidden buttons to preserve centering */}
+            {!editAlias ? (
+              <View style={{ margin: 10 }}>
+                <FontAwesome5 name="pencil-alt" color="white" size={20} />
+              </View>
+            ) : (
+              <View style={{ flexDirection: "row" }}>
+                <View
+                  style={{
+                    margin: 10,
+                    padding: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  <FontAwesome5 name="check" color="white" size={25} />
+                </View>
+
+                <View
+                  style={{
+                    margin: 10,
+                    padding: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  <FontAwesome5 name="times-circle" color="white" size={25} />
+                </View>
+              </View>
+            )}
             <View>
               {!editAlias ? (
-                <Text style={{ fontWeight: "bold" }}>
-                  {props.member.display_name} (You)
-                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontWeight: "bold" }}>
+                    {props.member.display_name}
+                  </Text>
+                  <Text style={{ fontWeight: "bold", fontStyle: "italic" }}>
+                    {" "}
+                    (You)
+                  </Text>
+                </View>
               ) : (
                 <View>
                   <TextInput
@@ -106,6 +147,7 @@ function MemberInfo(props) {
               </View>
             )}
           </View>
+
           <Card.Divider />
           <Text style={{ alignSelf: "center" }}>
             Group Role: {props.member.is_admin ? "Admin" : "Member"}
@@ -138,15 +180,64 @@ function MemberInfo(props) {
           </TouchableWithoutFeedback>
         </Card>
       ) : (
-        <Card>
-          <Card.Title>{props.member.display_name}</Card.Title>
-          <Card.Divider />
-          <Text style={{ alignSelf: "center", margin: 10 }}>
-            Group Role: {props.member.is_admin ? "Admin" : "Member"}
-          </Text>
+        <Card containerStyle={{ padding: 0 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: "white",
+                margin: 10,
+                alignItems: "center",
+              }}
+            ></View>
 
-          {props.isAdmin && (
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 10,
+                padding: 15,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>{props.member.display_name}</Text>
+              <Text style={{ fontStyle: "italic" }}>
+                {props.member.is_admin ? " (Admin)" : ""}
+                {!props.member.is_admin ? " (Member)" : ""}
+              </Text>
+            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                if (props.isAdmin) {
+                  setExpanded(!expanded);
+                }
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: "white",
+                  margin: 10,
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesome5
+                  name={expanded ? "compress" : "edit"}
+                  color={props.isAdmin ? "grey" : "white"}
+                  size={20}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          {expanded && <Card.Divider />}
+
+          {props.isAdmin && expanded && (
+            <View style={{ flexDirection: "row", margin: 0 }}>
               <TouchableWithoutFeedback
                 onPress={() => {
                   props.setAdminStatusAPI(
@@ -158,6 +249,8 @@ function MemberInfo(props) {
                 <View
                   style={{
                     margin: 10,
+                    marginTop: 0,
+                    height: 50,
                     borderRadius: 5,
                     flex: 1,
                     padding: 5,
@@ -187,6 +280,7 @@ function MemberInfo(props) {
                 <View
                   style={{
                     margin: 10,
+                    marginTop: 0,
                     borderRadius: 5,
                     padding: 5,
                     flex: 1,
