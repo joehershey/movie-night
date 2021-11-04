@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test entire page render renders 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#1d1f1e",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "margin": 30,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 40,
+            "textAlign": "center",
+          },
+          Object {
+            "fontFamily": "Didot",
+            "fontWeight": "bold",
+            "letterSpacing": 1.2,
+          },
+        ]
+      }
+    >
+      Welcome to Movie Night!
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "height": 70,
+          "top": 10,
+          "width": "60%",
+        },
+        Object {
+          "alignItems": "center",
+          "borderRadius": 20,
+          "justifyContent": "center",
+          "margin": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#1d1f1e",
+            "fontSize": 30,
+          },
+        ]
+      }
+    >
+      Log In
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "height": 70,
+          "top": 10,
+          "width": "60%",
+        },
+        Object {
+          "alignItems": "center",
+          "borderRadius": 20,
+          "justifyContent": "center",
+          "margin": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          Object {
+            "color": "#166fdb",
+            "fontSize": 20,
+            "fontStyle": "italic",
+          },
+        ]
+      }
+    >
+      New here? Sign up!
+    </Text>
+  </View>
+</View>
+`;
