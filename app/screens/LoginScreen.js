@@ -37,12 +37,8 @@ function LoginScreen(props) {
         if (responseJson.user_id === undefined) {
           alert("Username or password is incorrect");
         } else {
-          props.setId(responseJson.user_id);
-          if (responseJson.is_manager) {
-            props.navigation.navigate("Manager home");
-          } else {
-            props.navigation.navigate("Tenant home");
-          }
+          props.setUser(responseJson.user_id, user);
+          props.navigation.navigate("Landing");
         }
       })
       .catch((error) => {
@@ -52,14 +48,14 @@ function LoginScreen(props) {
 
   //called by the login button
   function checkCredentials() {
-    loginAPITest(username, password);
-    //loginAPI(username, password);
-    props.navigation.navigate("Landing");
+    //loginAPITest(username, password);
+    loginAPI(username, password);
   }
 
   //just testing where the information goes, and that it comes in correct
   function loginAPITest(user, pass) {
     props.setUser(1, user); // 1 as a test for user_id
+    props.navigation.navigate("Landing");
   }
 
   const keyboardControl = () => {

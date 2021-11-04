@@ -22,7 +22,6 @@ function SignupScreen(props) {
 
   //TODO replace spike code
   function signupAPI(user, pass, setEmail) {
-    console.log(name, user, pass, isManager);
     fetch(props.url + "signup", {
       headers: {
         Accept: "application/json",
@@ -30,10 +29,9 @@ function SignupScreen(props) {
       },
       method: "POST",
       body: JSON.stringify({
-        full_name: name,
+        email: setEmail,
         username: user,
         password: pass,
-        is_manager: isManager,
       }),
     })
       .then((response) => response.json())
@@ -42,12 +40,8 @@ function SignupScreen(props) {
         if (responseJson.user_id === undefined) {
           alert("Unable to sign up");
         } else {
-          props.setId(responseJson.user_id);
-          if (isManager) {
-            props.navigation.navigate("Manager home");
-          } else {
-            props.navigation.navigate("Tenant home");
-          }
+          props.setUser(responseJson.user_id, user);
+          props.navigation.navigate("Landing");
         }
       })
       .catch((error) => {
@@ -56,14 +50,15 @@ function SignupScreen(props) {
   }
 
   function testOrAPI(user, pass, setEmail) {
-    signupAPITest(user, pass, setEmail);
-    //signupAPI(user,pass,setEmail);
+    //signupAPITest(user, pass, setEmail);
+    signupAPI(user, pass, setEmail);
   }
 
   //test input without api
   function signupAPITest(user, pass, email) {
     console.log(user + ":" + pass + ":" + setEmail);
     props.setUser(2, user); //sets user_id as 2, username as input for username
+    props.navigation.navigate("Landing");
   }
 
   const keyboardControl = () => {
@@ -101,7 +96,7 @@ function SignupScreen(props) {
 
           <TouchableWithoutFeedback
             onPress={() => {
-              if (username == "" || password == "" || email) {
+              if (username == "" || password == "" || email == "") {
                 Alert.alert("Please fill out all fields");
               } else {
                 testOrAPI(username, password, email);

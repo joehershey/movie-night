@@ -22,6 +22,7 @@ import MemberInfo from "../components/MemberInfo";
 function GroupSettingsScreen(props) {
   const [loaded, setLoaded] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [groupMembers, setGroupMembers] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -36,7 +37,24 @@ function GroupSettingsScreen(props) {
   /* Getss all members of the group from API */
   function getMembersAPI() {
     //TODO: Call GET @ ~ /group/props.group_id/users
-
+    //DONE but not tested
+    /* fetch(props.url + "group/" + props.group_id + "/users", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setGroupMembers(responseJson); //replace arg with responseJson
+        checkAdminStatus(responseJson); //replace arg with responseJson
+        getGroupInfoAPI();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+ */
     //code below should be done in the .then code block
     setGroupMembers(TEST_DATA.group_data.members); //replace arg with responseJson
     checkAdminStatus(TEST_DATA.group_data.members); //replace arg with responseJson
@@ -48,6 +66,24 @@ function GroupSettingsScreen(props) {
     //TODO: Call GET @ ~ /group/props.group_id
     //      setGroupName(responseJson.group_name);
     //      setMaxMovies(responseJson.max_user_movies.toString());
+    //DONE but not tested
+    /* fetch(props.url + "group/" + props.group_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setMaxMovies(responseJson.max_user_movies);
+        setGroupName(responseJson.group_name);
+        setLoaded(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
+
     setGroupName(TEST_DATA.group_data.group_name);
     setMaxMovies(TEST_DATA.group_data.max_user_movies.toString());
     setLoaded(true);
@@ -58,6 +94,33 @@ function GroupSettingsScreen(props) {
     //TODO: Call PATCH @ ~ /group/props.group_id
     //      params-> max_user_movies: (if < 1 -> = 1) parseInt(maxMovies), group_name: groupName
     //      .then getMembersAPI(); //refresh page
+    //DONE except hasn't been tested
+
+    /* let max = 0;
+    if (parseInt(maxMovies) > 0) {
+      max = parseInt(maxMovies);
+    } else {
+      max = 1;
+    }
+    fetch(props.url + "group/" + props.group_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        group_name: groupName,
+        max_user_movies: max,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setLoaded(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
+
     TEST_DATA.group_data.group_name = groupName;
     if (parseInt(maxMovies) > 0) {
       TEST_DATA.group_data.max_user_movies = parseInt(maxMovies);
@@ -71,6 +134,22 @@ function GroupSettingsScreen(props) {
   function removeFromGroupAPI(user_id) {
     //TODO: Call DELETE @ ~ /user/[user_id]/props.group_id
     //      .then getMembersAPI(); //refresh page
+    //DONE but need to test
+
+    /* fetch(props.url + "user/" + user_id + "/" + props.group_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setLoaded(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
 
     /* this code is simply to simulate the process */
     let members = groupMembers;
@@ -88,6 +167,25 @@ function GroupSettingsScreen(props) {
     //TODO: Call PATCH @ ~ /user/[user_id]/props.group_id/admin
     //      params-> is_admin: is_admin (the parameter)
     //      .then getMembersAPI(); //refresh page
+    //DONE but need to test
+
+    /* fetch(props.url + "user/" + user_id + "/" + props.group_id + "/admin", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        is_admin: is_admin,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setLoaded(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
 
     /* this code is simply to simulate the process without the API */
     let members = groupMembers;
@@ -105,6 +203,25 @@ function GroupSettingsScreen(props) {
     //TODO: Call PATCH @ ~ /user/[user_id]/props.group_id/alias
     //      params-> alias: alias (the parameter)
     //      .then getMembersAPI(); //refresh page
+    //DONE but need to test
+
+    /* fetch(props.url + "user/" + props.user_id + "/" + props.group_id + "/alias", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          alias: alias,
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          setLoaded(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        }); */
 
     /* this code is simply to simulate the process without the API */
     let members = groupMembers;
@@ -116,6 +233,32 @@ function GroupSettingsScreen(props) {
     }
     TEST_DATA.group_data.members = members;
     setLoaded(false);
+  }
+
+  /* Deletes group from the app */
+  function deleteGroupAPI() {
+    //TODO: Call DELETE @ ~ /group/props.group_id
+    //DONE but need to test
+
+    /* fetch(props.url + "group/" + props.group_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+          props.navigation.navigate('Landing')
+          alert(groupName + " deleted")
+      })
+      .catch((error) => {
+        console.error(error);
+      });  */
+
+    /* this code is simply to simulate the process */
+    props.navigation.navigate("Landing");
+    alert(groupName + " deleted");
   }
 
   /* AUXILLARY FUNCTIONS */
@@ -142,7 +285,6 @@ function GroupSettingsScreen(props) {
   const currentUserRenderHTML = []; //Card for active user
 
   for (const [i, member] of groupMembers.entries()) {
-    console.log("ayo");
     //only non applied to properties
     if (member.user_id == props.user_id) {
       currentUserRenderHTML.push(
@@ -190,157 +332,178 @@ function GroupSettingsScreen(props) {
             alignItems: "stretch",
           }}
         >
-          <View style={{ alignItems: "center" }}>
-            <View
-              style={{
-                margin: 20,
-                flexDirection: "column",
-              }}
-            >
-              <Text style={{ fontSize: 35, fontWeight: "bold" }}>
-                Group Settings
-              </Text>
-            </View>
-          </View>
-
           <View
             style={{
-              marginLeft: 15,
-              marginRight: 15,
-              flexDirection: "row",
-              alignItems: "center",
+              borderColor: COLORS.lg,
+              borderWidth: 5,
+              margin: 10,
+              borderRadius: 20,
             }}
           >
-            <Text
-              style={{
-                flex: 1,
-                margin: 5,
-                fontSize: 20,
-                fontStyle: "italic",
-              }}
-            >
-              Group Name:
-            </Text>
-            <View style={{ flex: 1.5, flexDirection: "row" }}>
-              <View style={{ flex: 12 }}>
-                {!edit && (
-                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                    {groupName}
-                  </Text>
-                )}
-
-                {edit && (
-                  <TextInput
-                    style={[
-                      STYLES.input,
-                      STYLES.settingsInput,
-                      {
-                        borderColor:
-                          groupName.length < 1 ? COLORS.danger : "lightgrey",
-                      },
-                    ]}
-                    onChangeText={setGroupName}
-                    textAlign="center"
-                    value={groupName}
-                    placeholder="New group name"
-                  />
-                )}
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              marginLeft: 15,
-              marginRight: 15,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{
-                flex: 1.5,
-                margin: 5,
-                fontSize: 20,
-                fontStyle: "italic",
-              }}
-            >
-              Max. Movies Per User:
-            </Text>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ flex: 12 }}>
-                {!edit && (
-                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                    {maxMovies}
-                  </Text>
-                )}
-
-                {edit && (
-                  <TextInput
-                    style={[
-                      STYLES.input,
-                      STYLES.settingsInput,
-                      {
-                        borderColor:
-                          maxMovies.length < 1 ? COLORS.danger : "lightgrey",
-                      },
-                    ]}
-                    onChangeText={setMaxMovies}
-                    value={maxMovies}
-                    textAlign="center"
-                    keyboardType="number-pad"
-                    placeholder="Max. # per user"
-                  />
-                )}
-              </View>
-            </View>
-          </View>
-          {isAdmin && (
-            <TouchableWithoutFeedback
-              onPress={() => {
-                if (edit) {
-                  setEdit(!edit);
-                  changeGroupSettingsAPI();
-                } else {
-                  setEdit(!edit);
-                }
-              }}
-            >
+            <View style={{ alignItems: "center" }}>
               <View
                 style={{
-                  alignItems: "center",
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  backgroundColor:
-                    maxMovies.length < 1 || groupName.length < 1
-                      ? "lightgrey"
-                      : COLORS.secondary,
-                  borderRadius: 10,
-                  width: "20%",
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  margin: 10,
-                  height: 40,
+                  margin: 20,
+                  flexDirection: "column",
                 }}
               >
-                <Text style={{ color: "white", margin: 5, fontSize: 20 }}>
-                  {!edit ? "Edit" : "Save"}
+                <Text style={{ fontSize: 35, fontWeight: "bold" }}>
+                  Group Settings
                 </Text>
               </View>
-            </TouchableWithoutFeedback>
-          )}
+            </View>
+
+            <View
+              style={{
+                marginLeft: 15,
+                marginRight: 15,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  margin: 5,
+                  fontSize: 18,
+                  fontStyle: "italic",
+                }}
+              >
+                Group Name:
+              </Text>
+              <View style={{ flex: 1.5, flexDirection: "row" }}>
+                <View style={{ flex: 12 }}>
+                  {!edit && (
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        textAlign: "right",
+                      }}
+                    >
+                      {groupName}
+                    </Text>
+                  )}
+
+                  {edit && (
+                    <TextInput
+                      style={[
+                        STYLES.input,
+                        STYLES.settingsInput,
+                        {
+                          borderColor:
+                            groupName.length < 1 ? COLORS.danger : "lightgrey",
+                        },
+                      ]}
+                      onChangeText={setGroupName}
+                      textAlign="center"
+                      value={groupName}
+                      placeholder="New group name"
+                    />
+                  )}
+                </View>
+              </View>
+            </View>
+
+            <View
+              style={{
+                marginLeft: 15,
+                marginRight: 15,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  flex: 1.5,
+                  margin: 5,
+                  fontSize: 18,
+                  fontStyle: "italic",
+                }}
+              >
+                Max. Movies Per User:
+              </Text>
+              <View style={{ flex: 1, flexDirection: "row" }}>
+                <View style={{ flex: 12 }}>
+                  {!edit && (
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        textAlign: "right",
+                      }}
+                    >
+                      {maxMovies}
+                    </Text>
+                  )}
+
+                  {edit && (
+                    <TextInput
+                      style={[
+                        STYLES.input,
+                        STYLES.settingsInput,
+                        {
+                          borderColor:
+                            maxMovies.length < 1 ? COLORS.danger : "lightgrey",
+                        },
+                      ]}
+                      onChangeText={setMaxMovies}
+                      value={maxMovies}
+                      textAlign="center"
+                      keyboardType="number-pad"
+                      placeholder="Max. # per user"
+                    />
+                  )}
+                </View>
+              </View>
+            </View>
+            {isAdmin && (
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  if (edit) {
+                    setEdit(!edit);
+                    changeGroupSettingsAPI();
+                  } else {
+                    setEdit(!edit);
+                  }
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    backgroundColor:
+                      maxMovies.length < 1 || groupName.length < 1
+                        ? "lightgrey"
+                        : COLORS.secondary,
+                    borderRadius: 10,
+                    width: "20%",
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    margin: 10,
+                    height: 40,
+                  }}
+                >
+                  <Text style={{ color: "white", margin: 5, fontSize: 20 }}>
+                    {!edit ? "Edit" : "Save"}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            )}
+          </View>
           <View style={{ alignItems: "center" }}>
             <View
               style={{
                 marginTop: 20,
                 flexDirection: "column",
-                borderBottomWidth: 1,
+                borderBottomWidth: 0,
                 borderColor: "black",
               }}
             >
               <Text
                 style={{
-                  fontSize: 25,
+                  fontSize: 35,
                   fontWeight: "bold",
                 }}
               >
@@ -353,6 +516,111 @@ function GroupSettingsScreen(props) {
             {currentUserRenderHTML}
             {usersToRenderHTML}
           </View>
+
+          {isAdmin && (
+            <View>
+              {!deleteMode && (
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    setDeleteMode(true);
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      alignSelf: "center",
+                      justifyContent: "center",
+                      backgroundColor: COLORS.danger,
+                      borderRadius: 10,
+                      width: "50%",
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      margin: 10,
+                      marginTop: 60,
+                      height: 80,
+                    }}
+                  >
+                    <Text style={{ color: "white", margin: 5, fontSize: 20 }}>
+                      Delete Group
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              )}
+              {deleteMode && (
+                <View
+                  style={{
+                    width: "80%",
+                    backgroundColor: "#f2eceb",
+                    alignSelf: "center",
+                    borderRadius: 10,
+                    padding: 10,
+                    marginTop: 60,
+                  }}
+                >
+                  <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
+                    Are you sure?
+                  </Text>
+                  <View
+                    style={{ flexDirection: "row", justifyContent: "center" }}
+                  >
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        setDeleteMode(false);
+                        deleteGroupAPI();
+                      }}
+                    >
+                      <View
+                        style={{
+                          alignItems: "center",
+                          alignSelf: "center",
+                          justifyContent: "center",
+                          backgroundColor: COLORS.danger,
+                          flex: 1,
+                          borderRadius: 10,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          margin: 10,
+                          height: 60,
+                        }}
+                      >
+                        <Text
+                          style={{ color: "white", margin: 5, fontSize: 15 }}
+                        >
+                          Delete Group
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        setDeleteMode(false);
+                      }}
+                    >
+                      <View
+                        style={{
+                          alignItems: "center",
+                          alignSelf: "center",
+                          justifyContent: "center",
+                          backgroundColor: "grey",
+                          flex: 1,
+                          borderRadius: 10,
+                          paddingLeft: 10,
+                          paddingRight: 10,
+                          margin: 10,
+                          height: 60,
+                        }}
+                      >
+                        <Text
+                          style={{ color: "white", margin: 5, fontSize: 15 }}
+                        >
+                          Cancel
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                </View>
+              )}
+            </View>
+          )}
 
           <View style={{ height: 50 }}></View>
         </ScrollView>
