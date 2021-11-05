@@ -2,19 +2,24 @@ import WelcomeScreen from '../app/screens/WelcomeScreen';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {STYLES} from "../app/assets/saved.js";
-jest.useFakeTimers();
+
 
 describe('Test Welcome Screen', () => {
-    const tree = renderer.create(<WelcomeScreen />).toJSON();
-    it("Screen renders properly", () => {
-        expect(tree).toMatchSnapshot();
+    beforeEach(() => {
+        jest.useFakeTimers();
+        global.tree = renderer.create(<WelcomeScreen />).toJSON();
+    });
+    
+    it("Screen renders properly", (done) => {
+        expect(global.tree).toMatchSnapshot();
+        done();
     });
 
     it ('Login button renders', () => {
-        expect(tree.children[1]).toBeTruthy();
+        expect(global.tree.children[1]).toBeTruthy();
     });
 
     it('Login button matches style sheet', () => {
-        expect(tree.children[1].props.style[1]).toMatchObject(STYLES.btn);
+        expect(global.tree.children[1].props.style[1]).toMatchObject(STYLES.btn);
       });
 });
