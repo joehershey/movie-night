@@ -30,7 +30,7 @@ function ScheduleScreen(props) {
     //only non applied to properties
 
     eventsToRenderHTML.push(
-      <Card>
+      <Card key={i}>
         <Card.Title>{"Movie Night " + event.date}</Card.Title>
         <Card.Divider />
         <Text>{"Start Time: " + event.start_time}</Text>

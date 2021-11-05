@@ -72,7 +72,7 @@ function LandingScreen(props) {
     //only non applied to properties
 
     groupsToRenderHTML.push(
-      <Card>
+      <Card key={i}>
         <Card.Title>{group.group_name}</Card.Title>
         <Card.Divider />
         <TouchableWithoutFeedback

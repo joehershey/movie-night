@@ -280,6 +280,7 @@ function GroupSettingsScreen(props) {
       currentUserRenderHTML.push(
         /* Card holding user info/leave group */
         <MemberInfo
+          key={i}
           member={member}
           isUser={true}
           leaveGroup={() => leaveGroup()}
@@ -290,6 +291,7 @@ function GroupSettingsScreen(props) {
       usersToRenderHTML.push(
         /* Collapsable card with member info/edit if admin */
         <MemberInfo
+          key={i}
           member={member}
           isAdmin={isAdmin}
           isUser={false}

@@ -83,6 +83,7 @@ function Filters(props) {
   for (const [i, genre] of genresKeys.entries()) {
     renderGenres.push(
       <TouchableWithoutFeedback
+        key={i}
         onPress={() => {
           if (genres.indexOf(genre.id) != -1) {
             removeGenre(genre.id, i);
@@ -109,6 +110,7 @@ function Filters(props) {
   for (const [i, service] of servicesKeys.entries()) {
     renderServices.push(
       <TouchableWithoutFeedback
+        key={i}
         onPress={() => {
           if (watchProviders.indexOf(service.id) != -1) {
             removeService(service.id);
