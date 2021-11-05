@@ -2,6 +2,7 @@ import WelcomeScreen from '../app/screens/WelcomeScreen';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {STYLES} from "../app/assets/saved.js";
+jest.useFakeTimers();
 
 describe('Test Welcome Screen', () => {
     const tree = renderer.create(<WelcomeScreen />).toJSON();

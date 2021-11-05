@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Login Page Page renders properly 1`] = `
+exports[`Test Welcome Screen Screen renders properly 1`] = `
 <View
   style={
     Object {

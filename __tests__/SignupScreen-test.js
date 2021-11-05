@@ -1,16 +1,15 @@
-import LoginScreen from '../app/screens/LoginScreen';
+import SignupScreen from "../app/screens/SignupScreen";
 import React from 'react';
 import renderer from 'react-test-renderer';
 jest.useFakeTimers();
 
-describe('Test Login Screen', () => {
-    const tree = renderer.create(<LoginScreen />);
+describe('Test Signup Screen', () => {
+    const tree = renderer.create(<SignupScreen />);
 
     // it("Page renders properly", () => {
     //     expect(tree).toMatchSnapshot();
     // });
-    // Sample test so suite runs
     it("test", () => {
-        expect(1+2).toBe(3);
+        expect(3).toBe(3);
     });
 });
