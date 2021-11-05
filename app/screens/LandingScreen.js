@@ -21,6 +21,7 @@ import CreateGroupPopup from "../components/CreateGroupPopup";
 import JoinGroupPopup from "../components/JoinGroupPopup";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
+
 import { useLinkProps } from "@react-navigation/native";
 import { TEST_DATA } from "../assets/testData";
 
@@ -30,6 +31,15 @@ function LandingScreen(props) {
   const [showJoinGroup, toggleShowJoinGroup] = React.useState(false);
 
   const [groupsToRender, setGroups] = React.useState([]);
+
+  //re-render the groups when the screen is navigated to
+  React.useEffect(() => {
+    const unsubscribe = props.navigation.addListener("focus", () => {
+      getGroupsAPI();
+    });
+
+    return unsubscribe;
+  }, [props.navigation]);
 
   if (!isLoaded) {
     getGroupsAPI();
@@ -123,6 +133,22 @@ function LandingScreen(props) {
           style={{ width: "100%", marginTop: 20, marginBottom: 20 }}
           contentContainerStyle={{ alignItems: "center" }}
         >
+          {groupsToRender?.length < 1 && (
+            <View style={{ alignSelf: "center", margin: 50 }}>
+              <Text
+                style={{
+                  color: "lightgrey",
+                  textAlign: "center",
+                  fontSize: 20,
+                  fontStyle: "italic",
+                  top: 100,
+                }}
+              >
+                You aren't currently a member of any groups, create one now or
+                join an existing one with the group's access code!
+              </Text>
+            </View>
+          )}
           <View style={{ width: "90%" }}>{groupsToRenderHTML}</View>
         </ScrollView>
         {/* Button Panel start */}
