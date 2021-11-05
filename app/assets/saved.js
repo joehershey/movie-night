@@ -65,6 +65,17 @@ export const STYLES = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  formInput: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    height: 50,
+    width: "90%",
+    margin: 4,
+    borderWidth: 0,
+    borderRadius: 10,
+    padding: 10,
+  },
   settingsInput: {
     borderColor: "grey",
     borderWidth: 1,

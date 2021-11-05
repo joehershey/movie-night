@@ -9,10 +9,11 @@ function GroupSettings(props) {
   return (
     <View
       style={{
-        borderColor: COLORS.lg,
-        borderWidth: 5,
+        borderColor: COLORS.secondary,
+        borderWidth: 3,
         margin: 10,
         borderRadius: 20,
+        backgroundColor: "white",
       }}
     >
       <View style={{ alignItems: "center" }}>
@@ -84,6 +85,7 @@ function GroupSettings(props) {
         style={{
           marginLeft: 15,
           marginRight: 15,
+          marginBottom: 10,
           flexDirection: "row",
           alignItems: "center",
         }}

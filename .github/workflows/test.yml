@@ -1,4 +1,4 @@
-name: Run Jest Tests
+name: Run Jest Suite
 
 on: 
   push:
@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  Test_Application:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
