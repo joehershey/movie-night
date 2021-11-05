@@ -28,7 +28,7 @@ function GroupSettingsScreen(props) {
   function getMembersAPI() {
     //TODO: Call GET @ ~ /group/props.group_id/users
     //DONE but not tested
-    /* fetch(props.url + "group/" + props.group_id + "/users", {
+    fetch(props.url + "group/" + props.group_id + "/users", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -44,11 +44,11 @@ function GroupSettingsScreen(props) {
       .catch((error) => {
         console.error(error);
       });
- */
+
     //code below should be done in the .then code block
-    setGroupMembers(TEST_DATA.group_data.members); //replace arg with responseJson
-    checkAdminStatus(TEST_DATA.group_data.members); //replace arg with responseJson
-    getGroupInfoAPI();
+    // setGroupMembers(TEST_DATA.group_data.members); //replace arg with responseJson
+    // checkAdminStatus(TEST_DATA.group_data.members); //replace arg with responseJson
+    // getGroupInfoAPI();
   }
 
   /* Gets group settings information from the API */
@@ -57,7 +57,7 @@ function GroupSettingsScreen(props) {
     //      setGroupName(responseJson.group_name);
     //      setMaxMovies(responseJson.max_user_movies.toString());
     //DONE but not tested
-    /* fetch(props.url + "group/" + props.group_id, {
+    fetch(props.url + "group/" + props.group_id, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -72,11 +72,11 @@ function GroupSettingsScreen(props) {
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
 
-    setGroupName(TEST_DATA.group_data.group_name);
-    setMaxMovies(TEST_DATA.group_data.max_user_movies.toString());
-    setLoaded(true);
+    // setGroupName(TEST_DATA.group_data.group_name);
+    // setMaxMovies(TEST_DATA.group_data.max_user_movies.toString());
+    // setLoaded(true);
   }
 
   /* Sets group settings information through the API */
@@ -86,7 +86,7 @@ function GroupSettingsScreen(props) {
     //      .then getMembersAPI(); //refresh page
     //DONE except hasn't been tested
 
-    /* let max = 0;
+    let max = 0;
     if (parseInt(maxMovies) > 0) {
       max = parseInt(maxMovies);
     } else {
@@ -99,8 +99,8 @@ function GroupSettingsScreen(props) {
       },
       method: "PATCH",
       body: JSON.stringify({
-        group_name: groupName,
         max_user_movies: max,
+        group_name: groupName,
       }),
     })
       .then((response) => response.json())
@@ -109,15 +109,15 @@ function GroupSettingsScreen(props) {
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
 
-    TEST_DATA.group_data.group_name = groupName;
-    if (parseInt(maxMovies) > 0) {
-      TEST_DATA.group_data.max_user_movies = parseInt(maxMovies);
-    } else {
-      TEST_DATA.group_data.max_user_movies = 1;
-    }
-    setLoaded(false);
+    // TEST_DATA.group_data.group_name = groupName;
+    // if (parseInt(maxMovies) > 0) {
+    //   TEST_DATA.group_data.max_user_movies = parseInt(maxMovies);
+    // } else {
+    //   TEST_DATA.group_data.max_user_movies = 1;
+    // }
+    // setLoaded(false);
   }
 
   /* removes current user (leaving group) or other user (kicking) from group */
@@ -126,7 +126,7 @@ function GroupSettingsScreen(props) {
     //      .then getMembersAPI(); //refresh page
     //DONE but need to test
 
-    /* fetch(props.url + "user/" + user_id + "/" + props.group_id, {
+    fetch(props.url + "user/" + user_id + "/" + props.group_id, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -139,9 +139,9 @@ function GroupSettingsScreen(props) {
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
 
-    /* this code is simply to simulate the process */
+    /* this code is simply to simulate the process 
     let members = groupMembers;
     for (let i = 0; i < members.length; i++) {
       if (members[i].user_id == user_id) {
@@ -151,6 +151,7 @@ function GroupSettingsScreen(props) {
     }
     TEST_DATA.group_data.members = members;
     setLoaded(false);
+    */
   }
 
   function setAdminStatusAPI(user_id, is_admin) {
@@ -159,7 +160,7 @@ function GroupSettingsScreen(props) {
     //      .then getMembersAPI(); //refresh page
     //DONE but need to test
 
-    /* fetch(props.url + "user/" + user_id + "/" + props.group_id + "/admin", {
+    fetch(props.url + "user/" + user_id + "/" + props.group_id + "/admin", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -175,9 +176,9 @@ function GroupSettingsScreen(props) {
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
 
-    /* this code is simply to simulate the process without the API */
+    /* this code is simply to simulate the process without the API 
     let members = groupMembers;
     for (let i = 0; i < members.length; i++) {
       if (members[i].user_id == user_id) {
@@ -187,6 +188,7 @@ function GroupSettingsScreen(props) {
     }
     TEST_DATA.group_data.members = members;
     setLoaded(false);
+    */
   }
 
   function setAliasAPI(alias) {
@@ -195,7 +197,9 @@ function GroupSettingsScreen(props) {
     //      .then getMembersAPI(); //refresh page
     //DONE but need to test
 
-    /* fetch(props.url + "user/" + props.user_id + "/" + props.group_id + "/alias", {
+    fetch(
+      props.url + "user/" + props.user_id + "/" + props.group_id + "/alias",
+      {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json; charset=utf-8",
@@ -204,16 +208,17 @@ function GroupSettingsScreen(props) {
         body: JSON.stringify({
           alias: alias,
         }),
+      }
+    )
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setLoaded(false);
       })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setLoaded(false);
-        })
-        .catch((error) => {
-          console.error(error);
-        }); */
+      .catch((error) => {
+        console.error(error);
+      });
 
-    /* this code is simply to simulate the process without the API */
+    /* this code is simply to simulate the process without the API 
     let members = groupMembers;
     for (let i = 0; i < members.length; i++) {
       if (members[i].user_id == props.user_id) {
@@ -223,6 +228,7 @@ function GroupSettingsScreen(props) {
     }
     TEST_DATA.group_data.members = members;
     setLoaded(false);
+    */
   }
 
   /* Deletes group from the app */
@@ -230,7 +236,7 @@ function GroupSettingsScreen(props) {
     //TODO: Call DELETE @ ~ /group/props.group_id
     //DONE but need to test
 
-    /* fetch(props.url + "group/" + props.group_id, {
+    fetch(props.url + "group/" + props.group_id, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -239,16 +245,17 @@ function GroupSettingsScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-          props.navigation.navigate('Landing')
-          alert(groupName + " deleted")
+        props.navigation.navigate("Landing");
+        alert(groupName + " deleted");
       })
       .catch((error) => {
         console.error(error);
-      });  */
+      });
 
-    /* this code is simply to simulate the process */
+    /* this code is simply to simulate the process 
     props.navigation.navigate("Landing");
     alert(groupName + " deleted");
+    */
   }
 
   /* AUXILLARY FUNCTIONS */

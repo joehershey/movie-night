@@ -14,41 +14,50 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "modal-react-native-web";
 import { TEST_DATA } from "../assets/testData";
 
+/*
+  props from LandingScreen are:
+    showPopup={showCreateGroup}
+    toggleShowPopup={toggleShowCreateGroup}
+    url={props.url}
+    user_id={props.user_id}
+    setLoaded={setLoaded}
+*/
 function CreateGroupPopup(props) {
   const showPopup = props.showPopup;
   const toggleShowPopup = props.toggleShowPopup;
+  const setLoaded = props.setLoaded;
 
   const [showConfirm, toggleShowConfirm] = React.useState(false);
   const [groupName, changeGroupName] = React.useState("");
   const [alias, changeAlias] = React.useState("");
+  const [groupCode, setGroupCode] = React.useState("");
 
   function createGroupAPI() {
     //TODO: Call POST @ ~ /group/
     //DONE but not tested
-    /* fetch(props.url + "group/", {
-       headers: {
-         Accept: "application/json",
-         "Content-Type": "application/json; charset=utf-8",
-       },
-       method: "POST",
-       body: JSON.stringify({
-         group_name: groupName,
-         created_by: props.user_id,
-       }),
-     })
-       .then((response) => response.json())
-       .then((responseJson) => {
-         setGroupMembers(responseJson); //replace arg with responseJson
-         checkAdminStatus(responseJson); //replace arg with responseJson
-        getGroupInfoAPI();
-         return true;
-       })
+    fetch(props.url + "group/", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        group_name: groupName,
+        created_by: props.user_id,
+        alias: alias,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        const group = responseJson;
+        setGroupCode(responseJson.group_id);
+        return true;
+      })
       .catch((error) => {
-         console.error(error);
-         alert(error);
-         return false;
+        console.error(error);
+        alert(error);
+        return false;
       });
-      */
     return true;
   }
 
@@ -59,6 +68,7 @@ function CreateGroupPopup(props) {
       // here we would do a backend request to create a new group
       const flag = createGroupAPI();
 
+      console.log(flag);
       if (flag) {
         toggleShowPopup(false);
         toggleShowConfirm(true);
@@ -74,6 +84,11 @@ function CreateGroupPopup(props) {
     changeGroupName("");
     changeAlias("");
     toggleShowPopup(false);
+  };
+
+  const onConfirm = () => {
+    toggleShowConfirm(false);
+    setLoaded(false);
   };
 
   const keyboardControl = () => {
@@ -92,7 +107,7 @@ function CreateGroupPopup(props) {
       {/* WEB MODAL */}
       {Platform.OS == "web" ? (
         <View>
-          <Modal visible={showPopup} transparent={true}>
+          <Modal visible={showPopup} transparent={true} ariaHideApp={false}>
             <View style={STYLES.centeredModalView}>
               <View style={STYLES.webModalView}>
                 <View
@@ -137,9 +152,7 @@ function CreateGroupPopup(props) {
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableWithoutFeedback
-                    onPress={() => toggleShowPopup(!showPopup)}
-                  >
+                  <TouchableWithoutFeedback onPress={onSubmit}>
                     <View style={[STYLES.submitButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -152,9 +165,7 @@ function CreateGroupPopup(props) {
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback
-                    onPress={() => toggleShowPopup(!showPopup)}
-                  >
+                  <TouchableWithoutFeedback onPress={onClose}>
                     <View style={[STYLES.closeButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -172,7 +183,7 @@ function CreateGroupPopup(props) {
             </View>
           </Modal>
 
-          <Modal visible={showConfirm} transparent={true}>
+          <Modal visible={showConfirm} transparent={true} ariaHideApp={false}>
             <View style={STYLES.centeredModalView}>
               <View style={STYLES.webModalView}>
                 <View
@@ -186,12 +197,12 @@ function CreateGroupPopup(props) {
                   </Text>
                 </View>
                 <Text style={{ fontSize: 20 }}>
-                  Your group code is: 2020. Use it to invite other members! You
-                  can also view it later in your Group Settings.
+                  {"Your group code is: " +
+                    groupCode +
+                    ". Use it to invite other members! You " +
+                    "can also view it later in your Group Settings."}
                 </Text>
-                <TouchableWithoutFeedback
-                  onPress={() => toggleShowConfirm(!showConfirm)}
-                >
+                <TouchableWithoutFeedback onPress={onConfirm}>
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{
@@ -303,12 +314,12 @@ function CreateGroupPopup(props) {
                   </Text>
                 </View>
                 <Text style={{ fontSize: 20 }}>
-                  Your group code is: 2020. Use it to invite other members! You
-                  can also view it later in your Group Settings.
+                  {"Your group code is: " +
+                    groupCode +
+                    ". Use it to invite other members! You " +
+                    "can also view it later in your Group Settings."}
                 </Text>
-                <TouchableWithoutFeedback
-                  onPress={() => toggleShowConfirm(!showConfirm)}
-                >
+                <TouchableWithoutFeedback onPress={onConfirm}>
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{
