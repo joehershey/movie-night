@@ -284,6 +284,7 @@ export var TEST_DATA = {
       event_id: 1,
       group_id: 1,
       start_time: 100, // change -> datetime
+      date: "11/5", // placeholder until above change
       location: "House 1",
       genre: 1,
       tmdb_movie_id: 1000,
@@ -294,6 +295,7 @@ export var TEST_DATA = {
       event_id: 2,
       group_id: 1,
       start_time: 101, // change -> datetime
+      date: "11/7", // placeholder until above change
       location: "House 3",
       genre: 1,
       tmdb_movie_id: 0,

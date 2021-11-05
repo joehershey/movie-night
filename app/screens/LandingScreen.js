@@ -64,7 +64,7 @@ function LandingScreen(props) {
     //     .catch((error) => {
     //       console.error(error);
     //     });
-    () => setGroups(TEST_DATA.groups);
+    setGroups(TEST_DATA.groups);
   }
 
   const groupsToRenderHTML = [];

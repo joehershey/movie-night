@@ -12,6 +12,7 @@ import SearchMoviesScreen from "./app/screens/SearchMoviesScreen";
 import GroupQueueScreen from "./app/screens/GroupQueueScreen";
 import ScheduleScreen from "./app/screens/ScheduleScreen";
 import ProfileSettingsScreen from "./app/screens/ProfileSettingsScreen";
+import EventScreen from "./app/screens/EventScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -145,6 +146,18 @@ export default function App() {
         <Stack.Screen name="Schedule">
           {(props) => (
             <ScheduleScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
+              group_id={state.group_id}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Event">
+          {(props) => (
+            <EventScreen
               {...props}
               url={URL} //const URL to use for api calls (props.url)
               user_id={state.user_id}
