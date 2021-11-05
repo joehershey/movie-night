@@ -4,10 +4,10 @@ import renderer from 'react-test-renderer';
 
 describe('Test Signup Screen', () => {
     beforeEach( async () => {
-        global.tree = await renderer.create(<SignupScreen />);
+        global.tree = renderer.create(<SignupScreen />);
     });
 
-    it("Page renders properly", async () => {
+    it("Signup screen renders properly", async () => {
         await expect(global.tree).toMatchSnapshot();
     });
 });

@@ -6,13 +6,11 @@ import {STYLES} from "../app/assets/saved.js";
 
 describe('Test Welcome Screen', () => {
     beforeEach(() => {
-        jest.useFakeTimers();
         global.tree = renderer.create(<WelcomeScreen />).toJSON();
     });
     
-    it("Screen renders properly", (done) => {
+    it("Welcome screen renders properly", () => {
         expect(global.tree).toMatchSnapshot();
-        done();
     });
 
     it ('Login button renders', () => {
