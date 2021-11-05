@@ -120,6 +120,7 @@ function LandingScreen(props) {
           toggleShowPopup={toggleShowCreateGroup}
           url={props.url}
           user_id={props.user_id}
+          username={props.username}
           setLoaded={setLoaded}
         ></CreateGroupPopup>
         <JoinGroupPopup
@@ -127,6 +128,7 @@ function LandingScreen(props) {
           toggleShowPopup={toggleShowJoinGroup}
           url={props.url}
           user_id={props.user_id}
+          username={props.username}
           setLoaded={setLoaded}
         ></JoinGroupPopup>
         <ScrollView
@@ -157,6 +159,7 @@ function LandingScreen(props) {
           toggleShowCreateGroup={toggleShowCreateGroup}
           showJoinGroup={showJoinGroup}
           toggleShowJoinGroup={toggleShowJoinGroup}
+          username={props.username}
         ></ButtonPanel>
         {/* Button Panel over */}
       </View>

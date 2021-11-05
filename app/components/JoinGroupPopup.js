@@ -26,6 +26,10 @@ function JoinGroupPopup(props) {
   function joinGroupAPI() {
     //TODO: Call POST @ ~ /group/
     //DONE but not tested
+    let setAlias = alias;
+    if (setAlias.length < 1) {
+      setAlias = props.username;
+    }
 
     fetch(props.url + "user/" + props.user_id + "/join", {
       headers: {
@@ -35,7 +39,7 @@ function JoinGroupPopup(props) {
       method: "POST",
       body: JSON.stringify({
         group_code: groupCode,
-        alias: alias,
+        alias: setAlias,
         isAdmin: false,
       }),
     })

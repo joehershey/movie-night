@@ -35,6 +35,12 @@ function CreateGroupPopup(props) {
   function createGroupAPI() {
     //TODO: Call POST @ ~ /group/
     //DONE but not tested
+
+    let setAlias = alias;
+    if (setAlias.length < 1) {
+      setAlias = props.username;
+    }
+
     fetch(props.url + "group/", {
       headers: {
         Accept: "application/json",
@@ -44,7 +50,7 @@ function CreateGroupPopup(props) {
       body: JSON.stringify({
         group_name: groupName,
         created_by: props.user_id,
-        alias: alias,
+        alias: setAlias,
       }),
     })
       .then((response) => response.json())

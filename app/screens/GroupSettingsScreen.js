@@ -151,6 +151,8 @@ function GroupSettingsScreen(props) {
       .then((responseJson) => {
         if (user_id != props.user_id) {
           setLoaded(false);
+        } else {
+          props.navigation.navigate("Landing");
         }
       })
       .catch((error) => {
@@ -237,7 +239,6 @@ function GroupSettingsScreen(props) {
   /* Removes user from group and navigates to the landing page */
   function leaveGroup() {
     removeFromGroupAPI(props.user_id);
-    props.navigation.navigate("Landing");
   }
 
   /* Sets whether or not the user is an admin and thus has the ability to edit */
