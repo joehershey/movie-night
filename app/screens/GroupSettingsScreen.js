@@ -66,7 +66,8 @@ function GroupSettingsScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        setMaxMovies(responseJson.max_user_movies);
+        console.log(responseJson);
+        setMaxMovies(responseJson.max_user_movies.toString());
         setGroupName(responseJson.group_name);
         setLoaded(true);
       })
@@ -82,9 +83,7 @@ function GroupSettingsScreen(props) {
   /* Sets group settings information through the API */
   function changeGroupSettingsAPI() {
     //TODO: Call PATCH @ ~ /group/props.group_id
-    //      params-> max_user_movies: (if < 1 -> = 1) parseInt(maxMovies), group_name: groupName
-    //      .then getMembersAPI(); //refresh page
-    //DONE except hasn't been tested
+    //      params-> max_user_movies:  parseInt(maxMovies), group_name: groupName
 
     let max = 0;
     if (parseInt(maxMovies) > 0) {
@@ -92,7 +91,30 @@ function GroupSettingsScreen(props) {
     } else {
       max = 1;
     }
-    fetch(props.url + "group/" + props.group_id, {
+    console.log(max + "<-max");
+    console.log(groupName + "<-group name");
+    fetch(props.url + "group/" + props.group_id + "/group_name", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        group_name: groupName,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        changeGroupMaxAPI(max);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function changeGroupMaxAPI(max) {
+    fetch(props.url + "group/" + props.group_id + "/max_user_movies", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -100,24 +122,16 @@ function GroupSettingsScreen(props) {
       method: "PATCH",
       body: JSON.stringify({
         max_user_movies: max,
-        group_name: groupName,
       }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(responseJson);
         setLoaded(false);
       })
       .catch((error) => {
         console.error(error);
       });
-
-    // TEST_DATA.group_data.group_name = groupName;
-    // if (parseInt(maxMovies) > 0) {
-    //   TEST_DATA.group_data.max_user_movies = parseInt(maxMovies);
-    // } else {
-    //   TEST_DATA.group_data.max_user_movies = 1;
-    // }
-    // setLoaded(false);
   }
 
   /* removes current user (leaving group) or other user (kicking) from group */
@@ -135,23 +149,13 @@ function GroupSettingsScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        setLoaded(false);
+        if (user_id != props.user_id) {
+          setLoaded(false);
+        }
       })
       .catch((error) => {
         console.error(error);
       });
-
-    /* this code is simply to simulate the process 
-    let members = groupMembers;
-    for (let i = 0; i < members.length; i++) {
-      if (members[i].user_id == user_id) {
-        members.splice(i, 1);
-        break;
-      }
-    }
-    TEST_DATA.group_data.members = members;
-    setLoaded(false);
-    */
   }
 
   function setAdminStatusAPI(user_id, is_admin) {
@@ -177,24 +181,11 @@ function GroupSettingsScreen(props) {
       .catch((error) => {
         console.error(error);
       });
-
-    /* this code is simply to simulate the process without the API 
-    let members = groupMembers;
-    for (let i = 0; i < members.length; i++) {
-      if (members[i].user_id == user_id) {
-        members[i].is_admin = is_admin ? 1 : 0;
-        break;
-      }
-    }
-    TEST_DATA.group_data.members = members;
-    setLoaded(false);
-    */
   }
 
   function setAliasAPI(alias) {
     //TODO: Call PATCH @ ~ /user/[user_id]/props.group_id/alias
     //      params-> alias: alias (the parameter)
-    //      .then getMembersAPI(); //refresh page
     //DONE but need to test
 
     fetch(
@@ -217,18 +208,6 @@ function GroupSettingsScreen(props) {
       .catch((error) => {
         console.error(error);
       });
-
-    /* this code is simply to simulate the process without the API 
-    let members = groupMembers;
-    for (let i = 0; i < members.length; i++) {
-      if (members[i].user_id == props.user_id) {
-        members[i].display_name = alias;
-        break;
-      }
-    }
-    TEST_DATA.group_data.members = members;
-    setLoaded(false);
-    */
   }
 
   /* Deletes group from the app */
@@ -251,11 +230,6 @@ function GroupSettingsScreen(props) {
       .catch((error) => {
         console.error(error);
       });
-
-    /* this code is simply to simulate the process 
-    props.navigation.navigate("Landing");
-    alert(groupName + " deleted");
-    */
   }
 
   /* AUXILLARY FUNCTIONS */
@@ -338,6 +312,7 @@ function GroupSettingsScreen(props) {
             maxMovies={maxMovies}
             groupName={groupName}
             isAdmin={isAdmin}
+            group_id={props.group_id}
             setMaxMovies={(set) => setMaxMovies(set)}
             setGroupName={(set) => setGroupName(set)}
             changeGroupSettingsAPI={() => changeGroupSettingsAPI()}

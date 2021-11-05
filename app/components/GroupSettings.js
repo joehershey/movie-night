@@ -45,6 +45,38 @@ function GroupSettings(props) {
             fontStyle: "italic",
           }}
         >
+          Access Code:
+        </Text>
+        <View style={{ flex: 1.5, flexDirection: "row" }}>
+          <View style={{ flex: 12 }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                textAlign: "right",
+              }}
+            >
+              {props.group_id}
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={{
+          marginLeft: 15,
+          marginRight: 15,
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            flex: 1,
+            margin: 5,
+            fontSize: 18,
+            fontStyle: "italic",
+          }}
+        >
           Group Name:
         </Text>
         <View style={{ flex: 1.5, flexDirection: "row" }}>

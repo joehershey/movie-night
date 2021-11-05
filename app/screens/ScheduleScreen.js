@@ -21,8 +21,6 @@ import { useLinkProps } from "@react-navigation/native";
 import { TEST_DATA } from "../assets/testData";
 
 function ScheduleScreen(props) {
-  console.log("on schedule");
-
   const [eventsToRender, setEvents] = React.useState(TEST_DATA.events);
 
   const eventsToRenderHTML = [];

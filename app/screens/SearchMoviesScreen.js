@@ -90,8 +90,20 @@ function SearchMoviesScreen(props) {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        {display == "categories" && <Categories></Categories>}
-        {display == "search" && <Search></Search>}
+        {display == "categories" && (
+          <Categories
+            url={props.url}
+            user_id={props.user_id}
+            group_id={props.group_id}
+          ></Categories>
+        )}
+        {display == "search" && (
+          <Search
+            url={props.url}
+            user_id={props.user_id}
+            group_id={props.group_id}
+          ></Search>
+        )}
       </View>
 
       {/* Tabs */}

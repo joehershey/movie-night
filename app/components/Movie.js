@@ -19,7 +19,11 @@ function Movie(props) {
   const [expanded, setExpanded] = useState(false); //used when editing alias
 
   function addMovieToQueueAPI() {
-    /* fetch(props.url + "group/" + props.group_id + "/movie", {
+    /* console.log(props.url);
+    console.log(props.group_id);
+    console.log(props.movie.id);
+    console.log(props.user_id);
+    fetch(props.url + "group/" + props.group_id + "/movie", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -33,10 +37,9 @@ function Movie(props) {
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.group_id === undefined) {
-          alert(
-            "Failed to add movie:" + responseJson.message
-          );
+          alert("Failed to add movie:" + responseJson.message);
         } else {
+          console.log(responseJson);
           setAdded(true);
         }
       })

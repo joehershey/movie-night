@@ -115,7 +115,13 @@ function Categories(props) {
   for (const [i, movie] of movies.entries()) {
     moviesToRender.push(
       /* Collapsable card with member info/edit if admin */
-      <Movie key={i} movie={movie}></Movie>
+      <Movie
+        key={i}
+        url={props.url}
+        user_id={props.user_id}
+        group_id={props.group_id}
+        movie={movie}
+      ></Movie>
     );
   }
 

@@ -59,6 +59,7 @@ function LandingScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log("a");
         console.log(responseJson);
         setGroups(responseJson);
       })
