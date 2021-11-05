@@ -313,10 +313,10 @@ function GroupSettingsScreen(props) {
         message="Groups"
       ></TopBar>
       {/* Content */}
-      <View style={STYLES.content}>
+      <View style={[STYLES.content, { backgroundColor: "black" }]}>
         <ScrollView
           style={{
-            backgroundColor: "white",
+            backgroundColor: COLORS.primary,
             flexDirection: "column",
           }}
           contentContainerStyle={{
@@ -345,6 +345,7 @@ function GroupSettingsScreen(props) {
                 style={{
                   fontSize: 35,
                   fontWeight: "bold",
+                  color: "white",
                 }}
               >
                 Members
