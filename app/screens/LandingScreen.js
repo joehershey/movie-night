@@ -29,20 +29,7 @@ function LandingScreen(props) {
   const [showCreateGroup, toggleShowCreateGroup] = React.useState(false);
   const [showJoinGroup, toggleShowJoinGroup] = React.useState(false);
 
-  const testGroups = [
-    {
-      group_name: "Spooky Sunday",
-      group_id: 1,
-      created_by: 1,
-    },
-    {
-      group_name: "Mystery Monday",
-      group_id: 2,
-      created_by: 2,
-    },
-  ];
-
-  const [groupsToRender, setGroups] = React.useState(testGroups);
+  const [groupsToRender, setGroups] = React.useState([]);
 
   if (!isLoaded) {
     getGroupsAPI();
