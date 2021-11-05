@@ -23,67 +23,46 @@ function JoinGroupPopup(props) {
   const [alias, changeAlias] = React.useState("");
   const [flag, setFlag] = React.useState(true);
 
-  async function joinGroupAPI() {
+  function joinGroupAPI() {
     //TODO: Call POST @ ~ /group/
     //DONE but not tested
 
-    fetch(props.url + "/user/" + props.user_id + "/join/" + groupCode, {
+    fetch(props.url + "user/" + props.user_id + "/join", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
       },
       method: "POST",
       body: JSON.stringify({
-        alias: alias,
-        isAdmin: false,
-      }),
-    }).then(function (response) {
-      console.log(response.status);
-      if (response.status == 500) {
-        setFlag(!flag);
-        console.log(flag);
-      }
-    });
-
-    fetch(props.url + "/user/" + props.user_id + "/join/" + groupCode, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      method: "POST",
-      body: JSON.stringify({
+        group_code: groupCode,
         alias: alias,
         isAdmin: false,
       }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
-        console.log(flag);
+        if (responseJson.group_id === undefined) {
+          alert("Group code not valid.");
+        } else {
+          toggleShowPopup(false);
+          changeGroupCode("");
+          changeAlias("");
+          alert("You joined the group!");
+          props.setLoaded(false);
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  async function onSubmit() {
+  function onSubmit() {
     if (groupCode.trim() <= 0) {
       alert("Please enter a group code.");
     } else {
       // here we would do a backend request to join a new group
-      try {
-        await joinGroupAPI();
-        toggleShowPopup(false);
-        changeGroupCode("");
-        changeAlias("");
-        console.log(flag);
-        alert("You joined the group!");
-        props.setLoaded(false);
-      } catch (error) {
-        alert("Group code not valid.");
-        changeGroupCode("");
-        changeAlias("");
-      }
+
+      joinGroupAPI();
 
       // erase values or else they will be stored
     }
