@@ -21,6 +21,7 @@ function SearchMovie(props) {
   const [noMore, setNoMore] = useState(false);
 
   const [query, setQuery] = useState("");
+  const [queried, setQueried] = useState("");
 
   const [movies, setMovies] = useState([]);
 
@@ -31,9 +32,9 @@ function SearchMovie(props) {
   const RULES2 = "&include_adult=false";
 
   function getMovies(loadMore = false) {
+    setQueried(query);
     console.log(page);
     let searchQuery = "&query=" + query;
-
     let pageQuery;
     if (loadMore) {
       pageQuery = "&page=" + page;
@@ -132,9 +133,11 @@ function SearchMovie(props) {
 
         {movies.length == 0 ? (
           <View>
-            <Text style={{ color: "white", alignSelf: "center", margin: 20 }}>
-              No movies matched your results
-            </Text>
+            {queried.length > 0 && (
+              <Text style={{ color: "white", alignSelf: "center", margin: 20 }}>
+                No matches for "{queried}"
+              </Text>
+            )}
           </View>
         ) : (
           <View>

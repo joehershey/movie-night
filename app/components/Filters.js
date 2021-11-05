@@ -41,7 +41,7 @@ function Filters(props) {
   const servicesKeys = [
     { name: "Netflix", id: 8 },
     { name: "Hulu", id: 15 },
-    { name: "Disney +", id: 390 },
+    { name: "Disney +", id: 337 },
     { name: "Peacock", id: 386 },
     { name: "Paramount +", id: 531 },
     { name: "Prime Video", id: 199 },
@@ -194,9 +194,11 @@ function Filters(props) {
               style={[
                 STYLES.btn,
                 {
-                  backgroundColor: COLORS.secondary,
+                  backgroundColor: "dodgerblue",
+                  borderColor: "white",
+                  borderWidth: 2,
                   alignSelf: "center",
-                  padding: 15,
+                  padding: 10,
                   marginTop: 15,
                   borderRadius: 5,
                 },
