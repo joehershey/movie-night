@@ -1,15 +1,13 @@
 import SignupScreen from "../app/screens/SignupScreen";
 import React from 'react';
 import renderer from 'react-test-renderer';
-jest.useFakeTimers();
 
 describe('Test Signup Screen', () => {
-    const tree = renderer.create(<SignupScreen />);
+    beforeEach( async () => {
+        global.tree = await renderer.create(<SignupScreen />);
+    });
 
-    // it("Page renders properly", () => {
-    //     expect(tree).toMatchSnapshot();
-    // });
-    it("test", () => {
-        expect(3).toBe(3);
+    it("Page renders properly", async () => {
+        await expect(global.tree).toMatchSnapshot();
     });
 });
