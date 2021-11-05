@@ -50,24 +50,27 @@ function LandingScreen(props) {
   }
 
   function getGroupsAPI() {
-    // fetch(props.url + "user/" + props.user_id + "/groups", {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json; charset=utf-8",
-    //     },
-    //     method: "GET",
-    //   })
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //       () => setGroups(responseJson);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    setGroups(TEST_DATA.groups);
+    fetch(props.url + "user/" + props.user_id + "/groups", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        setGroups(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    //setGroups(TEST_DATA.groups);
   }
 
   const groupsToRenderHTML = [];
+
   for (const [i, group] of groupsToRender.entries()) {
     //only non applied to properties
 
@@ -119,10 +122,14 @@ function LandingScreen(props) {
           toggleShowPopup={toggleShowCreateGroup}
           url={props.url}
           user_id={props.user_id}
+          setLoaded={setLoaded}
         ></CreateGroupPopup>
         <JoinGroupPopup
           showPopup={showJoinGroup}
           toggleShowPopup={toggleShowJoinGroup}
+          url={props.url}
+          user_id={props.user_id}
+          setLoaded={setLoaded}
         ></JoinGroupPopup>
         <ScrollView
           style={{ width: "100%", marginTop: 20, marginBottom: 20 }}

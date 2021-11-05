@@ -21,28 +21,73 @@ function JoinGroupPopup(props) {
 
   const [groupCode, changeGroupCode] = React.useState("");
   const [alias, changeAlias] = React.useState("");
+  const [flag, setFlag] = React.useState(true);
 
-  function joinGroupAPI() {
-    return true;
+  async function joinGroupAPI() {
+    //TODO: Call POST @ ~ /group/
+    //DONE but not tested
+
+    fetch(props.url + "/user/" + props.user_id + "/join/" + groupCode, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        alias: alias,
+        isAdmin: false,
+      }),
+    }).then(function (response) {
+      console.log(response.status);
+      if (response.status == 500) {
+        setFlag(!flag);
+        console.log(flag);
+      }
+    });
+
+    fetch(props.url + "/user/" + props.user_id + "/join/" + groupCode, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        alias: alias,
+        isAdmin: false,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        console.log(flag);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-  const onSubmit = () => {
+  async function onSubmit() {
     if (groupCode.trim() <= 0) {
       alert("Please enter a group code.");
     } else {
-      toggleShowPopup(false);
-
       // here we would do a backend request to join a new group
-      const flag = joinGroupAPI();
-
-      if (flag) {
+      try {
+        await joinGroupAPI();
+        toggleShowPopup(false);
+        changeGroupCode("");
+        changeAlias("");
+        console.log(flag);
+        alert("You joined the group!");
+        props.setLoaded(false);
+      } catch (error) {
+        alert("Group code not valid.");
         changeGroupCode("");
         changeAlias("");
       }
 
       // erase values or else they will be stored
     }
-  };
+  }
 
   const onClose = () => {
     changeGroupCode("");
@@ -64,7 +109,7 @@ function JoinGroupPopup(props) {
         not web. Remember- if you are changing the popup, you MUST change both the web and the mobile versions. */}
       {/* WEB MODAL */}
       {Platform.OS == "web" ? (
-        <Modal visible={showPopup} transparent={true}>
+        <Modal visible={showPopup} transparent={true} ariaHideApp={false}>
           <View style={STYLES.centeredModalView}>
             <View style={STYLES.webModalView}>
               <View
