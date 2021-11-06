@@ -1,3 +1,479 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Group Settings Screen Group settings screen renders properly 1`] = `undefined`;
+exports[`Test Group Settings Screen Group settings screen renders properly 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Object {
+      "backgroundColor": "#1d1f1e",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#1d1f1e",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text />
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "margin": 5,
+          }
+        }
+      >
+        Groups
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 2,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "flex": 1,
+            "height": 50,
+            "marginBottom": 0,
+            "width": 100,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "flex": 11,
+        },
+        Object {
+          "backgroundColor": "black",
+        },
+      ]
+    }
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "alignItems": "stretch",
+          "justifyContent": "flex-start",
+        }
+      }
+      style={
+        Object {
+          "backgroundColor": "#1d1f1e",
+          "flexDirection": "column",
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "white",
+              "borderColor": "#166fdb",
+              "borderRadius": 20,
+              "borderWidth": 3,
+              "margin": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "column",
+                  "margin": 20,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "fontSize": 35,
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                Group Settings
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "marginLeft": 15,
+                "marginRight": 15,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "flex": 1,
+                  "fontSize": 18,
+                  "fontStyle": "italic",
+                  "margin": 5,
+                }
+              }
+            >
+              Access Code:
+            </Text>
+            <View
+              style={
+                Object {
+                  "flex": 1.5,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "textAlign": "right",
+                    }
+                  }
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "marginLeft": 15,
+                "marginRight": 15,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "flex": 1,
+                  "fontSize": 18,
+                  "fontStyle": "italic",
+                  "margin": 5,
+                }
+              }
+            >
+              Group Name:
+            </Text>
+            <View
+              style={
+                Object {
+                  "flex": 1.5,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "textAlign": "right",
+                    }
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "marginBottom": 10,
+                "marginLeft": 15,
+                "marginRight": 15,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "flex": 1.5,
+                  "fontSize": 18,
+                  "fontStyle": "italic",
+                  "margin": 5,
+                }
+              }
+            >
+              Max. Movies Per User:
+            </Text>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "textAlign": "right",
+                    }
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+                "marginTop": 20,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "white",
+                  "fontSize": 35,
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Members
+            </Text>
+          </View>
+        </View>
+        <View />
+        <View
+          style={
+            Object {
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#1d1f1e",
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 10,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text />
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontWeight": "normal",
+            "margin": 5,
+          }
+        }
+      >
+        Schedule
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text />
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontWeight": "normal",
+            "margin": 5,
+          }
+        }
+      >
+        Queue
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text />
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontWeight": "normal",
+            "margin": 5,
+          }
+        }
+      >
+        Search
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text />
+      <Text
+        style={
+          Object {
+            "color": "#166fdb",
+            "fontWeight": "bold",
+            "margin": 5,
+          }
+        }
+      >
+        Settings
+      </Text>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
