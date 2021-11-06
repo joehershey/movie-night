@@ -10,6 +10,9 @@ import TopBar from "../components/TopBar";
 import MemberInfo from "../components/MemberInfo";
 import GroupSettings from "../components/GroupSettings";
 import DeleteGroup from "../components/DeleteGroup";
+import fetch from "node-fetch"; // used to fix ReferenceError: 
+                                // fetch is not defined for 
+                                // LandingScreen-test.js. Remove if needed.
 
 function GroupSettingsScreen(props) {
   const [loaded, setLoaded] = useState(false);
