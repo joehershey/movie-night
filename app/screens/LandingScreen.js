@@ -21,7 +21,7 @@ import CreateGroupPopup from "../components/CreateGroupPopup";
 import JoinGroupPopup from "../components/JoinGroupPopup";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
-import fetch from "node-fetch"; // used to fix ReferenceError: 
+//import fetch from "node-fetch"; // used to fix ReferenceError: 
                                 // fetch is not defined for 
                                 // LandingScreen-test.js. Remove if needed.
 
