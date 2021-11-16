@@ -16,7 +16,7 @@ function Filters(props) {
   const [loaded, setLoaded] = useState(false);
   const [watchProviders, setWatchProviders] = useState(props.watchProviders);
   const [genres, setGenres] = useState(props.genres);
-  const [expanded, setExpanded] = useState(true); //used when editing alias
+  const [expanded, setExpanded] = useState(false); //used when editing alias
   const genresKeys = [
     { name: "Action", id: 28 },
     { name: "Adventure", id: 12 },
@@ -206,7 +206,7 @@ function Filters(props) {
                 },
               ]}
             >
-              <Text style={{ color: "white", fontWeight: "bold" }}>Search</Text>
+              <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -227,7 +227,7 @@ function Filters(props) {
               },
             ]}
           >
-            <Text style={{ color: "white", fontSize: 15 }}>Show Filters</Text>
+            <Text style={{ color: "white", fontSize: 15 }}>Filters</Text>
           </View>
         </TouchableWithoutFeedback>
       )}

@@ -84,6 +84,7 @@ function Categories(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(responseJson.results);
         if (
           responseJson.results.length < 1 ||
           responseJson.results === undefined

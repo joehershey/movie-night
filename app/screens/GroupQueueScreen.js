@@ -13,9 +13,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
+import Queue from "../components/Queue";
 
 function GroupQueueScreen(props) {
-  console.log("on settings");
+  console.log("on queue");
   return (
     <SafeAreaView style={STYLES.container}>
       {/* Top Bar */}
@@ -25,35 +26,13 @@ function GroupQueueScreen(props) {
         message="Groups"
       ></TopBar>
       {/* Content */}
-      <View style={STYLES.content}>
-        <View style={{ justifyContent: "center", flex: 1 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              margin: 20,
-            }}
-          >
-            <FontAwesome5 name="hammer" color="black" size={50} />
-            <Text style={{ fontSize: 25, margin: 10 }}>Under Construction</Text>
-            <FontAwesome5
-              name="hammer"
-              style={{ transform: [{ rotateY: "180deg" }] }}
-              color="black"
-              size={50}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 25,
-              margin: 30,
-              textAlign: "center",
-              fontStyle: "italic",
-            }}
-          >
-            Coming in Iteration 2!
-          </Text>
-        </View>
+      <View style={[STYLES.content, { backgroundColor: COLORS.primary }]}>
+        <Queue
+          navigation={props.navigation}
+          url={props.url}
+          user_id={props.user_id}
+          group_id={props.group_id}
+        ></Queue>
       </View>
       {/* Tabs */}
       <TabBar navigation={props.navigation} screen="queue"></TabBar>
