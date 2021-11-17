@@ -17,6 +17,7 @@ function Filters(props) {
   const [watchProviders, setWatchProviders] = useState(props.watchProviders);
   const [genres, setGenres] = useState(props.genres);
   const [expanded, setExpanded] = useState(false); //used when editing alias
+  const inSearch = props.inSearch;
   const genresKeys = [
     { name: "Action", id: 28 },
     { name: "Adventure", id: 12 },
@@ -186,29 +187,58 @@ function Filters(props) {
           >
             {renderServices}
           </View>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              props.getMovies();
-              setExpanded(!expanded);
-            }}
-          >
-            <View
-              style={[
-                STYLES.btn,
-                {
-                  backgroundColor: "dodgerblue",
-                  borderColor: "white",
-                  borderWidth: 2,
-                  alignSelf: "center",
-                  padding: 10,
-                  marginTop: 15,
-                  borderRadius: 5,
-                },
-              ]}
+          {inSearch ? (
+            <TouchableWithoutFeedback
+              onPress={() => {
+                props.getMovies();
+                setExpanded(!expanded);
+              }}
             >
-              <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
-            </View>
-          </TouchableWithoutFeedback>
+              <View
+                style={[
+                  STYLES.btn,
+                  {
+                    backgroundColor: "dodgerblue",
+                    borderColor: "white",
+                    borderWidth: 2,
+                    alignSelf: "center",
+                    padding: 10,
+                    marginTop: 15,
+                    borderRadius: 5,
+                  },
+                ]}
+              >
+                <Text style={{ color: "white", fontWeight: "bold" }}>
+                  Submit
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          ) : (
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setExpanded(!expanded);
+              }}
+            >
+              <View
+                style={[
+                  STYLES.btn,
+                  {
+                    backgroundColor: "dodgerblue",
+                    borderColor: "white",
+                    borderWidth: 2,
+                    alignSelf: "center",
+                    padding: 10,
+                    marginTop: 15,
+                    borderRadius: 5,
+                  },
+                ]}
+              >
+                <Text style={{ color: "white", fontWeight: "bold" }}>
+                  Close
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          )}
         </View>
       ) : (
         <TouchableWithoutFeedback
