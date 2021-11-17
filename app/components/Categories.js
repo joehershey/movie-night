@@ -144,6 +144,7 @@ function Categories(props) {
           setWatchProviders={() => setWatchProviders}
           getMovies={() => getMovies()}
           setPage={(a) => setPage(1)}
+          inSearch={true}
         ></Filters>
 
         {moviesToRender}

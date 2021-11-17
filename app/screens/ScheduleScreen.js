@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   ScrollView,
+  Button,
   TextInput,
 } from "react-native";
 
@@ -14,14 +15,131 @@ import { Card } from "react-native-elements";
 
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
+import Filters from "../components/Filters";
 import { useLinkProps } from "@react-navigation/native";
 import { TEST_DATA } from "../assets/testData";
 
 function ScheduleScreen(props) {
-  const [eventsToRender, setEvents] = React.useState(TEST_DATA.events);
+  const [eventsToRender, setEvents] = useState(TEST_DATA.events);
+  const [page, setPage] = useState(1);
+  const [watchProviders, setWatchProviders] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [isLoaded, toggleLoaded] = useState(false);
+
+  const genresKeys = [
+    { name: "Action", id: 28 },
+    { name: "Adventure", id: 12 },
+    { name: "Animation", id: 16 },
+    { name: "Comedy", id: 35 },
+    { name: "Crime", id: 80 },
+    { name: "Documentary", id: 99 },
+    { name: "Drama", id: 18 },
+    { name: "Family", id: 10751 },
+    { name: "Fantasy", id: 14 },
+    { name: "History", id: 36 },
+    { name: "Horror", id: 27 },
+    { name: "Music", id: 10402 },
+    { name: "Mystery", id: 9648 },
+    { name: "Romance", id: 10749 },
+    { name: "Sci Fi", id: 878 },
+    { name: "Thriller", id: 53 },
+    { name: "War", id: 10752 },
+    { name: "Western", id: 37 },
+  ];
+
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+
+  // date time test
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("datetime");
+  const [show, setShow] = useState(false);
+
+  const onChangeTimeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+
+  // date time test
+
+  const onSubmit = () => {
+    const currentTime = new Date();
+    // create event w api
+    if (name.trim() <= 0) {
+      alert("Please enter a name.");
+    } else if (location.trim() <= 0) {
+      alert("Please enter a location.");
+    } else if (date.getTime() > currentTime.getTime) {
+      alert("Please enter a date in the future.");
+    } else {
+      createEventAPI();
+    }
+  };
+
+  const onClear = () => {
+    setDate(new Date());
+    setName("");
+    setLocation("");
+    setGenres([]);
+    setWatchProviders([]);
+  };
+
+  if (!isLoaded) {
+    // works, but no events can be added yet
+    //getEventsAPI();
+    toggleLoaded(true);
+  }
+
+  function getEventsAPI() {
+    fetch(props.url + "group/" + props.group_id + "/events", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log("a");
+        console.log(responseJson);
+        setEvents(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function createEventAPI() {
+    fetch(props.url + "event/", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        group_id: props.group_id,
+        start_time: date.toDateString(),
+        location: location,
+        genre: 18,
+        tmdb_movie_id: 1,
+        organized_by: props.user_id,
+        voting_mode: false,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(error);
+      });
+  }
 
   const eventsToRenderHTML = [];
   for (const [i, event] of eventsToRender.entries()) {
@@ -89,19 +207,40 @@ function ScheduleScreen(props) {
             >
               <Text style={{ fontSize: 30 }}>New Movie Night</Text>
 
-              {/* Current address */}
-              <TextInput style={STYLES.formInput} placeholder="Date" />
-              <TextInput style={STYLES.formInput} placeholder="Time" />
-              {/* Phone number */}
-              <TextInput style={STYLES.formInput} placeholder="Genre" />
-
-              {/* Monthly income */}
-              <TextInput style={STYLES.formInput} placeholder="Location" />
-              {/* Comments */}
-              <TextInput style={STYLES.formInput} placeholder="Theme" />
+              <TextInput
+                style={STYLES.formInput}
+                placeholder="Name"
+                onChangeText={setName}
+                value={name}
+              />
+              <TextInput
+                style={STYLES.formInput}
+                placeholder={"Location (ex. 'Griffin's house')"}
+                onChangeText={setLocation}
+                value={location}
+              />
+              <View style={{}}>
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  is24Hour={true}
+                  display="default"
+                  onChange={onChangeTimeDate}
+                />
+              </View>
+              <Filters
+                genres={genres}
+                watchProviders={watchProviders}
+                setGenres={() => setGenres}
+                setWatchProviders={() => setWatchProviders}
+                getMovies={null}
+                setPage={(a) => setPage(1)}
+                inSearch={false}
+              ></Filters>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={onSubmit}>
                 <View
                   style={{
                     borderRadius: 5,
@@ -124,7 +263,7 @@ function ScheduleScreen(props) {
                 </View>
               </TouchableWithoutFeedback>
 
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={onClear}>
                 <View
                   style={{
                     borderRadius: 5,
