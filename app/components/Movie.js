@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
   TouchableWithoutFeedback,
   TextInput,
 } from "react-native";
@@ -18,11 +19,21 @@ function Movie(props) {
   const [added, setAdded] = useState(false);
   const [expanded, setExpanded] = useState(false); //used when editing alias
 
+  var poster = "https://image.tmdb.org/t/p/w500" + props.movie.poster_path;
+  console.log(poster);
+
+  function getColor() {
+    if (props.group_rating == null) return "white";
+    if (props.group_rating <= 2.0) return "#d13449";
+    if (props.group_rating <= 4.0) return "orange";
+    if (props.group_rating <= 6.0) return "#ffd900";
+    if (props.group_rating <= 8.0) return "green";
+    return "#2ce014";
+  }
+
+  const [groupRatingColor, setColor] = useState(getColor());
+
   function addMovieToQueueAPI() {
-    /* console.log(props.url);
-    console.log(props.group_id);
-    console.log(props.movie.id);
-    console.log(props.user_id);
     fetch(props.url + "group/" + props.group_id + "/movie", {
       headers: {
         Accept: "application/json",
@@ -45,71 +56,102 @@ function Movie(props) {
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
 
     setAdded(true);
   }
   return (
     <View>
       <Card containerStyle={{ padding: 0, borderRadius: 10 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
+        <TouchableWithoutFeedback onPress={() => setExpanded(!expanded)}>
           <View
             style={{
-              flex: 1,
-              backgroundColor: "white",
-              margin: 10,
-              alignItems: "center",
-            }}
-          ></View>
-
-          <View
-            style={{
-              flex: 10,
-              padding: 15,
               flexDirection: "row",
-              justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text style={{ fontWeight: "bold", textAlign: "center" }}>
-              {props.movie.title}{" "}
-              {props.movie.release_date
-                ? "(" + props.movie.release_date.substring(0, 4) + ")"
-                : ""}
-            </Text>
-          </View>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              setExpanded(!expanded);
-            }}
-          >
+            <View style={{ alignSelf: "center", flex: 3 }}>
+              <Image
+                style={{ width: 200 * 0.3, height: 300 * 0.3, margin: 10 }}
+                source={{
+                  uri: poster,
+                  //uri:
+                  //  "https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg",
+                }}
+              />
+            </View>
+
             <View
               style={{
-                flex: 1,
-                backgroundColor: "white",
-                margin: 10,
+                flex: 8,
+                padding: 15,
+                flexDirection: "row",
+                justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <FontAwesome5
-                name={expanded ? "compress" : "edit"}
-                color="grey"
-                size={20}
-              />
+              <Text style={{ fontWeight: "bold", textAlign: "center" }}>
+                {props.movie.title}{" "}
+                {props.movie.release_date
+                  ? "(" + props.movie.release_date.substring(0, 4) + ")"
+                  : ""}
+              </Text>
             </View>
-          </TouchableWithoutFeedback>
-        </View>
+            {props.group_rating != undefined ? (
+              <View
+                style={{
+                  flex: 2,
+                  backgroundColor: groupRatingColor,
+                  margin: 10,
+                  width: 50,
+                  height: 50,
+                  borderRadius: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 20,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {props.group_rating}
+                </Text>
+              </View>
+            ) : (
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setExpanded(!expanded);
+                }}
+              >
+                <View
+                  style={{
+                    flex: 2,
+                    backgroundColor: "white",
+                    margin: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <FontAwesome5
+                    name={expanded ? "compress" : "info"}
+                    color="grey"
+                    size={20}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
         {expanded && <Card.Divider />}
 
         {expanded && (
           <View>
-            <View style={{ padding: 15 }}>
-              <Text>{props.movie.overview}</Text>
+            <View style={{ padding: 15, paddingTop: 0 }}>
+              <Text style={{ fontStyle: "italic" }}>
+                {props.movie.overview}
+              </Text>
             </View>
             <View style={{ flexDirection: "row", margin: 0 }}>
               <TouchableWithoutFeedback onPress={() => addMovieToQueueAPI()}>
