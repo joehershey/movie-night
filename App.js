@@ -13,6 +13,7 @@ import GroupQueueScreen from "./app/screens/GroupQueueScreen";
 import ScheduleScreen from "./app/screens/ScheduleScreen";
 import ProfileSettingsScreen from "./app/screens/ProfileSettingsScreen";
 import EventScreen from "./app/screens/EventScreen";
+import VotingScreen from "./app/screens/VotingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
     username: "", //same as above (but accessed via props.username)
     user_token: "", //keep track of token IF backend wants this functionality
     group_id: -1,
+    event_id: -1,
   });
 
   //changes the state of user_id in this component (props.user_id in screens)
@@ -42,6 +44,14 @@ export default function App() {
     //takes previous state, only overrites passed info (with param)
     setState((prevState) => {
       return { ...prevState, group_id: set_id };
+    });
+  }
+
+  function setEvent(set_id) {
+    console.log(set_id);
+
+    setState((prevState) => {
+      return { ...prevState, event_id: set_id };
     });
   }
   return (
@@ -147,6 +157,7 @@ export default function App() {
           {(props) => (
             <ScheduleScreen
               {...props}
+              setEvent={(event_id) => setEvent(event_id)}
               url={URL} //const URL to use for api calls (props.url)
               user_id={state.user_id}
               user_token={state.user_token}
@@ -164,6 +175,20 @@ export default function App() {
               user_token={state.user_token}
               username={state.username}
               group_id={state.group_id}
+              event_id={state.event_id}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Voting">
+          {(props) => (
+            <VotingScreen
+              {...props}
+              url={URL} //const URL to use for api calls (props.url)
+              user_id={state.user_id}
+              user_token={state.user_token}
+              username={state.username}
+              group_id={state.group_id}
+              event_id={state.event_id}
             />
           )}
         </Stack.Screen>
