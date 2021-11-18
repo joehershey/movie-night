@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Group Settings Group settings renders properly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "borderColor": "#166fdb",
+      "borderRadius": 20,
+      "borderWidth": 3,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "column",
+          "margin": 20,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 35,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Group Settings
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginLeft": 15,
+        "marginRight": 15,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "flex": 1,
+          "fontSize": 18,
+          "fontStyle": "italic",
+          "margin": 5,
+        }
+      }
+    >
+      Access Code:
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1.5,
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "textAlign": "right",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginLeft": 15,
+        "marginRight": 15,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "flex": 1,
+          "fontSize": 18,
+          "fontStyle": "italic",
+          "margin": 5,
+        }
+      }
+    >
+      Group Name:
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1.5,
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "textAlign": "right",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginBottom": 10,
+        "marginLeft": 15,
+        "marginRight": 15,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "flex": 1.5,
+          "fontSize": 18,
+          "fontStyle": "italic",
+          "margin": 5,
+        }
+      }
+    >
+      Max. Movies Per User:
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "textAlign": "right",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
