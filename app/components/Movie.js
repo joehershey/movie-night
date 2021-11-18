@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  Picker,
   TextInput,
 } from "react-native";
 import { Card } from "react-native-elements";
@@ -16,7 +17,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 function Movie(props) {
   const [movieId, setMovieId] = useState("");
   const [movie, setMovie] = useState("");
+  const [edit, setEdit] = useState(false);
   const [added, setAdded] = useState(false);
+  const [userRating, setUserRating] = useState(props.user_rating + "");
   const [expanded, setExpanded] = useState(false); //used when editing alias
 
   var poster = "https://image.tmdb.org/t/p/w500" + props.movie.poster_path;
@@ -153,51 +156,149 @@ function Movie(props) {
                 {props.movie.overview}
               </Text>
             </View>
-            <View style={{ flexDirection: "row", margin: 0 }}>
-              <TouchableWithoutFeedback onPress={() => addMovieToQueueAPI()}>
-                <View
-                  style={{
-                    margin: 10,
-                    marginTop: 0,
-                    height: 50,
-                    borderRadius: 5,
-                    flex: 1,
-                    padding: 5,
-                    backgroundColor: added ? "#77a2c9" : COLORS.secondary,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {added ? (
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
+            {props.group_rating == undefined && (
+              <View style={{ flexDirection: "row", margin: 0 }}>
+                <TouchableWithoutFeedback onPress={() => addMovieToQueueAPI()}>
+                  <View
+                    style={{
+                      margin: 10,
+                      marginTop: 0,
+                      height: 50,
+                      borderRadius: 5,
+                      flex: 1,
+                      padding: 5,
+                      backgroundColor: added ? "#77a2c9" : COLORS.secondary,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {added ? (
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 14,
+                            alignContent: "center",
+                            margin: 5,
+                          }}
+                        >
+                          Added
+                        </Text>
+                        <FontAwesome5 color="white" size={20} name="check" />
+                      </View>
+                    ) : (
                       <Text
                         style={{
                           color: "white",
                           fontSize: 14,
                           alignContent: "center",
-                          margin: 5,
                         }}
                       >
-                        Added
+                        Add
                       </Text>
-                      <FontAwesome5 color="white" size={20} name="check" />
-                    </View>
+                    )}
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            )}
+            {props.group_rating != undefined && (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  margin: 15,
+                }}
+              >
+                <Text
+                  style={{
+                    flex: 4,
+                    textAlign: "left",
+                    fontSize: 15,
+                    textAlignVertical: "center",
+                  }}
+                >
+                  Your Rating:
+                </Text>
+                <View style={{ flex: 4, alignSelf: "center" }}>
+                  {edit ? (
+                    <TextInput
+                      style={[
+                        STYLES.input,
+                        STYLES.settingsInput,
+
+                        {
+                          borderColor:
+                            userRating.length < 1 ||
+                            userRating.length > 2 ||
+                            parseInt(userRating) > 10
+                              ? COLORS.danger
+                              : "lightgrey",
+                          width: "100%",
+                          fontWeight: "bold",
+                          fontSize: 20,
+                        },
+                      ]}
+                      onChangeText={setUserRating}
+                      value={userRating}
+                      textAlign="center"
+                      keyboardType="number-pad"
+                      placeholder="#1-10"
+                    />
                   ) : (
                     <Text
                       style={{
-                        color: "white",
-                        fontSize: 14,
-                        alignContent: "center",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: 20,
+                        textAlignVertical: "center",
                       }}
                     >
-                      Add
+                      {userRating}
                     </Text>
                   )}
                 </View>
-              </TouchableWithoutFeedback>
-            </View>
+                <View
+                  style={{
+                    flex: 4,
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      if (edit) {
+                        setEdit(!edit);
+                        props.setRatingAPI(userRating);
+                      } else {
+                        setEdit(!edit);
+                      }
+                    }}
+                  >
+                    <View
+                      style={{
+                        alignItems: "center",
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        backgroundColor:
+                          userRating.length < 1 ||
+                          userRating.length > 2 ||
+                          parseInt(userRating) > 10
+                            ? "lightgrey"
+                            : COLORS.secondary,
+                        borderRadius: 10,
+                        width: "50%",
+                      }}
+                    >
+                      <Text style={{ color: "white", margin: 5, fontSize: 15 }}>
+                        {!edit ? "Edit" : "Save"}
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
+              </View>
+            )}
           </View>
         )}
       </Card>

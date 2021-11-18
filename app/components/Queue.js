@@ -42,11 +42,11 @@ function Queue(props) {
         movies = [];
         console.log(responseJson);
         let test = [
-          { tmdb_movie_id: 566525, group_rating: 4.7 },
-          { tmdb_movie_id: 438631, group_rating: 9.2 },
-          { tmdb_movie_id: 580489, group_rating: 7.3 },
-          { tmdb_movie_id: 574060, group_rating: 1.3 },
-          { tmdb_movie_id: 630004, group_rating: 3.3 },
+          { tmdb_movie_id: 566525, group_rating: 4.7, user_rating: 5 },
+          { tmdb_movie_id: 438631, group_rating: 9.2, user_rating: 5 },
+          { tmdb_movie_id: 580489, group_rating: 7.3, user_rating: 5 },
+          { tmdb_movie_id: 574060, group_rating: 1.3, user_rating: 5 },
+          { tmdb_movie_id: 630004, group_rating: 3.3, user_rating: 5 },
         ];
         for (const [i, movie] of test.entries()) {
           movies.push(movie);
@@ -85,6 +85,10 @@ function Queue(props) {
       });
   }
 
+  function setRatingAPI(rating) {
+    console.log("*****" + rating + "*****");
+  }
+
   const moviesToRender = [];
   for (const [i, movie] of htmlMovies.entries()) {
     console.log(movie.data);
@@ -97,6 +101,8 @@ function Queue(props) {
         group_id={props.group_id}
         movie={movie.data}
         group_rating={movie.group_rating}
+        user_rating={movie.user_rating}
+        setRatingAPI={(rtg) => setRatingAPI(rtg)}
       ></Movie>
     );
   }
