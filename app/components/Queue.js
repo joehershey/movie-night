@@ -86,6 +86,34 @@ function Queue(props) {
   }
 
   function setRatingAPI(rating) {
+    /* fetch(props.url + "group/" + props.group_id + "/movies/" + props.user_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "PATCH",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        movies = [];
+        console.log(responseJson);
+        let test = [
+          { tmdb_movie_id: 566525, group_rating: 4.7, user_rating: 5 },
+          { tmdb_movie_id: 438631, group_rating: 9.2, user_rating: 5 },
+          { tmdb_movie_id: 580489, group_rating: 7.3, user_rating: 5 },
+          { tmdb_movie_id: 574060, group_rating: 1.3, user_rating: 5 },
+          { tmdb_movie_id: 630004, group_rating: 3.3, user_rating: 5 },
+        ];
+        for (const [i, movie] of test.entries()) {
+          movies.push(movie);
+          console.log(movie);
+          addMovieData(movie, i, i == test.length - 1);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
+
     console.log("*****" + rating + "*****");
   }
 
