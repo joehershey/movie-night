@@ -21,10 +21,9 @@ import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
 import Filters from "../components/Filters";
 import { useLinkProps } from "@react-navigation/native";
-import { TEST_DATA } from "../assets/testData";
 
 function ScheduleScreen(props) {
-  const [eventsToRender, setEvents] = useState(TEST_DATA.events);
+  const [eventsToRender, setEvents] = useState([]);
   const [page, setPage] = useState(1);
   const [watchProviders, setWatchProviders] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -66,6 +65,24 @@ function ScheduleScreen(props) {
     } else {
       return value;
     }
+  }
+
+  function processTime(hours, minutes) {
+    let end = "AM";
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    if (hours == 12) {
+      end = "PM";
+    }
+    if (hours == 0) {
+      hours = 12;
+    }
+    if (hours > 12) {
+      hours = hours % 12;
+      end = "PM";
+    }
+    return hours + ":" + minutes + " " + end;
   }
 
   const onChangeTimeDate = (event, selectedDate) => {
@@ -180,8 +197,9 @@ function ScheduleScreen(props) {
     const dateTime = new Date(event.start_time);
     const month = dateTime.getMonth() + 1;
 
-    const date = month + "/" + dateTime.getDate();
-    const time = dateTime.getHours() + ":" + processDate(dateTime.getMinutes());
+    const date =
+      month + "/" + dateTime.getDate() + "/" + dateTime.getFullYear();
+    const time = processTime(dateTime.getHours(), dateTime.getMinutes());
 
     eventsToRenderHTML.push(
       <Card key={i}>

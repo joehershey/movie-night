@@ -48,6 +48,18 @@ export const STYLES = StyleSheet.create({
     height: 70,
     backgroundColor: "white",
   },
+  goingButton: {
+    top: 10,
+    width: "40%",
+    height: 50,
+    backgroundColor: COLORS.happy,
+  },
+  notGoingButton: {
+    top: 10,
+    width: "40%",
+    height: 50,
+    backgroundColor: COLORS.danger,
+  },
   settingsButtons: {
     top: 10,
     width: "60%",
