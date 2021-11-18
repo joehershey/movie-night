@@ -15,7 +15,6 @@ import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
 
 function EventScreen(props) {
-  console.log("on settings");
   return (
     <SafeAreaView style={STYLES.container}>
       {/* Top Bar */}
@@ -26,22 +25,15 @@ function EventScreen(props) {
       ></TopBar>
       {/* Content */}
       <View style={[STYLES.content]}>
-        <View style={{ justifyContent: "center", flex: 1 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              margin: 20,
-            }}
-          >
-            <FontAwesome5 name="hammer" color="black" size={50} />
-            <Text style={{ fontSize: 25, margin: 10 }}>Under Construction</Text>
-            <FontAwesome5
-              name="hammer"
-              style={{ transform: [{ rotateY: "180deg" }] }}
-              color="black"
-              size={50}
-            />
+        <View style={{ justifyContent: "center" }}>
+          <View>
+            <TouchableWithoutFeedback
+              onPress={() => props.navigation.navigate("Voting")}
+            >
+              <View style={[STYLES.lgButton, STYLES.btn]}>
+                <Text style={[{ color: "white", fontSize: 20 }]}>Vote!</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <Text
             style={{
@@ -51,7 +43,7 @@ function EventScreen(props) {
               fontStyle: "italic",
             }}
           >
-            Coming in Iteration 2!
+            {props.event_id}
           </Text>
         </View>
       </View>

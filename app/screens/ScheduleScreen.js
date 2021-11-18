@@ -56,13 +56,41 @@ function ScheduleScreen(props) {
 
   // date time test
   const [date, setDate] = useState(new Date());
+  const [dateString, setDateString] = useState("");
   const [mode, setMode] = useState("datetime");
   const [show, setShow] = useState(false);
+
+  function processDate(value) {
+    if (value < 10) {
+      return "0" + value;
+    } else {
+      return value;
+    }
+  }
 
   const onChangeTimeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
+    const month = currentDate.getMonth() + 1;
+
+    const stringDate =
+      currentDate.getFullYear() +
+      "-" +
+      processDate(month) +
+      "-" +
+      processDate(currentDate.getDate()) +
+      "T" +
+      processDate(currentDate.getHours()) +
+      ":" +
+      processDate(currentDate.getMinutes()) +
+      ":" +
+      processDate(currentDate.getSeconds()) +
+      "." +
+      processDate(currentDate.getMilliseconds());
+    setDateString(stringDate);
+    console.log(stringDate);
+    console.log(dateString);
   };
 
   // date time test
@@ -78,6 +106,12 @@ function ScheduleScreen(props) {
       alert("Please enter a date in the future.");
     } else {
       createEventAPI();
+      toggleLoaded(false);
+      setDate(new Date());
+      setName("");
+      setLocation("");
+      setGenres([]);
+      setWatchProviders([]);
     }
   };
 
@@ -91,7 +125,7 @@ function ScheduleScreen(props) {
 
   if (!isLoaded) {
     // works, but no events can be added yet
-    //getEventsAPI();
+    getEventsAPI();
     toggleLoaded(true);
   }
 
@@ -123,12 +157,12 @@ function ScheduleScreen(props) {
       method: "POST",
       body: JSON.stringify({
         group_id: props.group_id,
-        start_time: date.toDateString(),
+        start_time: dateString,
         location: location,
         genre: 18,
         tmdb_movie_id: 1,
         organized_by: props.user_id,
-        voting_mode: false,
+        voting_mode: 1,
       }),
     })
       .then((response) => response.json())
@@ -143,16 +177,21 @@ function ScheduleScreen(props) {
 
   const eventsToRenderHTML = [];
   for (const [i, event] of eventsToRender.entries()) {
-    //only non applied to properties
+    const dateTime = new Date(event.start_time);
+    const month = dateTime.getMonth() + 1;
+
+    const date = month + "/" + dateTime.getDate();
+    const time = dateTime.getHours() + ":" + processDate(dateTime.getMinutes());
 
     eventsToRenderHTML.push(
       <Card key={i}>
-        <Card.Title>{"Movie Night " + event.date}</Card.Title>
+        <Card.Title>{"Movie Night " + date}</Card.Title>
         <Card.Divider />
-        <Text>{"Start Time: " + event.start_time}</Text>
+        <Text>{"Start Time: " + time}</Text>
         <Text>{"Location: " + event.location}</Text>
         <TouchableWithoutFeedback
           onPress={() => {
+            props.setEvent(event.event_id);
             props.navigation.navigate("Event");
           }}
         >
