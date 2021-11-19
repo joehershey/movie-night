@@ -9,7 +9,7 @@ describe('Test Member Info', () => {
                 display_name: "defined"
             }
         }
-        global.tree = renderer.create(<MemberInfo />);
+        global.tree = renderer.create(<MemberInfo {...props}/>);
     });
 
     it("Member info renders properly", async () => {
