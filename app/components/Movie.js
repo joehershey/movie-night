@@ -26,13 +26,13 @@ function Movie(props) {
   var poster = "https://image.tmdb.org/t/p/w500" + props.movie?.poster_path;
   console.log(poster);
 
-  function getColor() {
+  function getColor(avg) {
     console.log("abc:" + props.avg_user_rating);
-    if (props.avg_user_rating == null) return "white";
-    if (props.avg_user_rating <= 2.0) return "#d13449";
-    if (props.avg_user_rating <= 4.0) return "orange";
-    if (props.avg_user_rating <= 6.0) return "#ffd900";
-    if (props.avg_user_rating <= 8.0) return "green";
+    if (avg == null) return "white";
+    if (avg <= 2.0) return "#d13449";
+    if (avg <= 4.0) return "orange";
+    if (avg <= 6.0) return "#ffd900";
+    if (avg <= 8.0) return "green";
     return "#2ce014";
   }
 
@@ -107,7 +107,7 @@ function Movie(props) {
               <View
                 style={{
                   flex: 2,
-                  backgroundColor: groupRatingColor,
+                  backgroundColor: getColor(props.avg_user_rating),
                   margin: 10,
                   width: 50,
                   height: 50,
@@ -300,6 +300,67 @@ function Movie(props) {
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
+              </View>
+            )}
+            {props.avg_user_rating != undefined && (
+              <View>
+                {props.isAdmin ? (
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      props.deleteMovieAPI(props.movie.id);
+                    }}
+                  >
+                    <View
+                      style={{
+                        alignItems: "center",
+                        alignSelf: "center",
+                        justifyContent: "center",
+                        backgroundColor: COLORS.danger,
+                        borderRadius: 10,
+                        width: "50%",
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        margin: 10,
+                        height: 40,
+                      }}
+                    >
+                      <Text style={{ color: "white", margin: 5, fontSize: 20 }}>
+                        Delete
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                ) : (
+                  <View>
+                    {props.added_by == props.user_id && (
+                      <TouchableWithoutFeedback
+                        onPress={() => {
+                          props.deleteMovieAPI(props.movie.id);
+                        }}
+                      >
+                        <View
+                          style={{
+                            alignItems: "center",
+                            alignSelf: "center",
+                            justifyContent: "center",
+                            backgroundColor: COLORS.danger,
+                            borderRadius: 10,
+                            width: "50%",
+                            paddingLeft: 10,
+                            paddingRight: 10,
+                            margin: 10,
+                            height: 40,
+                          }}
+                        >
+                          <Text
+                            style={{ color: "white", margin: 5, fontSize: 20 }}
+                          >
+                            Delete
+                          </Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                    )}
+                  </View>
+                )}
               </View>
             )}
           </View>

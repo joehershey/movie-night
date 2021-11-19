@@ -20,6 +20,8 @@ function Queue(props) {
 
   React.useEffect(() => {
     const unsubscribe = props.navigation.addListener("focus", () => {
+      movies = [];
+      setHtmlMovies([]);
       getMovies();
     });
 
@@ -39,13 +41,6 @@ function Queue(props) {
       .then((responseJson) => {
         movies = [];
         console.log(responseJson);
-        let test = [
-          { tmdb_movie_id: 566525, avg_user_rating: 4.7, user_rating: 5 },
-          { tmdb_movie_id: 438631, avg_user_rating: 9.2, user_rating: 5 },
-          { tmdb_movie_id: 580489, avg_user_rating: 7.3, user_rating: 5 },
-          { tmdb_movie_id: 574060, avg_user_rating: 1.3, user_rating: 5 },
-          { tmdb_movie_id: 630004, avg_user_rating: 3.3, user_rating: 5 },
-        ];
         for (const [i, movie] of responseJson.entries()) {
           movies.push(movie);
           console.log(movie);
@@ -110,6 +105,26 @@ function Queue(props) {
     console.log("*****" + rating + "*****");
   }
 
+  function deleteMovieAPI(movieId) {
+    fetch(props.url + "group/" + props.group_id + "/movie/" + movieId, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        console.log(`deleted ${movieId}`);
+        getMovies();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   const moviesToRender = [];
   for (const [i, movie] of htmlMovies.entries()) {
     console.log("*****");
@@ -123,9 +138,12 @@ function Queue(props) {
         group_id={props.group_id}
         token={props.token}
         movie={movie.data}
+        isAdmin={props.isAdmin}
         avg_user_rating={movie.avg_user_rating}
+        added_by={movie.added_by}
         user_rating={movie.user_rating}
         setRatingAPI={(rtg, id) => setRatingAPI(rtg, id)}
+        deleteMovieAPI={(id) => deleteMovieAPI(id)}
       ></Movie>
     );
   }
