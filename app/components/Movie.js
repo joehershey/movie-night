@@ -22,25 +22,28 @@ function Movie(props) {
   const [userRating, setUserRating] = useState(props.user_rating + "");
   const [expanded, setExpanded] = useState(false); //used when editing alias
 
-  var poster = "https://image.tmdb.org/t/p/w500" + props.movie.poster_path;
+  const [groupRatingColor, setColor] = useState(getColor());
+  var poster = "https://image.tmdb.org/t/p/w500" + props.movie?.poster_path;
   console.log(poster);
 
   function getColor() {
-    if (props.group_rating == null) return "white";
-    if (props.group_rating <= 2.0) return "#d13449";
-    if (props.group_rating <= 4.0) return "orange";
-    if (props.group_rating <= 6.0) return "#ffd900";
-    if (props.group_rating <= 8.0) return "green";
+    console.log("abc:" + props.avg_user_rating);
+    if (props.avg_user_rating == null) return "white";
+    if (props.avg_user_rating <= 2.0) return "#d13449";
+    if (props.avg_user_rating <= 4.0) return "orange";
+    if (props.avg_user_rating <= 6.0) return "#ffd900";
+    if (props.avg_user_rating <= 8.0) return "green";
     return "#2ce014";
   }
 
-  const [groupRatingColor, setColor] = useState(getColor());
+  console.log(groupRatingColor);
 
   function addMovieToQueueAPI() {
     fetch(props.url + "group/" + props.group_id + "/movie", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "POST",
       body: JSON.stringify({
@@ -100,7 +103,7 @@ function Movie(props) {
                   : ""}
               </Text>
             </View>
-            {props.group_rating != undefined ? (
+            {props.avg_user_rating != undefined ? (
               <View
                 style={{
                   flex: 2,
@@ -120,7 +123,7 @@ function Movie(props) {
                     fontWeight: "bold",
                   }}
                 >
-                  {props.group_rating}
+                  {props.avg_user_rating}
                 </Text>
               </View>
             ) : (
@@ -156,7 +159,7 @@ function Movie(props) {
                 {props.movie.overview}
               </Text>
             </View>
-            {props.group_rating == undefined && (
+            {props.avg_user_rating == undefined && (
               <View style={{ flexDirection: "row", margin: 0 }}>
                 <TouchableWithoutFeedback onPress={() => addMovieToQueueAPI()}>
                   <View
@@ -203,7 +206,7 @@ function Movie(props) {
                 </TouchableWithoutFeedback>
               </View>
             )}
-            {props.group_rating != undefined && (
+            {props.avg_user_rating != undefined && (
               <View
                 style={{
                   flexDirection: "row",
@@ -270,7 +273,7 @@ function Movie(props) {
                     onPress={() => {
                       if (edit) {
                         setEdit(!edit);
-                        props.setRatingAPI(userRating);
+                        props.setRatingAPI(userRating, props.movie.id);
                       } else {
                         setEdit(!edit);
                       }

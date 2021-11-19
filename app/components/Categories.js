@@ -32,7 +32,7 @@ function Categories(props) {
     "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false";
   const REGION = "&watch_region=US";
 
-  function getMovieByID(tmdb_movie_id) {
+  /* function getMovieByID(tmdb_movie_id) {
     let TEST = BASEURL + "movie/" + tmdb_movie_id + APIKEY;
     fetch(TEST, {
       headers: {
@@ -48,7 +48,7 @@ function Categories(props) {
       .catch((error) => {
         console.error(error);
       });
-  }
+  } */
 
   function getMovies(loadMore = false) {
     console.log(page);
@@ -122,6 +122,7 @@ function Categories(props) {
         user_id={props.user_id}
         group_id={props.group_id}
         movie={movie}
+        token={props.token}
       ></Movie>
     );
   }

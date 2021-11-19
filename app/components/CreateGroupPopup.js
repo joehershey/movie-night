@@ -45,6 +45,7 @@ function CreateGroupPopup(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "POST",
       body: JSON.stringify({
@@ -55,8 +56,9 @@ function CreateGroupPopup(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(responseJson);
         const group = responseJson;
-        setGroupCode(responseJson.group_id);
+        setGroupCode(responseJson.group_code);
         return true;
       })
       .catch((error) => {

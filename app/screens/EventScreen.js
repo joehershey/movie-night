@@ -27,6 +27,7 @@ function EventScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })
@@ -48,6 +49,7 @@ function EventScreen(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Bearer " + props.token,
         },
         method: "POST",
         body: JSON.stringify({
@@ -68,6 +70,7 @@ function EventScreen(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Bearer " + props.token,
         },
         method: "PATCH",
         body: JSON.stringify({
@@ -89,6 +92,7 @@ function EventScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })
@@ -108,6 +112,7 @@ function EventScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })

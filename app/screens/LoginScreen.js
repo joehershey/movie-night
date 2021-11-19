@@ -37,7 +37,8 @@ function LoginScreen(props) {
         if (responseJson.user_id === undefined) {
           alert("Username or password is incorrect");
         } else {
-          props.setUser(responseJson.user_id, user);
+          console.log(responseJson.token);
+          props.setUser(responseJson.user_id, user, responseJson.token);
           props.navigation.navigate("Landing");
         }
       })

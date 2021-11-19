@@ -14,7 +14,6 @@ import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import Movie from "./Movie";
-import Filters from "./Filters";
 
 function SearchMovie(props) {
   const [page, setPage] = useState(0);
@@ -90,6 +89,7 @@ function SearchMovie(props) {
         url={props.url}
         user_id={props.user_id}
         group_id={props.group_id}
+        token={props.token}
       ></Movie>
     );
   }
