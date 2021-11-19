@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Button Panel Button panel renders properly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "marginBottom": 30,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#166fdb",
+          "height": 70,
+          "top": 10,
+          "width": "40%",
+        },
+        Object {
+          "alignItems": "center",
+          "borderRadius": 20,
+          "justifyContent": "center",
+          "margin": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 20,
+          },
+        ]
+      }
+    >
+      Create Group
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "height": 70,
+          "top": 10,
+          "width": "40%",
+        },
+        Object {
+          "alignItems": "center",
+          "borderRadius": 20,
+          "justifyContent": "center",
+          "margin": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#1d1f1e",
+            "fontSize": 20,
+          },
+        ]
+      }
+    >
+      Join Group
+    </Text>
+  </View>
+</View>
+`;
