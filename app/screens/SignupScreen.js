@@ -40,7 +40,7 @@ function SignupScreen(props) {
         if (responseJson.user_id === undefined) {
           alert("Unable to sign up");
         } else {
-          props.setUser(responseJson.user_id, user);
+          props.setUser(responseJson.user_id, user, responseJson.token);
           props.navigation.navigate("Landing");
         }
       })

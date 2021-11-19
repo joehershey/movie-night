@@ -32,6 +32,7 @@ function GroupQueueScreen(props) {
           url={props.url}
           user_id={props.user_id}
           group_id={props.group_id}
+          token={props.token}
         ></Queue>
       </View>
       {/* Tabs */}

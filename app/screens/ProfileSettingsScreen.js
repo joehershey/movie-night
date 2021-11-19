@@ -29,11 +29,16 @@ function ProfileSettingsScreen(props) {
         screen="Landing"
         message="Groups"
       ></TopBar>
-      <ChangePassword showPopup={showPopup} toggleShowPopup={toggleShowPopup} />
+      <ChangePassword
+        showPopup={showPopup}
+        token={props.token}
+        toggleShowPopup={toggleShowPopup}
+      />
       <DeleteAccount
         showPopup={showDelete}
         toggleShowPopup={toggleShowDelete}
         navigation={props.navigation}
+        token={props.token}
       ></DeleteAccount>
       {/* Content */}
       <View style={styles.content}>

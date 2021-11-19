@@ -21,9 +21,9 @@ import CreateGroupPopup from "../components/CreateGroupPopup";
 import JoinGroupPopup from "../components/JoinGroupPopup";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
-//import fetch from "node-fetch"; // used to fix ReferenceError: 
-                                // fetch is not defined for 
-                                // LandingScreen-test.js. Remove if needed.
+//import fetch from "node-fetch"; // used to fix ReferenceError:
+// fetch is not defined for
+// LandingScreen-test.js. Remove if needed.
 
 import { useLinkProps } from "@react-navigation/native";
 import { TEST_DATA } from "../assets/testData";
@@ -54,6 +54,7 @@ function LandingScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })
@@ -72,7 +73,7 @@ function LandingScreen(props) {
 
   const groupsToRenderHTML = [];
 
-  for (const [i, group] of groupsToRender.entries()) {
+  for (const [i, group] of groupsToRender?.entries()) {
     //only non applied to properties
 
     groupsToRenderHTML.push(
@@ -124,6 +125,7 @@ function LandingScreen(props) {
           url={props.url}
           user_id={props.user_id}
           username={props.username}
+          token={props.token}
           setLoaded={setLoaded}
         ></CreateGroupPopup>
         <JoinGroupPopup
@@ -131,6 +133,7 @@ function LandingScreen(props) {
           toggleShowPopup={toggleShowJoinGroup}
           url={props.url}
           user_id={props.user_id}
+          token={props.token}
           username={props.username}
           setLoaded={setLoaded}
         ></JoinGroupPopup>

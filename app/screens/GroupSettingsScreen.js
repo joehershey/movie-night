@@ -10,9 +10,9 @@ import TopBar from "../components/TopBar";
 import MemberInfo from "../components/MemberInfo";
 import GroupSettings from "../components/GroupSettings";
 import DeleteGroup from "../components/DeleteGroup";
-//import fetch from "node-fetch"; // used to fix ReferenceError: 
-                                // fetch is not defined for 
-                                // LandingScreen-test.js. Remove if needed.
+//import fetch from "node-fetch"; // used to fix ReferenceError:
+// fetch is not defined for
+// LandingScreen-test.js. Remove if needed.
 
 function GroupSettingsScreen(props) {
   const [loaded, setLoaded] = useState(false);
@@ -20,6 +20,7 @@ function GroupSettingsScreen(props) {
   const [groupMembers, setGroupMembers] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [maxMovies, setMaxMovies] = useState("");
+  const [groupCode, setGroupCode] = useState("");
 
   /* This hook insures getUsersAPI() is only automatically called on the 
   first render (because of the empty array as the second argument) */
@@ -35,6 +36,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })
@@ -47,11 +49,6 @@ function GroupSettingsScreen(props) {
       .catch((error) => {
         console.error(error);
       });
-
-    //code below should be done in the .then code block
-    // setGroupMembers(TEST_DATA.group_data.members); //replace arg with responseJson
-    // checkAdminStatus(TEST_DATA.group_data.members); //replace arg with responseJson
-    // getGroupInfoAPI();
   }
 
   /* Gets group settings information from the API */
@@ -64,6 +61,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })
@@ -72,15 +70,12 @@ function GroupSettingsScreen(props) {
         console.log(responseJson);
         setMaxMovies(responseJson.max_user_movies.toString());
         setGroupName(responseJson.group_name);
+        setGroupCode(responseJson.group_code);
         setLoaded(true);
       })
       .catch((error) => {
         console.error(error);
       });
-
-    // setGroupName(TEST_DATA.group_data.group_name);
-    // setMaxMovies(TEST_DATA.group_data.max_user_movies.toString());
-    // setLoaded(true);
   }
 
   /* Sets group settings information through the API */
@@ -100,6 +95,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "PATCH",
       body: JSON.stringify({
@@ -121,6 +117,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "PATCH",
       body: JSON.stringify({
@@ -147,6 +144,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "DELETE",
     })
@@ -173,6 +171,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "PATCH",
       body: JSON.stringify({
@@ -199,6 +198,7 @@ function GroupSettingsScreen(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Bearer " + props.token,
         },
         method: "PATCH",
         body: JSON.stringify({
@@ -224,6 +224,7 @@ function GroupSettingsScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "DELETE",
     })
@@ -317,6 +318,8 @@ function GroupSettingsScreen(props) {
             groupName={groupName}
             isAdmin={isAdmin}
             group_id={props.group_id}
+            group_code={groupCode}
+            token={props.token}
             setMaxMovies={(set) => setMaxMovies(set)}
             setGroupName={(set) => setGroupName(set)}
             changeGroupSettingsAPI={() => changeGroupSettingsAPI()}

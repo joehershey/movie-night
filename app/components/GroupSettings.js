@@ -56,7 +56,7 @@ function GroupSettings(props) {
                 textAlign: "right",
               }}
             >
-              {props.group_id}
+              {props.group_code}
             </Text>
           </View>
         </View>

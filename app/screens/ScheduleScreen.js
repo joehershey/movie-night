@@ -151,6 +151,7 @@ function ScheduleScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "GET",
     })
@@ -170,6 +171,7 @@ function ScheduleScreen(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
       },
       method: "POST",
       body: JSON.stringify({

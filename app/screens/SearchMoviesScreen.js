@@ -95,6 +95,7 @@ function SearchMoviesScreen(props) {
             url={props.url}
             user_id={props.user_id}
             group_id={props.group_id}
+            token={props.token}
           ></Categories>
         )}
         {display == "search" && (
@@ -102,6 +103,7 @@ function SearchMoviesScreen(props) {
             url={props.url}
             user_id={props.user_id}
             group_id={props.group_id}
+            token={props.token}
           ></Search>
         )}
       </View>
