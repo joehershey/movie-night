@@ -3,6 +3,8 @@ import { View, Text, TouchableWithoutFeedback, TextInput } from "react-native";
 
 import { COLORS, STYLES } from "../assets/saved";
 
+import fetch from "cross-fetch";
+
 function DeleteGroup(props) {
   const [deleteMode, setDeleteMode] = useState(false);
 

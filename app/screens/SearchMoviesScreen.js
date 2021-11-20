@@ -18,6 +18,8 @@ import TopBar from "../components/TopBar";
 import Categories from "../components/Categories";
 import Search from "../components/Search";
 
+import fetch from "cross-fetch";
+
 function SearchMoviesScreen(props) {
   const [display, setDisplay] = useState("categories");
 

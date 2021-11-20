@@ -15,6 +15,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 import Movie from "./Movie";
 
+import fetch from "cross-fetch";
+
 function SearchMovie(props) {
   const [page, setPage] = useState(0);
   const [noMore, setNoMore] = useState(false);

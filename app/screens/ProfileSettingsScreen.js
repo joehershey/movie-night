@@ -17,6 +17,8 @@ import ChangePassword from "../components/ChangePassword";
 import DeleteAccount from "../components/DeleteAccount";
 import { useLinkProps } from "@react-navigation/native";
 
+import fetch from "cross-fetch";
+
 function ProfileSettingsScreen(props) {
   const [showPopup, toggleShowPopup] = React.useState(false);
   const [showDelete, toggleShowDelete] = React.useState(false);

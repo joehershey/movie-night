@@ -15,6 +15,8 @@ import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "modal-react-native-web";
 
+import fetch from "cross-fetch";
+
 function JoinGroupPopup(props) {
   const showPopup = props.showPopup;
   const toggleShowPopup = props.toggleShowPopup;

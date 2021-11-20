@@ -14,6 +14,8 @@ import TopBar from "../components/TopBar";
 import { TEST_DATA } from "../assets/testData";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
+import fetch from "cross-fetch";
+
 function EventScreen(props) {
   const [currentEvent, setEvent] = useState([]);
   const [dateTime, setDateTime] = useState(new Date());

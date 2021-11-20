@@ -21,12 +21,15 @@ import CreateGroupPopup from "../components/CreateGroupPopup";
 import JoinGroupPopup from "../components/JoinGroupPopup";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
+
 //import fetch from "node-fetch"; // used to fix ReferenceError:
 // fetch is not defined for
 // LandingScreen-test.js. Remove if needed.
 
 import { useLinkProps } from "@react-navigation/native";
 import { TEST_DATA } from "../assets/testData";
+
+import fetch from "cross-fetch";
 
 function LandingScreen(props) {
   const [isLoaded, setLoaded] = React.useState(false);

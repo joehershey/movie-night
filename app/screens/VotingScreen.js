@@ -12,6 +12,8 @@ import { COLORS, STYLES } from "../assets/saved";
 
 import TopBar from "../components/TopBar";
 
+import fetch from "cross-fetch";
+
 function VotingScreen(props) {
   return (
     <SafeAreaView style={STYLES.container}>

@@ -15,6 +15,8 @@ import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
 import Queue from "../components/Queue";
 
+import fetch from "cross-fetch";
+
 function GroupQueueScreen(props) {
   const [isAdmin, setIsAdmin] = React.useState(false);
 

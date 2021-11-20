@@ -14,6 +14,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Movie from "../components/Movie";
 import Filters from "../components/Filters";
 
+import fetch from "cross-fetch";
+
 function Queue(props) {
   var movies = [];
   const [htmlMovies, setHtmlMovies] = useState([]);

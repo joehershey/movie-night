@@ -10,6 +10,8 @@ import {
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import fetch from "cross-fetch";
+
 function TopBar(props) {
   return (
     <View style={STYLES.topBar}>
