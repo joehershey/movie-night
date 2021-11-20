@@ -28,7 +28,7 @@ describe('Test Delete Group', () => {
         const deleteButton = container.find(TouchableWithoutFeedback).first();
         deleteButton.props().onPress();
         const confirmDelete = container.find(TouchableWithoutFeedback).first();
-        //confirmDelete.props().onPress(); // throws props error for props.DeleteGroupAPI. I believe figuring out this error will lead to 100% coverage
+        confirmDelete.props().onPress(); // throws props error for props.DeleteGroupAPI. I believe figuring out this error will lead to 100% coverage
         expect(confirmDelete.exists());
     });
 
