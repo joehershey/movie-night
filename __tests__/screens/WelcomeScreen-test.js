@@ -27,7 +27,12 @@ describe('Test Welcome Screen', () => {
     });
 
     it("Login button exists", () => {
-        const props = jest.fn();
+        const navigate = jest.fn();
+        props = {
+            navigation: {
+                navigate
+            }
+        }
         const container = shallow(<WelcomeScreen {...props} />);
         //console.log(container.debug());
         const loginButton = container.find(TouchableWithoutFeedback).first();
@@ -36,7 +41,13 @@ describe('Test Welcome Screen', () => {
     });
 
     it("Signup button exists", () => {
-        const container = shallow(<WelcomeScreen />);
+        const navigate = jest.fn();
+        props = {
+            navigation: {
+                navigate
+            }
+        }
+        const container = shallow(<WelcomeScreen {...props}/>);
         //console.log(container.debug());
         const signupButton = container.find(TouchableWithoutFeedback).last();
         signupButton.props().onPress();
