@@ -16,6 +16,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Movie from "../components/Movie";
 import Filters from "../components/Filters";
 
+import fetch from "cross-fetch";
+
 function Categories(props) {
   const [page, setPage] = useState(1);
   const [noMore, setNoMore] = useState(false);

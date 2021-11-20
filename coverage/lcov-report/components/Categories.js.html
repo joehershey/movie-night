@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25.53% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/47</span>
+                <span class='fraction'>12/42</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>1/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25.53% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/47</span>
+                <span class='fraction'>12/42</span>
             </div>
         
             
@@ -238,7 +238,10 @@
 <a name='L179'></a><a href='#L179'>179</a>
 <a name='L180'></a><a href='#L180'>180</a>
 <a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -257,13 +260,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -272,21 +268,30 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -355,6 +360,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -437,6 +443,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Movie from "../components/Movie";
 import Filters from "../components/Filters";
 &nbsp;
+import fetch from "cross-fetch";
+&nbsp;
 function Categories(props) {
   const [page, setPage] = useState(1);
   const [noMore, setNoMore] = useState(false);
@@ -453,23 +461,23 @@ function Categories(props) {
     "&amp;language=en-US&amp;sort_by=popularity.desc&amp;include_adult=false&amp;include_video=false";
   const REGION = "&amp;watch_region=US";
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >getMovieByID(</span>tmdb_movie_id) {
-    let TEST = <span class="cstat-no" title="statement not covered" >BASEURL + "movie/" + tmdb_movie_id + APIKEY;</span>
-<span class="cstat-no" title="statement not covered" >    fetch(TEST, {</span>
+  /* function getMovieByID(tmdb_movie_id) {
+    let TEST = BASEURL + "movie/" + tmdb_movie_id + APIKEY;
+    fetch(TEST, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
       },
       method: "GET",
     })
-      .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; <span class="cstat-no" title="statement not covered" >response.json())</span>
-      .then(<span class="fstat-no" title="function not covered" >(r</span>esponseJson) =&gt; {
-<span class="cstat-no" title="statement not covered" >        setMovie(responseJson);</span>
+      .then((response) =&gt; response.json())
+      .then((responseJson) =&gt; {
+        setMovie(responseJson);
       })
-      .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
-<span class="cstat-no" title="statement not covered" >        console.error(error);</span>
+      .catch((error) =&gt; {
+        console.error(error);
       });
-  }
+  } */
 &nbsp;
   function <span class="fstat-no" title="function not covered" >getMovies(</span>loadMore = <span class="branch-0 cbranch-no" title="branch not covered" >false)</span> {
 <span class="cstat-no" title="statement not covered" >    console.log(page);</span>
@@ -543,6 +551,7 @@ function Categories(props) {
         user_id={props.user_id}
         group_id={props.group_id}
         movie={movie}
+        token={props.token}
       &gt;&lt;/Movie&gt;
     );
   }
@@ -607,7 +616,7 @@ export default Categories;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Nov 18 2021 17:39:07 GMT-0600 (Central Standard Time)
+                at Fri Nov 19 2021 19:43:11 GMT-0600 (Central Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

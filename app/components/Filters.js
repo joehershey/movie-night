@@ -11,6 +11,8 @@ import { Card } from "react-native-elements";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import fetch from "cross-fetch";
+
 /* This component returns one Card representing a movie searched */
 function Filters(props) {
   const [loaded, setLoaded] = useState(false);

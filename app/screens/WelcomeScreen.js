@@ -11,6 +11,8 @@ import {
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import fetch from "cross-fetch";
+
 function WelcomeScreen(props) {
   return (
     <View style={styles.background}>

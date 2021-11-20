@@ -14,6 +14,7 @@ import {
 
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
+import fetch from "cross-fetch";
 
 function SignupScreen(props) {
   const [username, changeUsername] = React.useState("");

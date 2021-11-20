@@ -11,6 +11,8 @@ import { Card } from "react-native-elements";
 import { COLORS, STYLES } from "../assets/saved";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import fetch from "cross-fetch";
+
 /* This component returns one Card representing a member in a group */
 function MemberInfo(props) {
   const [editAlias, setEditAlias] = useState(false); //if alias editing is on

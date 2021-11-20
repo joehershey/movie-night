@@ -14,6 +14,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "modal-react-native-web";
 import { TEST_DATA } from "../assets/testData";
 
+import fetch from "cross-fetch";
+
 /*
   props from LandingScreen are:
     showPopup={showCreateGroup}

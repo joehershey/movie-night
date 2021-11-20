@@ -22,6 +22,8 @@ import TopBar from "../components/TopBar";
 import Filters from "../components/Filters";
 import { useLinkProps } from "@react-navigation/native";
 
+import fetch from "cross-fetch";
+
 function ScheduleScreen(props) {
   const [eventsToRender, setEvents] = useState([]);
   const [page, setPage] = useState(1);
