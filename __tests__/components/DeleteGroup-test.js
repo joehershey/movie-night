@@ -23,7 +23,11 @@ describe('Test Delete Group', () => {
     });
 
     it("Confirm delete button exists", () => {
-        const container = shallow(<DeleteGroup/>);
+        deleteGroupAPI = jest.fn();
+        props = {
+            deleteGroupAPI
+        }
+        const container = shallow(<DeleteGroup {...props}/>);
         //console.log(container.debug());
         const deleteButton = container.find(TouchableWithoutFeedback).first();
         deleteButton.props().onPress();
