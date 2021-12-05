@@ -6,6 +6,6 @@ describe('Test Categories', () => {
 
     it("Categories renders properly", async () => {
         const tree = renderer.create(<Categories />);
-        expect(tree).toMatchSnapshot();
+        await expect(tree).toMatchSnapshot();
     });
 });

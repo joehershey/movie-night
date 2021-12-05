@@ -8,9 +8,9 @@ import { shallow, configure } from 'enzyme';
 configure({adapter: new Adapter()});
 
 describe('Test Button Panel', () => {
-    it("Button panel renders properly", () => {
-        tree = renderer.create(<ButtonPanel />);
-        expect(tree).toMatchSnapshot();
+    it("Button panel renders properly", async () => {
+        const tree = renderer.create(<ButtonPanel />);
+        await expect(tree).toMatchSnapshot();
     });
 
     it("Create group button on click", () => {
