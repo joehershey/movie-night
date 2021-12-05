@@ -4,7 +4,11 @@ import renderer from 'react-test-renderer';
 
 describe('Test Filters', () => {
     beforeEach( async () => {
-        global.tree = renderer.create(<Filters />);
+        props = {
+            genres: "Action",
+            watchProviders: "Hulu"
+        }
+        global.tree = renderer.create(<Filters {...props}/>);
     });
 
     it("Filters renders properly", async () => {

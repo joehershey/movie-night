@@ -17,7 +17,13 @@ describe('Test Button Panel', () => {
     });
 
     it("Create group button exists", () => {
-        const container = shallow(<ButtonPanel/>);
+        const toggleShowCreateGroup = jest.fn();
+        const toggleShowJoinGroup = jest.fn();
+        const props = {
+                toggleShowCreateGroup,
+                toggleShowJoinGroup
+        }
+        const container = shallow(<ButtonPanel {...props}/>);
         //console.log(container.debug());
         const createButton = container.find(TouchableWithoutFeedback).first();
         createButton.props().onPress();
@@ -25,9 +31,13 @@ describe('Test Button Panel', () => {
     });
 
     it("Join group button exists", () => {
-        const onp = jest.fn();
-        onp.mockReturnValue('Link on press invoked');
-        const container = shallow(<ButtonPanel onClick={onp}/>);
+        const toggleShowCreateGroup = jest.fn();
+        const toggleShowJoinGroup = jest.fn();
+        const props = {
+                toggleShowCreateGroup,
+                toggleShowJoinGroup
+        }
+        const container = shallow(<ButtonPanel {...props}/>);
         //container.dive().instance().toggleShowCreateGroup = jest.fn();
         //console.log(container.debug());
         container.update();

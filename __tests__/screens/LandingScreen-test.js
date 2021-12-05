@@ -12,7 +12,7 @@ describe("Test Landing Screen", () => {
   });
 
   it("Landing screen renders properly", async () => {
-    console.error = jest.fn(); // fixme: mutes FetchError for testing purposes
+    console.error = jest.fn(); // fixme: mutes expected FetchError for testing purposes
     await expect(global.tree).toMatchSnapshot();
   });
 });
