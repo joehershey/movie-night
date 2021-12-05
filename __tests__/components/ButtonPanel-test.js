@@ -4,19 +4,16 @@ import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import { TouchableWithoutFeedback } from "react-native";
 import { shallow, configure } from 'enzyme';
-//import nodeModulePackage from 'nodeModulePackage';
 
 configure({adapter: new Adapter()});
+
 describe('Test Button Panel', () => {
-    beforeEach( async () => {
-        global.tree = renderer.create(<ButtonPanel />);
+    it("Button panel renders properly", () => {
+        tree = renderer.create(<ButtonPanel />);
+        expect(tree).toMatchSnapshot();
     });
 
-    it("Button panel renders properly", async () => {
-        await expect(global.tree).toMatchSnapshot();
-    });
-
-    it("Create group button exists", () => {
+    it("Create group button on click", () => {
         const toggleShowCreateGroup = jest.fn();
         const toggleShowJoinGroup = jest.fn();
         const props = {
@@ -24,13 +21,12 @@ describe('Test Button Panel', () => {
                 toggleShowJoinGroup
         }
         const container = shallow(<ButtonPanel {...props}/>);
-        //console.log(container.debug());
         const createButton = container.find(TouchableWithoutFeedback).first();
         createButton.props().onPress();
-        expect(createButton.exists());
+        expect(toggleShowCreateGroup).toBeCalledTimes(1); // checks if the mock 'toggleShowCreateGroup' function has been called
     });
 
-    it("Join group button exists", () => {
+    it("Join group button on click", () => {
         const toggleShowCreateGroup = jest.fn();
         const toggleShowJoinGroup = jest.fn();
         const props = {
@@ -38,11 +34,8 @@ describe('Test Button Panel', () => {
                 toggleShowJoinGroup
         }
         const container = shallow(<ButtonPanel {...props}/>);
-        //container.dive().instance().toggleShowCreateGroup = jest.fn();
-        //console.log(container.debug());
-        container.update();
         const joinButton = container.find(TouchableWithoutFeedback).last();
         joinButton.props().onPress();
-        expect(joinButton.exists());
+        expect(toggleShowJoinGroup).toBeCalledTimes(1); // checks if the mock 'toggleShowJoinGroup' function has been called
     });
 });
