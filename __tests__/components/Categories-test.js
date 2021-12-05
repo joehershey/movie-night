@@ -3,9 +3,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 describe('Test Categories', () => {
+    beforeEach( async () => {
+        global.tree = renderer.create(<Categories />);
+    });
 
     it("Categories renders properly", async () => {
-        const tree = renderer.create(<Categories />);
-        await expect(tree).toMatchSnapshot();
+        await expect(global.tree).toMatchSnapshot();
     });
 });
