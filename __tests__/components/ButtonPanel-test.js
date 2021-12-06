@@ -36,7 +36,7 @@ describe('Test Button Panel', () => {
                 toggleShowCreateGroup,
                 toggleShowJoinGroup
         }
-        const container = shallow(<ButtonPanel {...props}/>);
+        const container = shallow(<ButtonPanel {...props} />);
         const joinButton = container.find(TouchableWithoutFeedback).last();
         joinButton.props().onPress();
         expect(toggleShowJoinGroup).toBeCalledTimes(1); // checks if the mock 'toggleShowJoinGroup' function has been called
