@@ -4,7 +4,13 @@ import renderer from 'react-test-renderer';
 
 describe('Test Queue', () => {
     beforeEach( async () => {
-        global.tree = renderer.create(<Queue />);
+        const addListener = jest.fn();
+        props = {
+            navigation: {
+                addListener
+            }
+        }
+        global.tree = renderer.create(<Queue {...props} />);
     });
 
     it("Queue renders properly", async () => {
