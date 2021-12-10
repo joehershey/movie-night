@@ -2,11 +2,32 @@ import React, { useState } from "react";
 import { View, Text, TouchableWithoutFeedback, TextInput } from "react-native";
 
 import { COLORS, STYLES } from "../assets/saved";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import fetch from "cross-fetch";
 
 function GroupSettings(props) {
   const [edit, setEdit] = useState(false);
+
+  function newCode() {
+    //PATCH /group/{group_id}/code
+    fetch(props.url + "group/" + props.group_id + "/code", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "PATCH",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        props.setCode();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <View
@@ -50,15 +71,36 @@ function GroupSettings(props) {
           Access Code:
         </Text>
         <View style={{ flex: 1.5, flexDirection: "row" }}>
-          <View style={{ flex: 12 }}>
+          <View
+            style={{
+              flex: 12,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
+            <TouchableWithoutFeedback onPress={() => newCode()}>
+              <View
+                style={{
+                  margin: 10,
+                  marginRight: 0,
+                  padding: 5,
+                  backgroundColor: COLORS.secondary,
+                  borderRadius: 10,
+                }}
+              >
+                <FontAwesome5 name="exchange-alt" color="white" size={20} />
+              </View>
+            </TouchableWithoutFeedback>
             <Text
               style={{
+                margin: 10,
+                marginRight: 0,
                 fontSize: 20,
                 fontWeight: "bold",
                 textAlign: "right",
               }}
             >
-              {props.group_code}
+              {props.group_code + " "}
             </Text>
           </View>
         </View>
@@ -196,7 +238,7 @@ function GroupSettings(props) {
               height: 40,
             }}
           >
-            <Text style={{ color: "white", margin: 5, fontSize: 20 }}>
+            <Text style={{ color: "white", margin: 5, fontSize: 18 }}>
               {!edit ? "Edit" : "Save"}
             </Text>
           </View>

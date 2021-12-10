@@ -130,7 +130,10 @@ function Queue(props) {
   const moviesToRender = [];
   for (const [i, movie] of htmlMovies.entries()) {
     console.log("*****");
-    console.log(movie.avg_user_rating);
+    if (!movie.data || !movie) {
+      getMovies();
+      break;
+    }
     moviesToRender.push(
       /* Collapsable card with member info/edit if admin */
       <Movie

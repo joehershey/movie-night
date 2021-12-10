@@ -18,14 +18,15 @@ import fetch from "cross-fetch";
 /* This component returns one Card representing a movie searched */
 function Movie(props) {
   const [movieId, setMovieId] = useState("");
-  const [movie, setMovie] = useState("");
+  //const [movie, setMovie] = useState("");
   const [edit, setEdit] = useState(false);
   const [added, setAdded] = useState(false);
   const [userRating, setUserRating] = useState(props.user_rating + "");
   const [expanded, setExpanded] = useState(false); //used when editing alias
 
   const [groupRatingColor, setColor] = useState(getColor());
-  var poster = "https://image.tmdb.org/t/p/w500" + props.movie?.poster_path;
+  var movie = props.movie;
+  var poster = "https://image.tmdb.org/t/p/w500" + movie?.poster_path;
   console.log(poster);
 
   function getColor(avg) {
@@ -49,7 +50,7 @@ function Movie(props) {
       },
       method: "POST",
       body: JSON.stringify({
-        tmdb_movie_id: props.movie.id,
+        tmdb_movie_id: movie.id,
         added_by: props.user_id,
       }),
     })
@@ -99,9 +100,10 @@ function Movie(props) {
               }}
             >
               <Text style={{ fontWeight: "bold", textAlign: "center" }}>
-                {props.movie.title}{" "}
-                {props.movie.release_date
-                  ? "(" + props.movie.release_date.substring(0, 4) + ")"
+                {console.log(movie.title)}
+                {movie.title}{" "}
+                {movie.release_date
+                  ? "(" + movie.release_date.substring(0, 4) + ")"
                   : ""}
               </Text>
             </View>
@@ -157,9 +159,7 @@ function Movie(props) {
         {expanded && (
           <View>
             <View style={{ padding: 15, paddingTop: 0 }}>
-              <Text style={{ fontStyle: "italic" }}>
-                {props.movie.overview}
-              </Text>
+              <Text style={{ fontStyle: "italic" }}>{movie.overview}</Text>
             </View>
             {props.avg_user_rating == undefined && (
               <View style={{ flexDirection: "row", margin: 0 }}>
@@ -275,7 +275,7 @@ function Movie(props) {
                     onPress={() => {
                       if (edit) {
                         setEdit(!edit);
-                        props.setRatingAPI(userRating, props.movie.id);
+                        props.setRatingAPI(userRating, movie.id);
                       } else {
                         setEdit(!edit);
                       }
@@ -309,7 +309,7 @@ function Movie(props) {
                 {props.isAdmin ? (
                   <TouchableWithoutFeedback
                     onPress={() => {
-                      props.deleteMovieAPI(props.movie.id);
+                      props.deleteMovieAPI(movie.id);
                     }}
                   >
                     <View
@@ -336,7 +336,7 @@ function Movie(props) {
                     {props.added_by == props.user_id && (
                       <TouchableWithoutFeedback
                         onPress={() => {
-                          props.deleteMovieAPI(props.movie.id);
+                          props.deleteMovieAPI(movie.id);
                         }}
                       >
                         <View
