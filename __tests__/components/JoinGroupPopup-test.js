@@ -27,7 +27,7 @@ describe('Test Join Group Popup', () => {
         alert = jest.fn() // simulates alert functions that onPress calls
         const container = shallow(<JoinGroupPopup {...alert} />);
         const onSubmit = container.find(TouchableWithoutFeedback).at(1); // finds onPress => onSubmit
-        onSubmit.props().onPress(); // simulate onSubmit function, does not run else statement b/c password values aren't set
+        onSubmit.props().onPress(); // simulate onSubmit function
         expect(onSubmit.exists());
     });
 
@@ -37,20 +37,8 @@ describe('Test Join Group Popup', () => {
             toggleShowPopup
         }
         const container = shallow(<JoinGroupPopup {...props} />);
-        const onClose = container.find(TouchableWithoutFeedback).at(2); // finds onPress => toggleShowConfirm() on line 312
+        const onClose = container.find(TouchableWithoutFeedback).at(2); // finds onPress => onClose
         onClose.props().onPress(); // calls the function
         expect(onClose.exists());
-    });
-
-    it("Check for close button and simulate press", () => {
-        const toggleShowPopup = jest.fn();
-        props = {
-            toggleShowPopup
-        }
-        const container = shallow(<JoinGroupPopup {...props} />);
-        const onClose = container.find(TouchableWithoutFeedback); // finds onPress => toggleShowConfirm() on line 312
-        console.log(onClose.debug())
-        // onClose.props().onPress(); // calls the function
-        // expect(onClose.exists());
     });
 });
