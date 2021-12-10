@@ -325,6 +325,7 @@ function GroupSettingsScreen(props) {
             setMaxMovies={(set) => setMaxMovies(set)}
             setGroupName={(set) => setGroupName(set)}
             changeGroupSettingsAPI={() => changeGroupSettingsAPI()}
+            setCode={() => getGroupInfoAPI()}
           ></GroupSettings>
 
           <View style={{ alignItems: "center" }}>

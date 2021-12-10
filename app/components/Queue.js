@@ -99,6 +99,7 @@ function Queue(props) {
       .then((responseJson) => {
         console.log(responseJson);
         console.log(`set ${id} to ${rating}`);
+        getMovies();
       })
       .catch((error) => {
         console.error(error);
