@@ -31,7 +31,7 @@ describe('Test Change Password', () => {
         expect(onSubmit.exists());
     });
 
-    it("Simulate onPress => onClose function", () => {
+    it("Find and simulate onPress => onClose function", () => {
         const toggleShowPopup = jest.fn()
         props = {
             toggleShowPopup
