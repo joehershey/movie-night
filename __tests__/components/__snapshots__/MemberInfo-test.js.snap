@@ -1,3 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Member Info Member info renders properly 1`] = `undefined`;
+exports[`Test Member Info Member info renders properly 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "borderColor": "#e1e8ee",
+        "borderWidth": 1,
+        "margin": 15,
+        "marginBottom": 0,
+        "padding": 0,
+        "shadowColor": "rgba(0,0,0, .2)",
+        "shadowOffset": Object {
+          "height": 0,
+          "width": 0,
+        },
+        "shadowOpacity": 1,
+        "shadowRadius": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "transparent",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "flex": 1,
+              "margin": 10,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 10,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 15,
+            }
+          }
+        >
+          <Text>
+            defined
+          </Text>
+          <Text
+            style={
+              Object {
+                "fontStyle": "italic",
+              }
+            }
+          >
+            
+             (Member)
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "flex": 1,
+              "margin": 10,
+            }
+          }
+        >
+          <Text />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

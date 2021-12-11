@@ -24,14 +24,14 @@ describe('Test Change Password', () => {
     });
 
     it("Check for submit button and simulate press", () => {
-        alert = jest.fn() // simulates alert functions that onPress call
+        alert = jest.fn() // simulates alert functions that onPress calls
         const container = shallow(<ChangePassword {...alert} />);
         const onSubmit = container.find(TouchableWithoutFeedback).at(1); // finds onPress => onSubmit
         onSubmit.props().onPress(); // simulate onSubmit function, does not run else statement b/c password values aren't set
         expect(onSubmit.exists());
     });
 
-    it("Simulate onPress => onClose function", () => {
+    it("Find and simulate onPress => onClose function", () => {
         const toggleShowPopup = jest.fn()
         props = {
             toggleShowPopup
