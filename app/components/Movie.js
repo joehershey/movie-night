@@ -127,7 +127,7 @@ function Movie(props) {
                     fontWeight: "bold",
                   }}
                 >
-                  {props.avg_user_rating}
+                  {props.avg_user_rating.toFixed(1)}
                 </Text>
               </View>
             ) : (

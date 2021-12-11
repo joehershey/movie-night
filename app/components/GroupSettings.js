@@ -11,6 +11,9 @@ function GroupSettings(props) {
 
   function newCode() {
     //PATCH /group/{group_id}/code
+    console.log(props.group_id);
+    console.log(props.group_id);
+
     fetch(props.url + "group/" + props.group_id + "/code", {
       headers: {
         Accept: "application/json",
