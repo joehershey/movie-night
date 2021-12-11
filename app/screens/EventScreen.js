@@ -23,6 +23,10 @@ function EventScreen(props) {
   const [rsvpList, setRSVPList] = useState([]);
   const [isLoaded, toggleLoaded] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isVoting, setIsVoting] = useState(0);
+
+  //added by joe, hitting vote locks in top 3 movies
+  const [htmlMovies, setHtmlMovies] = useState([]);
 
   function getEventInfoAPI() {
     fetch(props.url + "event/" + props.event_id, {
@@ -39,6 +43,7 @@ function EventScreen(props) {
         console.log(responseJson);
         setEvent(responseJson);
         setDateTime(new Date(responseJson.start_time));
+        setIsVoting(responseJson.voting_mode);
       })
       .catch((error) => {
         console.error(error);
@@ -181,15 +186,27 @@ function EventScreen(props) {
         status = true;
 
         if (rsvp.is_coming) {
-          usersGoing.push(<Text>{user.display_name}</Text>);
+          usersGoing.push(
+            <Text key={i} style={{ padding: 5 }}>
+              {user.display_name}
+            </Text>
+          );
         } else {
-          usersNotGoing.push(<Text>{user.display_name}</Text>);
+          usersNotGoing.push(
+            <Text key={i} style={{ padding: 5 }}>
+              {user.display_name}
+            </Text>
+          );
         }
         break;
       }
     }
     if (!status) {
-      usersNoResponse.push(<Text>{user.display_name}</Text>);
+      usersNoResponse.push(
+        <Text key={i} style={{ padding: 5 }}>
+          {user.display_name}
+        </Text>
+      );
     }
   }
 
@@ -210,6 +227,114 @@ function EventScreen(props) {
     toggleLoaded(false);
   };
 
+  //added by joe, getting top 3 movies
+  var movies = [];
+  function getMovies(loadMore = false) {
+    fetch(props.url + "group/" + props.group_id + "/movies/" + props.user_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        movies = [];
+        console.log(responseJson);
+        for (const [i, movie] of responseJson.entries()) {
+          movies.push(movie);
+          console.log(movie);
+          addMovieData(movie, i, i == responseJson.length - 1);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  const BASEURL = "https://api.themoviedb.org/3/";
+  const APIKEY = "?api_key=3eb4bede8c2782fba9b6b7cd9c56b62c";
+
+  function addMovieData(movie, idx, set = false) {
+    let TEST = BASEURL + "movie/" + movie.tmdb_movie_id + APIKEY;
+    //let TEST = BASEURL + "movie/" + 72 + APIKEY;
+    fetch(TEST, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!set) return;
+        movies.sort((a, b) => (a.avg_user_rating < b.avg_user_rating ? 1 : -1));
+        const top3 = [];
+        var count = 0;
+        for (const [i, movie] of movies.entries()) {
+          console.log("*****");
+          if (count == 3) {
+            break;
+          }
+          count = count + 1;
+          top3.push(movie.tmdb_movie_id);
+        }
+        console.log("&&&");
+        console.log(top3);
+        setEventMoviesAPI(top3);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function setEventMoviesAPI(movies) {
+    //call post to set the 3 movies locked in for this event
+    console.log(movies);
+    console.log("^^");
+    /* fetch(props.url + "event/" + props.event_id + "/movies", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        tmdb_movie_id: movies, // need to figure this out
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        toggleLoaded(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
+  }
+  function setVoting() {
+    console.log("voting true");
+    setIsVoting(1);
+    /* fetch(props.url + "event/" + props.event_id ,{
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "PATCH",
+      body: JSON.stringify({
+        voting_mode: 1,
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        toggleLoaded(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); */
+  }
+
   return (
     <SafeAreaView style={STYLES.container}>
       {/* Top Bar */}
@@ -224,13 +349,34 @@ function EventScreen(props) {
           style={{ width: "100%", marginTop: 20, marginBottom: 20 }}
           contentContainerStyle={{ alignItems: "center" }}
         >
-          <TouchableWithoutFeedback
-            onPress={() => props.navigation.navigate("Voting")}
-          >
-            <View style={[STYLES.lgButton, STYLES.btn]}>
-              <Text style={[{ color: "white", fontSize: 40 }]}>Vote!</Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <View style={{ width: "100%", alignItems: "center" }}>
+            {isAdmin && isVoting == 0 && (
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setVoting(true);
+                  getMovies();
+                }}
+              >
+                <View style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}>
+                  <Text style={[{ color: "white", fontSize: 30 }]}>
+                    Start vote!
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            )}
+            {isVoting == 1 && (
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  getMovies();
+                  props.navigation.navigate("Voting");
+                }}
+              >
+                <View style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}>
+                  <Text style={[{ color: "white", fontSize: 30 }]}>Vote!</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            )}
+          </View>
 
           <Text
             style={{
@@ -298,6 +444,8 @@ function EventScreen(props) {
                   height: 30,
                   borderColor: "black",
                   borderWidth: 1,
+                  borderLeftWidth: 0,
+                  borderRightWidth: 0,
                   alignSelf: "center",
                 }}
               >
@@ -326,6 +474,8 @@ function EventScreen(props) {
                   height: 30,
                   borderColor: "black",
                   borderWidth: 1,
+                  borderLeftWidth: 0,
+                  borderRightWidth: 0,
                   alignSelf: "center",
                 }}
               >
@@ -342,6 +492,7 @@ function EventScreen(props) {
                   minHeight: 200,
                   borderColor: "black",
                   borderWidth: 1,
+                  borderRightWidth: 0,
                   alignSelf: "center",
                 }}
               >
@@ -362,6 +513,7 @@ function EventScreen(props) {
                   minHeight: 200,
                   borderColor: "black",
                   borderWidth: 1,
+                  borderLeftWidth: 0,
                   alignSelf: "center",
                 }}
               >

@@ -11,6 +11,7 @@ import {
 import { COLORS, STYLES } from "../assets/saved";
 
 import TopBar from "../components/TopBar";
+import Vote from "../components/Vote";
 
 import fetch from "cross-fetch";
 
@@ -24,7 +25,15 @@ function VotingScreen(props) {
         message="Event"
       ></TopBar>
       {/* Content */}
-      <View style={[STYLES.content]}></View>
+      <View style={[STYLES.content]}>
+        <Vote
+          url={props.url}
+          event_id={props.event}
+          user_id={props.user_id}
+          group_id={props.group_id}
+          token={props.token}
+        ></Vote>
+      </View>
       {/* Tabs */}
     </SafeAreaView>
   );

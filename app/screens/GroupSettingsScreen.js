@@ -319,6 +319,7 @@ function GroupSettingsScreen(props) {
             maxMovies={maxMovies}
             groupName={groupName}
             isAdmin={isAdmin}
+            url={props.url}
             group_id={props.group_id}
             group_code={groupCode}
             token={props.token}
