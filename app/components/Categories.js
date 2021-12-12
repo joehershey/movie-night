@@ -152,7 +152,7 @@ function Categories(props) {
 
         {moviesToRender}
         {!noMore && movies.length != 0 && (
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="LoadMoreButton"
             onPress={() => {
               getMovies(true);
             }}
