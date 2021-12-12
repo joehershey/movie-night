@@ -22,11 +22,4 @@ describe('Test Queue', () => {
         await expect(global.tree).toMatchSnapshot();
     });
 
-    it("Check for iOS keyboardControl and simulate press", () => {
-        const container = shallow(<Queue />);
-        const keyboardControl = container.find(TouchableWithoutFeedback); // finds onPress => keyboardControl()
-        //console.log(keyboardControl.debug())
-        // keyboardControl.props().onPress(); // calls keyboardControl()
-        // expect(keyboardControl.exists());
-    });
 });
