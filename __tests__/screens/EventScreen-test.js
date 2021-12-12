@@ -15,7 +15,6 @@ describe('Test Event Screen', () => {
         console.error = jest.fn(); // mutes expect API call error
         const container = shallow(<EventScreen />);
         const onPress = container.find(TouchableWithoutFeedback).at(0); // finds onPress => isGoing()
-        console.log(onPress.debug())
         onPress.props().onPress(); // calls isGoing()
         expect(onPress.exists());
     });
@@ -24,7 +23,6 @@ describe('Test Event Screen', () => {
         console.error = jest.fn(); // mutes expect API call error
         const container = shallow(<EventScreen />);
         const onPress = container.find(TouchableWithoutFeedback).at(1); // finds onPress => isNotGoing()
-        console.log(onPress.debug())
         onPress.props().onPress(); // calls isNotGoing()
         expect(onPress.exists());
     });    
