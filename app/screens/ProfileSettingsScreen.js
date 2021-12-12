@@ -48,7 +48,7 @@ function ProfileSettingsScreen(props) {
         <Text style={{ fontSize: 30 }}>{"Username: " + props.username}</Text>
 
         <View style={{ width: "100%", alignItems: "center" }}>
-          <TouchableWithoutFeedback onPress={() => toggleShowPopup(!showPopup)}>
+          <TouchableWithoutFeedback testID="ChangePasswordButton" onPress={() => toggleShowPopup(!showPopup)}>
             <View
               style={[
                 STYLES.settingsButtons,
@@ -62,7 +62,7 @@ function ProfileSettingsScreen(props) {
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="NavigateButton"
             onPress={() => props.navigation.navigate("Welcome")}
           >
             <View
@@ -75,7 +75,7 @@ function ProfileSettingsScreen(props) {
               <Text style={[{ color: "white", fontSize: 20 }]}>Log out</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="DeleteAccountButton"
             onPress={() => toggleShowDelete(!showDelete)}
           >
             <View
