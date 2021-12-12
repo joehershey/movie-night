@@ -10,21 +10,22 @@ import { shallow, configure } from 'enzyme';
 configure({adapter: new Adapter()});
 
 describe('Test Event Screen', () => {
-    it("Does basic test", () => {
-        //const toggleShowPopup = jest.fn()
-        console.error = jest.fn();
-        props = {
-            url: "https://sample.com/",
-            is_admin: true
-        }
-        const { getByTestId } = render(<EventScreen {...props}/>);
-        // FIXME: need to set state somehow to use these
-        //fireEvent.press(getByTestId('StartVoteButton'));
-        //fireEvent.press(getByTestId('VoteButton'));
-        fireEvent.press(getByTestId('GoingButton'));
-        fireEvent.press(getByTestId('NotGoingButton'));
-
-        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
-    });
     
+    it("Check for onPress isGoing() function and simulate press", () => {
+        console.error = jest.fn(); // mutes expect API call error
+        const container = shallow(<EventScreen />);
+        const onPress = container.find(TouchableWithoutFeedback).at(0); // finds onPress => isGoing()
+        console.log(onPress.debug())
+        onPress.props().onPress(); // calls isGoing()
+        expect(onPress.exists());
+    });
+
+    it("Check for onPress isNotGoing() function and simulate press", () => {
+        console.error = jest.fn(); // mutes expect API call error
+        const container = shallow(<EventScreen />);
+        const onPress = container.find(TouchableWithoutFeedback).at(1); // finds onPress => isNotGoing()
+        console.log(onPress.debug())
+        onPress.props().onPress(); // calls isNotGoing()
+        expect(onPress.exists());
+    });    
 });
