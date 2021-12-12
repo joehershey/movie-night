@@ -1,6 +1,7 @@
 import LoginScreen from '../../app/screens/LoginScreen';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {render, fireEvent} from '@testing-library/react-native';
 import Adapter from 'enzyme-adapter-react-16';
 import { TouchableWithoutFeedback } from "react-native";
 import { shallow, configure } from 'enzyme';
@@ -13,6 +14,18 @@ describe('Test Login Screen', () => {
 
     it("Login screen renders properly", async () => {
         await expect(global.tree).toMatchSnapshot();
+    });
+
+    it("Does basic test", () => {
+        // const toggleShowPopup = jest.fn()
+        props = {
+        }
+        const { getByTestId } = render(<LoginScreen {...props}/>);
+        fireEvent.changeText(getByTestId('EnterUserName'), 'JESTusername');
+        fireEvent.changeText(getByTestId('EnterPassword'), 'JESTpassword');
+        fireEvent.press(getByTestId('LogInButton'));
+        fireEvent.press(getByTestId('NavigateButton'));  // Fails because cannot read navigate of undefined
+        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
     });
 
     it("Check keyboard control on press", () => {

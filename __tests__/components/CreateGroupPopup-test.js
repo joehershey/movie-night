@@ -1,6 +1,7 @@
 import CreateGroupPopup from "../../app/components/CreateGroupPopup";
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {render, fireEvent} from '@testing-library/react-native';
 import Adapter from 'enzyme-adapter-react-16';
 import { TouchableWithoutFeedback } from "react-native";
 import { shallow, configure } from 'enzyme';
@@ -29,6 +30,40 @@ describe('Test Create Group Popup', () => {
         const onSubmit = container.find(TouchableWithoutFeedback).at(1); // finds onPress => onSubmit()
         onSubmit.props().onPress(); // calls onPress()
         expect(onSubmit.exists());
+    });
+
+    it("Enters standard group name and alias presses submit", () => {
+        alert = jest.fn(); // mutes plese enter group name alert
+        const showPopup = jest.fn();
+        const toggleShowPopup = jest.fn();
+        const setLoaded = jest.fn();
+        props = {
+            showPopup,
+            toggleShowPopup,
+            setLoaded
+        }
+        const { getByTestId } = render(<CreateGroupPopup {...props}/>);
+        fireEvent.changeText(getByTestId('MobileCreateGroup'), 'JESTTestGroup');
+        fireEvent.changeText(getByTestId('MobileGroupAlias'), 'JESTTestAlias');
+        fireEvent.press(getByTestId('MobileSubmitButton'));
+        fireEvent.press(getByTestId('MobileConfirmButton'));
+    });
+
+    it("Enters a group name with no alias", () => {
+        alert = jest.fn(); // mutes plese enter group name alert
+        const showPopup = jest.fn();
+        const toggleShowPopup = jest.fn();
+        const setLoaded = jest.fn();
+        props = {
+            showPopup,
+            toggleShowPopup,
+            setLoaded
+        }
+        const { getByTestId } = render(<CreateGroupPopup {...props}/>);
+        fireEvent.changeText(getByTestId('MobileCreateGroup'), 'JESTTestGroup');
+        fireEvent.changeText(getByTestId('MobileGroupAlias'), '');
+        fireEvent.press(getByTestId('MobileSubmitButton'));
+        fireEvent.press(getByTestId('MobileConfirmButton'));
     });
 
     it("Find and simulate onPress => onClose function", () => {

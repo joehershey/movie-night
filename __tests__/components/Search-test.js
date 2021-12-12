@@ -27,8 +27,33 @@ describe('Test Search', () => {
         loadMore = true
         const container = shallow(<Search {...loadMore}/>);
         const onChange = container.find(TextInput); // finds onSubmitEditing => getMovies()
-        console.log(onChange.debug())
+        //console.log(onChange.debug())
         onChange.props().onChange(); // calls getMovies()
         expect(onChange.exists());
     });
+
+/*     it("Something", () => {
+        // FIXME: why doesn't this work?
+        const getMovies = jest.fn();
+        const props = {
+            getMovies
+        }
+        const container = shallow(<Search {...props}/>);
+        const onSubmit = container.find(TextInput); // finds onSubmitEditing => getMovies()
+        console.log(onSubmit.debug())
+        onSubmit.props().onSubmitEditing(); // calls getMovies()
+        expect(getMovies).toBeCalledTimes(1);
+    }); */
+
+
+/*     it("Get movies button", () => {
+        const getMovies = jest.fn();
+        const container = shallow(<Search />);
+        console.log(container)
+        //const getMoviesButton = container.find(View);
+        //console.log(getMoviesButton.debug());
+        //console.log(onChange.debug())
+        getMoviesButton.props().onPress(); // calls getMovies()
+        expect(getMovies).toBeCalledTimes(1);
+    }); */
 });
