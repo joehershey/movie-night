@@ -24,6 +24,7 @@ describe('Test Group Settings Screen', () => {
             isAdmin
         }
         const { getByTestId } = render(<GroupSettingsScreen {...props}/>);
+        console.log(getByTestId)
         fireEvent.press(getByTestId('NewCodeButton'));
 
         //fireEvent.changeText(getByTestId('EditGroupName'), 'JESTGroupName');
