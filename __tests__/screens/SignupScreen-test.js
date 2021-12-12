@@ -18,15 +18,19 @@ describe('Test Signup Screen', () => {
     });
 
     it("Does basic test", () => {
-        // const toggleShowPopup = jest.fn()
+        const navigate = jest.fn()
         props = {
+            navigation: {
+                navigate
+            }
         }
         const { getByTestId } = render(<SignupScreen {...props}/>);
         fireEvent.changeText(getByTestId('EnterEmail'), 'JESTEmail');
         fireEvent.changeText(getByTestId('EnterPassword'), 'JESTpassword');
         fireEvent.press(getByTestId('SignUpButton'));
-        fireEvent.press(getByTestId('NavigateButton'));  // Fails because cannot read navigate of undefined
+        fireEvent.press(getByTestId('NavigateButton'));
         // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
+        expect(navigate).toBeCalledTimes(1); // confirms navigate call
     });
 
     it("Check keyboard control on press", () => {
