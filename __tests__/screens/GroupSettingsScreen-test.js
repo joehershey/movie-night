@@ -31,7 +31,6 @@ describe('Test Group Settings Screen', () => {
         }
         const container = shallow(<GroupSettingsScreen {...props} />);
         const groupSettings = container.find(GroupSettings); // finds group settings block
-        console.log(container.debug())
         //simulate group settings
         groupSettings.props().setMaxMovies("5");
         groupSettings.props().setGroupName("test");
