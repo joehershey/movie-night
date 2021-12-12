@@ -42,7 +42,7 @@ function SearchMoviesScreen(props) {
             margin: 10,
           }}
         >
-          <TouchableWithoutFeedback onPress={() => setDisplay("categories")}>
+          <TouchableWithoutFeedback testID="CategoriesButton" onPress={() => setDisplay("categories")}>
             <View
               style={[
                 styles.selectButton,
@@ -67,7 +67,7 @@ function SearchMoviesScreen(props) {
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress={() => setDisplay("search")}>
+          <TouchableWithoutFeedback testID="SearchButton" onPress={() => setDisplay("search")}>
             <View
               style={[
                 styles.selectButton,
