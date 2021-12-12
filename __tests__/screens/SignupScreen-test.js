@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import { TouchableWithoutFeedback, TextInput } from "react-native";
 import { shallow, configure } from 'enzyme';
+import {render, fireEvent} from '@testing-library/react-native';
 
 configure({adapter: new Adapter()});
 
@@ -14,6 +15,18 @@ describe('Test Signup Screen', () => {
 
     it("Signup screen renders properly", async () => {
         await expect(global.tree).toMatchSnapshot();
+    });
+
+    it("Does basic test", () => {
+        // const toggleShowPopup = jest.fn()
+        props = {
+        }
+        const { getByTestId } = render(<SignupScreen {...props}/>);
+        fireEvent.changeText(getByTestId('EnterEmail'), 'JESTEmail');
+        fireEvent.changeText(getByTestId('EnterPassword'), 'JESTpassword');
+        fireEvent.press(getByTestId('SignUpButton'));
+        fireEvent.press(getByTestId('NavigateButton'));  // Fails because cannot read navigate of undefined
+        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
     });
 
     it("Check keyboard control on press", () => {

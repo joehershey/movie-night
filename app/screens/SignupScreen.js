@@ -85,6 +85,7 @@ function SignupScreen(props) {
             onChangeText={changeEmail}
             value={email}
             placeholder="Enter email:"
+            testID="EnterEmail"
           />
 
           <TextInput
@@ -93,9 +94,10 @@ function SignupScreen(props) {
             value={password}
             placeholder="Enter password:"
             secureTextEntry={true}
+            testID="EnterPassword"
           />
 
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="SignUpButton"
             onPress={() => {
               if (username == "" || password == "" || email == "") {
                 Alert.alert("Please fill out all fields");
@@ -109,7 +111,7 @@ function SignupScreen(props) {
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="NavigateButton"
             onPress={() => props.navigation.navigate("Welcome")}
           >
             <View style={[STYLES.returnBtn]}>
