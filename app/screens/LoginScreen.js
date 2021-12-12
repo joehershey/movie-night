@@ -77,6 +77,7 @@ function LoginScreen(props) {
             onChangeText={changeUsername}
             value={username}
             placeholder="Enter username:"
+            testID="EnterUserName"
           />
 
           <TextInput
@@ -85,16 +86,17 @@ function LoginScreen(props) {
             value={password}
             placeholder="Enter password:"
             secureTextEntry={true}
+            testID="EnterPassword"
           />
 
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="LogInButton"
             onPress={() => checkCredentials()} //checking w/ API and navigating
           >
             <View style={[STYLES.lgButton, STYLES.btn]}>
               <Text style={[{ color: "white", fontSize: 30 }]}>Log In</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
+          <TouchableWithoutFeedback testID="NavigateButton"
             onPress={() => props.navigation.navigate("Welcome")}
           >
             <View style={[STYLES.returnBtn]}>
