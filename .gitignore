@@ -11,6 +11,7 @@ npm-debug.*
 web-build/
 *.snap
 *.html
+coverage/
 
 # macOS
 .DS_Store
