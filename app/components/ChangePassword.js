@@ -98,6 +98,7 @@ function ChangePassword(props) {
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeCurrentPassword}
                     secureTextEntry={true}
+                    testID="WebCurrentPassword"
                   ></TextInput>
                 </View>
 
@@ -115,6 +116,7 @@ function ChangePassword(props) {
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeNewPassword}
                     secureTextEntry={true}
+                    testID="WebNewPassword"
                   ></TextInput>
                 </View>
                 <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
@@ -131,10 +133,11 @@ function ChangePassword(props) {
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeConfirmPassword}
                     secureTextEntry={true}
+                    testID="WebConfirmNewPassword"
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableWithoutFeedback onPress={onSubmit}>
+                  <TouchableWithoutFeedback testID="WebSubmitButton" onPress={onSubmit}>
                     <View style={[STYLES.submitButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -147,7 +150,7 @@ function ChangePassword(props) {
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback onPress={onClose}>
+                  <TouchableWithoutFeedback testID="WebCloseButton" onPress={onClose}>
                     <View style={[STYLES.closeButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -179,9 +182,7 @@ function ChangePassword(props) {
                   </Text>
                 </View>
 
-                <TouchableWithoutFeedback
-                  onPress={() => toggleShowConfirm(!showConfirm)}
-                >
+                <TouchableWithoutFeedback testID="WebConfirmButton" onPress={() => toggleShowConfirm(!showConfirm)}>
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{
@@ -227,6 +228,7 @@ function ChangePassword(props) {
                       placeholderTextColor={"#D3D3D3"}
                       onChangeText={changeCurrentPassword}
                       secureTextEntry={true}
+                      testID="MobileCurrentPassword"
                     ></TextInput>
                   </View>
 
@@ -244,6 +246,7 @@ function ChangePassword(props) {
                       placeholderTextColor={"#D3D3D3"}
                       onChangeText={changeNewPassword}
                       secureTextEntry={true}
+                      testID="MobileNewPassword"
                     ></TextInput>
                   </View>
                   <Text style={{ fontSize: 20 }}>Confirm New Password:</Text>
@@ -260,10 +263,11 @@ function ChangePassword(props) {
                       placeholderTextColor={"#D3D3D3"}
                       onChangeText={changeConfirmPassword}
                       secureTextEntry={true}
+                      testID="MobileConfirmNewPassword"
                     ></TextInput>
                   </View>
                   <View style={{ flexDirection: "row" }}>
-                    <TouchableWithoutFeedback onPress={onSubmit}>
+                    <TouchableWithoutFeedback testID="MobileSubmitButton" onPress={onSubmit}>
                       <View style={[STYLES.submitButton, STYLES.btn]}>
                         <Text
                           style={{
@@ -276,7 +280,7 @@ function ChangePassword(props) {
                         </Text>
                       </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={onClose}>
+                    <TouchableWithoutFeedback testID="MobileCloseButton" onPress={onClose}>
                       <View style={[STYLES.closeButton, STYLES.btn]}>
                         <Text
                           style={{
@@ -308,9 +312,7 @@ function ChangePassword(props) {
                     You have changed your password!
                   </Text>
                 </View>
-                <TouchableWithoutFeedback
-                  onPress={() => toggleShowConfirm(!showConfirm)}
-                >
+                <TouchableWithoutFeedback testID="MobileConfirmButton" onPress={() => toggleShowConfirm(!showConfirm)}>
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{

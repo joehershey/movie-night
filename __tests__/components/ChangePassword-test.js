@@ -1,6 +1,7 @@
 import ChangePassword from "../../app/components/ChangePassword";
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {render, fireEvent} from '@testing-library/react-native';
 import Adapter from 'enzyme-adapter-react-16';
 import { TouchableWithoutFeedback } from "react-native";
 import { shallow, configure } from 'enzyme';
@@ -23,12 +24,44 @@ describe('Test Change Password', () => {
         expect(keyboardControl.exists());
     });
 
-    it("Check for submit button and simulate press", () => {
+    it("Check for submit button and simulate press with no password input", () => {
         alert = jest.fn() // simulates alert functions that onPress calls
         const container = shallow(<ChangePassword {...alert} />);
         const onSubmit = container.find(TouchableWithoutFeedback).at(1); // finds onPress => onSubmit
         onSubmit.props().onPress(); // simulate onSubmit function, does not run else statement b/c password values aren't set
         expect(onSubmit.exists());
+    });
+    
+    it("Changes password with all three entries the same", () => {
+        alert = jest.fn() // simulates alert functions that onPress calls
+        const toggleShowPopup = jest.fn()
+        props = {
+            toggleShowPopup
+        }
+        const { getByTestId } = render(<ChangePassword {...props}/>);
+        fireEvent.changeText(getByTestId('MobileCurrentPassword'), 'JESTTestPassword');
+        fireEvent.changeText(getByTestId('MobileNewPassword'), 'NEWJESTTestPassword');
+        fireEvent.changeText(getByTestId('MobileConfirmNewPassword'), 'NEWJESTTestPassword');
+        fireEvent.press(getByTestId('MobileSubmitButton'));
+        fireEvent.press(getByTestId('MobileConfirmButton'));
+        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
+    });
+
+    it("Changes password with newPassword != confirmPassword", () => {
+        alert = jest.fn() // simulates alert functions that onPress calls
+        const toggleShowPopup = jest.fn()
+        props = {
+            toggleShowPopup
+        }
+        const { getByTestId } = render(<ChangePassword {...props}/>);
+        fireEvent.changeText(getByTestId('MobileCurrentPassword'), 'JESTTestPassword');
+        fireEvent.changeText(getByTestId('MobileNewPassword'), 'NEWJESTTestPassword');
+        fireEvent.changeText(getByTestId('MobileConfirmNewPassword'), 'NOTNEWJESTTestPassword');
+        fireEvent.press(getByTestId('MobileSubmitButton'));
+        fireEvent.press(getByTestId('MobileConfirmButton'));
+
+        // expect(getByTestId('MobileSubmitButton').exists());
+        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
     });
 
     it("Find and simulate onPress => onClose function", () => {
