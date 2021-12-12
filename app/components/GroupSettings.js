@@ -81,7 +81,7 @@ function GroupSettings(props) {
               justifyContent: "flex-end",
             }}
           >
-            <TouchableWithoutFeedback onPress={() => newCode()}>
+            <TouchableWithoutFeedback testID="NewCodeButton" onPress={() => newCode()}>
               <View
                 style={{
                   margin: 10,
@@ -154,6 +154,7 @@ function GroupSettings(props) {
                 textAlign="center"
                 value={props.groupName}
                 placeholder="New group name"
+                testID="EditGroupName"
               />
             )}
           </View>
@@ -208,13 +209,14 @@ function GroupSettings(props) {
                 textAlign="center"
                 keyboardType="number-pad"
                 placeholder="Max. # per user"
+                testID="EditMaxMoviesPerUser"
               />
             )}
           </View>
         </View>
       </View>
       {props.isAdmin && (
-        <TouchableWithoutFeedback
+        <TouchableWithoutFeedback testID="ChangeGroupSettingsButton"
           onPress={() => {
             if (edit) {
               setEdit(!edit);
