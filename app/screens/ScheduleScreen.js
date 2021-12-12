@@ -273,12 +273,14 @@ function ScheduleScreen(props) {
                 placeholder="Name"
                 onChangeText={setName}
                 value={name}
+                testID="MovieNightName"
               />
               <TextInput
                 style={STYLES.formInput}
                 placeholder={"Location (ex. 'Griffin's house')"}
                 onChangeText={setLocation}
                 value={location}
+                testID="MovieNightLocation"
               />
               <View style={{}}>
                 <DateTimePicker
@@ -288,6 +290,7 @@ function ScheduleScreen(props) {
                   is24Hour={true}
                   display="default"
                   onChange={onChangeTimeDate}
+                  testID="DateTimePick"
                 />
               </View>
               <Filters
@@ -301,7 +304,7 @@ function ScheduleScreen(props) {
               ></Filters>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <TouchableWithoutFeedback onPress={onSubmit}>
+              <TouchableWithoutFeedback testID="SubmitButton" onPress={onSubmit}>
                 <View
                   style={{
                     borderRadius: 5,
@@ -324,7 +327,7 @@ function ScheduleScreen(props) {
                 </View>
               </TouchableWithoutFeedback>
 
-              <TouchableWithoutFeedback onPress={onClear}>
+              <TouchableWithoutFeedback testID="ClearButton" onPress={onClear}>
                 <View
                   style={{
                     borderRadius: 5,
