@@ -18,28 +18,34 @@ describe('Test Delete Account', () => {
     });
 
       it("Confirm button", () => {
-        // FIXME: failing still, but does increase code coverage
-        const showConfirm = false;
-        const onConfirm = () => showConfirm();
+        const toggleShowConfirm = jest.fn();
+        const navigate = jest.fn();
         const props = {
+            navigation: {
+                navigate
+            }
         }
-        const container = shallow(<DeleteAccount {...props}/>);
-        const confirmButton = container.find(TouchableWithoutFeedback).first();
-        confirmButton.props().onPress();
-        expect(showConfirm).toBeCalledTimes(1); // checks if the mock 'onConfirm' function has been called
+        const container = shallow(<DeleteAccount {...props} {...toggleShowConfirm}/>);
+        const confirmButton = container.find(TouchableWithoutFeedback).first(); // finds onPress () => onConfirm()
+        confirmButton.props().onPress(); // simulates press
+        expect(navigate).toBeCalledTimes(1); // checks if the mock navigate function has been called
+        expect(confirmButton.exists());
     });
 
     it("Toggle show popup button", () => {
         const toggleShowPopup = jest.fn();
+        const navigate = jest.fn();
         const props = {
-            toggleShowPopup
+            toggleShowPopup,
+            navigation: {
+                navigate
+            },
+            showPopup: true
         }
         const container = shallow(<DeleteAccount {...props}/>);
-        const twf = container.find(TouchableWithoutFeedback); 
-        //console.log(twf.debug());
-        //const togglePopUpButton = container.find(TouchableWithoutFeedback).second();
-        //togglePopUpButton.props().onPress();
-        twf.at(1).props().onPress();
+        const closeButton = container.find(TouchableWithoutFeedback).at(1); 
+        closeButton.props().onPress(); // Finds and calls onPress () => toggleShowPopup()
         expect(toggleShowPopup).toBeCalledTimes(1); // checks if the mock 'toggleShowPopUp' function has been called
+        expect(closeButton.exists());
     });
 });
