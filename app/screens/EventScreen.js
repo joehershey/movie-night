@@ -351,7 +351,7 @@ function EventScreen(props) {
         >
           <View style={{ width: "100%", alignItems: "center" }}>
             {isAdmin && isVoting == 0 && (
-              <TouchableWithoutFeedback
+              <TouchableWithoutFeedback testID="StartVoteButton"
                 onPress={() => {
                   setVoting(true);
                   getMovies();
@@ -365,7 +365,7 @@ function EventScreen(props) {
               </TouchableWithoutFeedback>
             )}
             {isVoting == 1 && (
-              <TouchableWithoutFeedback
+              <TouchableWithoutFeedback testID="VoteButton"
                 onPress={() => {
                   getMovies();
                   props.navigation.navigate("Voting");
@@ -410,12 +410,12 @@ function EventScreen(props) {
           </Text>
 
           <View style={{ flexDirection: "row", marginBottom: 30 }}>
-            <TouchableWithoutFeedback onPress={isGoing}>
+            <TouchableWithoutFeedback testID="GoingButton" onPress={isGoing}>
               <View style={[STYLES.goingButton, STYLES.btn]}>
                 <Text style={[{ color: "white", fontSize: 20 }]}>Going</Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={isNotGoing}>
+            <TouchableWithoutFeedback testID="NotGoingButton" onPress={isNotGoing}>
               <View style={[STYLES.notGoingButton, STYLES.btn]}>
                 <Text style={[{ color: "white", fontSize: 20 }]}>
                   Not Going
