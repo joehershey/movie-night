@@ -141,6 +141,7 @@ function CreateGroupPopup(props) {
                     placeholder={"Group Name"}
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeGroupName}
+                    testID="WebGroupName"
                   ></TextInput>
                 </View>
 
@@ -159,10 +160,11 @@ function CreateGroupPopup(props) {
                     placeholder={"Alias"}
                     placeholderTextColor={"#D3D3D3"}
                     onChangeText={changeAlias}
+                    testID="WebGroupAlias"
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableWithoutFeedback onPress={onSubmit}>
+                  <TouchableWithoutFeedback testID="WebSubmit" onPress={onSubmit}>
                     <View style={[STYLES.submitButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -175,7 +177,7 @@ function CreateGroupPopup(props) {
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback onPress={onClose}>
+                  <TouchableWithoutFeedback testID="WebClose" onPress={onClose}>
                     <View style={[STYLES.closeButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -212,7 +214,7 @@ function CreateGroupPopup(props) {
                     ". Use it to invite other members! You " +
                     "can also view it later in your Group Settings."}
                 </Text>
-                <TouchableWithoutFeedback onPress={onConfirm}>
+                <TouchableWithoutFeedback testID="WebConfirm" onPress={onConfirm}>
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{
@@ -257,6 +259,7 @@ function CreateGroupPopup(props) {
                       placeholder={"Group Name"}
                       placeholderTextColor={"#D3D3D3"}
                       onChangeText={changeGroupName}
+                      testID="MobileCreateGroup"
                     ></TextInput>
                   </View>
 
@@ -275,10 +278,11 @@ function CreateGroupPopup(props) {
                       placeholder={"Alias"}
                       placeholderTextColor={"#D3D3D3"}
                       onChangeText={changeAlias}
+                      testID="MobileGroupAlias"
                     ></TextInput>
                   </View>
                   <View style={{ flexDirection: "row" }}>
-                    <TouchableWithoutFeedback onPress={onSubmit}>
+                    <TouchableWithoutFeedback testID="MobileSubmitButton" onPress={onSubmit}>
                       <View style={[STYLES.submitButton, STYLES.btn]}>
                         <Text
                           style={{
@@ -291,7 +295,7 @@ function CreateGroupPopup(props) {
                         </Text>
                       </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={onClose}>
+                    <TouchableWithoutFeedback testID="MobileClose" onPress={onClose}>
                       <View style={[STYLES.closeButton, STYLES.btn]}>
                         <Text
                           style={{
@@ -329,7 +333,7 @@ function CreateGroupPopup(props) {
                     ". Use it to invite other members! You " +
                     "can also view it later in your Group Settings."}
                 </Text>
-                <TouchableWithoutFeedback onPress={onConfirm}>
+                <TouchableWithoutFeedback testID="MobileConfirmButton" onPress={onConfirm}>
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{

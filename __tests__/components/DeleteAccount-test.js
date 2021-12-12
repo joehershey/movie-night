@@ -17,8 +17,8 @@ describe('Test Delete Account', () => {
         await expect(global.tree).toMatchSnapshot();
     });
 
-     it("Confirm button", () => {
-        // FIXME: failing still
+      it("Confirm button", () => {
+        // FIXME: failing still, but does increase code coverage
         const showConfirm = false;
         const onConfirm = () => showConfirm();
         const props = {
