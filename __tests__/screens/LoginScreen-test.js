@@ -17,15 +17,20 @@ describe('Test Login Screen', () => {
     });
 
     it("Does basic test", () => {
-        // const toggleShowPopup = jest.fn()
+        console.error = jest.fn(); // mutes expected API call error
+        const navigate = jest.fn();
         props = {
+            navigation: {
+                navigate
+            }
         }
         const { getByTestId } = render(<LoginScreen {...props}/>);
         fireEvent.changeText(getByTestId('EnterUserName'), 'JESTusername');
         fireEvent.changeText(getByTestId('EnterPassword'), 'JESTpassword');
         fireEvent.press(getByTestId('LogInButton'));
-        fireEvent.press(getByTestId('NavigateButton'));  // Fails because cannot read navigate of undefined
+        fireEvent.press(getByTestId('NavigateButton'));  // Finds onPress () => props.navigation.navigate("Welcome") and calls mock function
         // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
+        expect(navigate).toBeCalledTimes(1);
     });
 
     it("Check keyboard control on press", () => {
