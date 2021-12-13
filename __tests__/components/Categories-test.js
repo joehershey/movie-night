@@ -1,9 +1,10 @@
 import Categories from "../../app/components/Categories";
+import Filters from "../../app/components/Filters";
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {render, fireEvent} from '@testing-library/react-native';
+
 import Adapter from 'enzyme-adapter-react-16';
-import { TouchableWithoutFeedback, Filters, View} from "react-native";
 import { shallow, configure } from 'enzyme';
 
 configure({adapter: new Adapter()});
@@ -17,15 +18,15 @@ describe('Test Categories', () => {
         await expect(global.tree).toMatchSnapshot();
     });
 
-    it("Renders movies", () => {
-        const toggleShowPopup = jest.fn()
-        props = {
-        }
-        // FIXME:
-        // I think this doesn't work because there are no movies loading to start
-        // We need a way to add movies like a user would
-        // const { getByTestId } = render(<Categories {...props}/>);
-        // fireEvent.press(getByTestId('LoadMoreButton'));
-        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
-    });
+    jest.useFakeTimers(); // mutes expected async fetch error
+    it("Check keyboard control on press", () => {
+        const container = shallow(<Categories />);
+        const filters = container.find(Filters); // finds <Filters> block
+        // call functions in block
+        filters.props().setGenres();
+        filters.props().setWatchProviders();
+        filters.props().getMovies();
+        filters.props().setPage();
+        expect(filters.exists());
+    })
 });
