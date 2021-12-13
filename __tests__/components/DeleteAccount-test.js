@@ -17,7 +17,7 @@ describe('Test Delete Account', () => {
         await expect(global.tree).toMatchSnapshot();
     });
 
-      it("Confirm button", () => {
+    it("Confirm button", () => {
         const toggleShowConfirm = jest.fn();
         const navigate = jest.fn();
         const props = {
