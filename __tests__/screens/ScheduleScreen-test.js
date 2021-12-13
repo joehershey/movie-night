@@ -4,16 +4,9 @@ import renderer from 'react-test-renderer';
 import {render, fireEvent} from '@testing-library/react-native';
 
 describe('Test Schedule Screen', () => {
-    beforeEach( async () => {
-        global.tree = renderer.create(<ScheduleScreen />).toJSON();
-    });
-
-    it("Schedule screen renders properly", async () => {
-        await expect(global.tree).toMatchSnapshot();
-    });
-
     it("Does basic test", () => {
         // const toggleShowPopup = jest.fn()
+        console.error = jest.fn();
         props = {
         }
         const { getByTestId } = render(<ScheduleScreen {...props}/>);

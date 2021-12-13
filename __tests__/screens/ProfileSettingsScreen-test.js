@@ -12,14 +12,18 @@ describe('Test Profile Settings Screen', () => {
         await expect(global.tree).toMatchSnapshot();
     });
 
-    it("Does basic test", () => {
-        // const toggleShowPopup = jest.fn()
+    it("Find onPress events and simulate press", () => {
+        const navigate = jest.fn()
         props = {
+            navigation: {
+                navigate
+            }
         }
         const { getByTestId } = render(<ProfileSettingsScreen {...props}/>);
-        fireEvent.press(getByTestId('ChangePasswordButton'));
-        fireEvent.press(getByTestId('NavigateButton'));  // Fails because cannot read navigate of undefined
-        fireEvent.press(getByTestId('DeleteAccountButton'));
-        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
+        fireEvent.press(getByTestId('ChangePasswordButton')) // calls onPress () => toggleShowPopup()
+        fireEvent.press(getByTestId('NavigateButton')); // calls onPress props.navigation.navigate("Welcome")
+        fireEvent.press(getByTestId('DeleteAccountButton')); // calls onPress () => toggleShowDelete()
+        //console.log(getByTestId('MobileCurrentPassword').props).toEqual('JESTTestPassword');
+        expect(navigate).toBeCalledTimes(1); // confirms navigate call
     });
 });

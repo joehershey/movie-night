@@ -25,7 +25,7 @@ function DeleteAccount(props) {
 
   const onConfirm = () => {
     // access the database, delete the users account and then send them to welcome screen logged out
-    showConfirm(false);
+    toggleShowConfirm(false);
     props.navigation.navigate("Welcome");
   };
 

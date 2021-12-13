@@ -16,7 +16,7 @@ describe('Test Group Settings', () => {
         await expect(global.tree).toMatchSnapshot();
     });
 
-    it("Check for edit button and simulate press", () => {
+    it("Check for newCode() event and simulate press", () => {
         console.error = jest.fn(); // mutes expected console error of invalid prop
         props = {
             isAdmin: true,
@@ -28,7 +28,23 @@ describe('Test Group Settings', () => {
             }
         }
         const container = shallow(<GroupSettings {...props}/>);
-        const edit = container.find(TouchableWithoutFeedback).first(); // finds onPress function that calls setEdit
+        const onPress = container.find(TouchableWithoutFeedback).first(); // finds onPress function that calls newCode()
+        onPress.props().onPress(); // simulate newCode()
+        expect(onPress.exists());
+    });
+
+    it("Check for edit button and simulate press", () => {
+        props = {
+            isAdmin: true,
+            maxMovies: {
+                length: 0
+            },
+            groupName: {
+                length: 0
+            }
+        }
+        const container = shallow(<GroupSettings {...props}/>);
+        const edit = container.find(TouchableWithoutFeedback).at(1); // finds onPress function that calls setEdit
         edit.props().onPress(); // simulate onPress event
         expect(edit.exists());
     });

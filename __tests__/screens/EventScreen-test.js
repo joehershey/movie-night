@@ -3,27 +3,27 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {render, fireEvent} from '@testing-library/react-native';
 
+import Adapter from 'enzyme-adapter-react-16';
+import { TouchableWithoutFeedback } from "react-native";
+import { shallow, configure } from 'enzyme';
+
+configure({adapter: new Adapter()});
+
 describe('Test Event Screen', () => {
-    beforeEach( async () => {
-        global.tree = renderer.create(<EventScreen />).toJSON();
-    });
-
-    it("Event screen renders properly", async () => {
-        await expect(global.tree).toMatchSnapshot();
-    });
-
-    it("Does basic test", () => {
-        //const toggleShowPopup = jest.fn()
-        props = {
-        }
-        const { getByTestId } = render(<EventScreen {...props}/>);
-        // FIXME: need to set state somehow to use these
-        //fireEvent.press(getByTestId('StartVoteButton'));
-        //fireEvent.press(getByTestId('VoteButton'));
-        fireEvent.press(getByTestId('GoingButton'));
-        fireEvent.press(getByTestId('NotGoingButton'));
-
-        // expect(getByTestId('MobileCurrentPassword').props.value).toEqual('JESTTestPassword');
-    });
     
+    it("Check for onPress isGoing() function and simulate press", () => {
+        console.error = jest.fn(); // mutes expect API call error
+        const container = shallow(<EventScreen />);
+        const onPress = container.find(TouchableWithoutFeedback).at(0); // finds onPress => isGoing()
+        onPress.props().onPress(); // calls isGoing()
+        expect(onPress.exists());
+    });
+
+    it("Check for onPress isNotGoing() function and simulate press", () => {
+        console.error = jest.fn(); // mutes expect API call error
+        const container = shallow(<EventScreen />);
+        const onPress = container.find(TouchableWithoutFeedback).at(1); // finds onPress => isNotGoing()
+        onPress.props().onPress(); // calls isNotGoing()
+        expect(onPress.exists());
+    });    
 });
