@@ -1,29 +1,64 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   SafeAreaView,
   ScrollView,
 } from "react-native";
 
-import { COLORS, STYLES } from "../assets/saved";
+import { STYLES } from "../assets/saved";
 import TopBar from "../components/TopBar";
-import { TEST_DATA } from "../assets/testData";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import fetch from "cross-fetch";
 
 function EventScreen(props) {
   const [currentEvent, setEvent] = useState([]);
+  const [currentGenres, setGenres] = useState([]);
+  const [currentPlatforms, setPlatforms] = useState([]);
   const [dateTime, setDateTime] = useState(new Date());
   const [userList, setUserList] = useState([]);
   const [rsvpList, setRSVPList] = useState([]);
   const [isLoaded, toggleLoaded] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isVoting, setIsVoting] = useState(0);
+
+  const genresKeys = [
+    { name: "Action", id: 28 },
+    { name: "Adventure", id: 12 },
+    { name: "Animation", id: 16 },
+    { name: "Comedy", id: 35 },
+    { name: "Crime", id: 80 },
+    { name: "Documentary", id: 99 },
+    { name: "Drama", id: 18 },
+    { name: "Family", id: 10751 },
+    { name: "Fantasy", id: 14 },
+    { name: "History", id: 36 },
+    { name: "Horror", id: 27 },
+    { name: "Music", id: 10402 },
+    { name: "Mystery", id: 9648 },
+    { name: "Romance", id: 10749 },
+    { name: "Sci Fi", id: 878 },
+    { name: "Thriller", id: 53 },
+    { name: "War", id: 10752 },
+    { name: "Western", id: 37 },
+  ];
+
+  const servicesKeys = [
+    { name: "Netflix", id: 8 },
+    { name: "Hulu", id: 15 },
+    { name: "Disney +", id: 337 },
+    { name: "Peacock", id: 386 },
+    { name: "Paramount +", id: 531 },
+    { name: "Prime Video", id: 199 },
+    { name: "HBO Max", id: 384 },
+  ];
+
+  if (!isLoaded) {
+    getEventInfoAPI();
+    toggleLoaded(true);
+  }
 
   //added by joe, hitting vote locks in top 3 movies
   const [htmlMovies, setHtmlMovies] = useState([]);
@@ -39,11 +74,13 @@ function EventScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log("a");
-        console.log(responseJson);
         setEvent(responseJson);
         setDateTime(new Date(responseJson.start_time));
+        getGenres(responseJson.genres);
+        getPlatforms(responseJson.services);
         setIsVoting(responseJson.voting_mode);
+        getUsersAPI();
+        getRSVPListAPI();
       })
       .catch((error) => {
         console.error(error);
@@ -66,9 +103,7 @@ function EventScreen(props) {
         }),
       })
         .then((response) => response.json())
-        .then((responseJson) => {
-          console.log("new");
-        })
+        .then((responseJson) => {})
         .catch((error) => {
           console.error(error);
         });
@@ -85,9 +120,7 @@ function EventScreen(props) {
         }),
       })
         .then((response) => response.json())
-        .then((responseJson) => {
-          console.log("old");
-        })
+        .then((responseJson) => {})
         .catch((error) => {
           console.error(error);
         });
@@ -105,7 +138,6 @@ function EventScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log("a");
         setUserList(responseJson);
         checkAdminStatus(responseJson);
       })
@@ -158,6 +190,67 @@ function EventScreen(props) {
     return hours + ":" + minutes + " " + end;
   }
 
+  /*
+    Called by getEventInfoAPI. Retrieves the genre info for the current event
+    and processes the data to be displayed.
+  */
+  function getGenres(genreList) {
+    if (genreList == undefined) {
+      return [];
+    }
+
+    // if no genres are chosen, we choose any
+    if (genreList.length == 0) {
+      setGenres(["Any"]);
+    }
+
+    // fix for duplication error - check if genres have been loaded already
+    if (currentGenres.length == genreList.length) {
+      return currentGenres;
+    }
+
+    for (const [i, genreNum] of genreList.entries()) {
+      for (const [j, genre] of genresKeys.entries()) {
+        if (genreNum === genre.id) {
+          const newGenres = currentGenres;
+          newGenres.push(genre.name);
+          setGenres(newGenres);
+        }
+      }
+    }
+    return currentGenres;
+  }
+
+  /*
+    Called by getEventInfoAPI. Retrieves the platform info for the current event
+    and processes the data to be displayed.
+  */
+  function getPlatforms(platformList) {
+    if (platformList == undefined) {
+      return [];
+    }
+
+    // if no platforms are selected, we assume all are chosen
+    if (platformList.length == 0) {
+      setPlatforms(["Any"]);
+    }
+
+    // fix for duplication error - check if platforms have been loaded already
+    if (platformList.length == currentPlatforms.length) {
+      return currentPlatforms;
+    }
+    for (const [i, platformNum] of platformList.entries()) {
+      for (const [j, platform] of servicesKeys.entries()) {
+        if (platformNum === platform.id) {
+          const newPlatforms = currentPlatforms;
+          newPlatforms.push(platform.name);
+          setPlatforms(newPlatforms);
+        }
+      }
+    }
+    return currentPlatforms;
+  }
+
   function RSVPcontains(user_id) {
     for (const [j, rsvp] of rsvpList.entries()) {
       if (user_id == rsvp.user_id) {
@@ -176,6 +269,7 @@ function EventScreen(props) {
     }
   }
 
+  // process of sorting users into RSVP groups
   const usersGoing = [];
   const usersNotGoing = [];
   const usersNoResponse = [];
@@ -210,22 +304,15 @@ function EventScreen(props) {
     }
   }
 
-  if (!isLoaded) {
-    getEventInfoAPI();
-    getUsersAPI();
-    getRSVPListAPI();
-    toggleLoaded(true);
-  }
-
-  const isGoing = () => {
+  function isGoing() {
     RSVPAPI(true);
     toggleLoaded(false);
-  };
+  }
 
-  const isNotGoing = () => {
+  function isNotGoing() {
     RSVPAPI(false);
     toggleLoaded(false);
-  };
+  }
 
   //added by joe, getting top 3 movies
   var movies = [];
@@ -241,7 +328,6 @@ function EventScreen(props) {
       .then((response) => response.json())
       .then((responseJson) => {
         movies = [];
-        console.log(responseJson);
         for (const [i, movie] of responseJson.entries()) {
           movies.push(movie);
           console.log(movie);
@@ -312,10 +398,11 @@ function EventScreen(props) {
         console.error(error);
       }); */
   }
-  function setVoting() {
-    console.log("voting true");
-    setIsVoting(1);
-    /* fetch(props.url + "event/" + props.event_id ,{
+
+  //changes voting mode on database
+  function setVoting(mode) {
+    setIsVoting(mode);
+    fetch(props.url + "event/" + props.event_id, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -323,7 +410,7 @@ function EventScreen(props) {
       },
       method: "PATCH",
       body: JSON.stringify({
-        voting_mode: 1,
+        voting_mode: mode,
       }),
     })
       .then((response) => response.json())
@@ -332,7 +419,55 @@ function EventScreen(props) {
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
+  }
+
+  function checkVotingAPI() {
+    fetch(props.url + "group/" + props.group_id + "/events", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        let flag = false;
+        for (const [i, event] of responseJson.entries()) {
+          if (event.event_id != props.event_id && event.voting_mode == 1) {
+            alert(
+              "Another event is voting. Please finish or cancel that voting session."
+            );
+            flag = true;
+          }
+        }
+        if (!flag) {
+          setVoting(1);
+          getMovies();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  // function for starting voting
+  function startVoting() {
+    checkVotingAPI();
+  }
+
+  // function for finishing votings
+  function finishVoting() {
+    setVoting(0);
+    // set the group's movie to selected one
+  }
+
+  // function for cancelling voting
+  function cancelVoting() {
+    setVoting(0);
+    // do not set group's movie, voting is unsuccessful
   }
 
   return (
@@ -351,11 +486,9 @@ function EventScreen(props) {
         >
           <View style={{ width: "100%", alignItems: "center" }}>
             {isAdmin && isVoting == 0 && (
-              <TouchableWithoutFeedback testID="StartVoteButton"
-                onPress={() => {
-                  setVoting(true);
-                  getMovies();
-                }}
+              <TouchableWithoutFeedback
+                testID="StartVoteButton"
+                onPress={startVoting}
               >
                 <View style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}>
                   <Text style={[{ color: "white", fontSize: 30 }]}>
@@ -365,7 +498,8 @@ function EventScreen(props) {
               </TouchableWithoutFeedback>
             )}
             {isVoting == 1 && (
-              <TouchableWithoutFeedback testID="VoteButton"
+              <TouchableWithoutFeedback
+                testID="VoteButton"
                 onPress={() => {
                   getMovies();
                   props.navigation.navigate("Voting");
@@ -378,36 +512,82 @@ function EventScreen(props) {
             )}
           </View>
 
-          <Text
-            style={{
-              fontSize: 25,
-              marginTop: 30,
-              textAlign: "left",
-            }}
-          >
-            {"Date: " + getDate(dateTime)}
-          </Text>
-          <Text
-            style={{
-              fontSize: 25,
-            }}
-          >
-            {"Time: " + getTime(dateTime)}
-          </Text>
-          <Text
-            style={{
-              fontSize: 25,
-            }}
-          >
-            {"Location: " + currentEvent.location}
-          </Text>
-          <Text
-            style={{
-              fontSize: 25,
-            }}
-          >
-            {"Genre: Any"}
-          </Text>
+          {isVoting == 1 && isAdmin && (
+            <View
+              style={{ flexDirection: "row", marginBottom: 30, marginTop: 30 }}
+            >
+              <TouchableWithoutFeedback
+                testID="FinishVotingButton"
+                onPress={finishVoting}
+              >
+                <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
+                  <Text style={[{ color: "white", fontSize: 20 }]}>
+                    Finish Voting
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback
+                testID="CancelVotingButton"
+                onPress={cancelVoting}
+              >
+                <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
+                  <Text style={[{ color: "white", fontSize: 20 }]}>
+                    Cancel Voting
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          )}
+
+          <View>
+            <Text
+              style={{
+                fontSize: 25,
+                marginTop: 30,
+                textAlign: "left",
+              }}
+            >
+              {"Date: " + getDate(dateTime)}
+            </Text>
+            <Text
+              style={{
+                fontSize: 25,
+              }}
+            >
+              {"Time: " + getTime(dateTime)}
+            </Text>
+            <Text
+              style={{
+                fontSize: 25,
+              }}
+            >
+              {"Location: " + currentEvent.location}
+            </Text>
+            <Text
+              style={{
+                fontSize: 25,
+              }}
+            >
+              {
+                "Movie: undecided" //TODO: fill in movie when decided
+              }
+            </Text>
+            <Text
+              style={{
+                fontSize: 25,
+              }}
+            >
+              {"Genres: " + currentGenres}
+            </Text>
+
+            <Text
+              style={{
+                fontSize: 25,
+              }}
+            >
+              {"Streaming Platforms: " + currentPlatforms}
+            </Text>
+          </View>
 
           <View style={{ flexDirection: "row", marginBottom: 30 }}>
             <TouchableWithoutFeedback testID="GoingButton" onPress={isGoing}>
@@ -415,7 +595,10 @@ function EventScreen(props) {
                 <Text style={[{ color: "white", fontSize: 20 }]}>Going</Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback testID="NotGoingButton" onPress={isNotGoing}>
+            <TouchableWithoutFeedback
+              testID="NotGoingButton"
+              onPress={isNotGoing}
+            >
               <View style={[STYLES.notGoingButton, STYLES.btn]}>
                 <Text style={[{ color: "white", fontSize: 20 }]}>
                   Not Going

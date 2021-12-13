@@ -60,6 +60,12 @@ export const STYLES = StyleSheet.create({
     height: 50,
     backgroundColor: COLORS.danger,
   },
+  cancelVotingButton: {
+    top: 10,
+    width: "40%",
+    height: 50,
+    backgroundColor: COLORS.primary,
+  },
   settingsButtons: {
     top: 10,
     width: "60%",
