@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   SafeAreaView,
   ScrollView,
-  Button,
   TextInput,
 } from "react-native";
 
 import { Card } from "react-native-elements";
 
 import { COLORS, STYLES } from "../assets/saved";
-import { FontAwesome5 } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
 import Filters from "../components/Filters";
-import { useLinkProps } from "@react-navigation/native";
 
 import fetch from "cross-fetch";
 
@@ -30,27 +25,6 @@ function ScheduleScreen(props) {
   const [watchProviders, setWatchProviders] = useState([]);
   const [genres, setGenres] = useState([]);
   const [isLoaded, toggleLoaded] = useState(false);
-
-  const genresKeys = [
-    { name: "Action", id: 28 },
-    { name: "Adventure", id: 12 },
-    { name: "Animation", id: 16 },
-    { name: "Comedy", id: 35 },
-    { name: "Crime", id: 80 },
-    { name: "Documentary", id: 99 },
-    { name: "Drama", id: 18 },
-    { name: "Family", id: 10751 },
-    { name: "Fantasy", id: 14 },
-    { name: "History", id: 36 },
-    { name: "Horror", id: 27 },
-    { name: "Music", id: 10402 },
-    { name: "Mystery", id: 9648 },
-    { name: "Romance", id: 10749 },
-    { name: "Sci Fi", id: 878 },
-    { name: "Thriller", id: 53 },
-    { name: "War", id: 10752 },
-    { name: "Western", id: 37 },
-  ];
 
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -114,7 +88,7 @@ function ScheduleScreen(props) {
 
   // date time test
 
-  const onSubmit = () => {
+  function onSubmit() {
     const currentTime = new Date();
     // create event w api
     if (name.trim() <= 0) {
@@ -125,27 +99,27 @@ function ScheduleScreen(props) {
       alert("Please enter a date in the future.");
     } else {
       createEventAPI();
-      toggleLoaded(false);
+
       setDate(new Date());
       setName("");
       setLocation("");
       setGenres([]);
       setWatchProviders([]);
     }
-  };
+  }
 
-  const onClear = () => {
+  function onClear() {
     setDate(new Date());
     setName("");
     setLocation("");
     setGenres([]);
     setWatchProviders([]);
-  };
+  }
 
   if (!isLoaded) {
     // works, but no events can be added yet
     getEventsAPI();
-    toggleLoaded(true);
+    toggleLoaded(!isLoaded);
   }
 
   function getEventsAPI() {
@@ -169,6 +143,7 @@ function ScheduleScreen(props) {
   }
 
   function createEventAPI() {
+    console.log(genres);
     fetch(props.url + "event/", {
       headers: {
         Accept: "application/json",
@@ -180,15 +155,18 @@ function ScheduleScreen(props) {
         group_id: props.group_id,
         start_time: dateString,
         location: location,
-        genre: 18,
+        genres: genres,
         tmdb_movie_id: 1,
         organized_by: props.user_id,
-        voting_mode: 1,
+        voting_mode: 0,
+        services: watchProviders,
+        genre: 18,
       }),
     })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
+        getEventsAPI();
       })
       .catch((error) => {
         console.error(error);
@@ -304,7 +282,10 @@ function ScheduleScreen(props) {
               ></Filters>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <TouchableWithoutFeedback testID="SubmitButton" onPress={onSubmit}>
+              <TouchableWithoutFeedback
+                testID="SubmitButton"
+                onPress={onSubmit}
+              >
                 <View
                   style={{
                     borderRadius: 5,
