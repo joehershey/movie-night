@@ -160,7 +160,6 @@ function ScheduleScreen(props) {
         organized_by: props.user_id,
         voting_mode: 0,
         services: watchProviders,
-        genre: 18,
       }),
     })
       .then((response) => response.json())

@@ -16,8 +16,8 @@ import fetch from "cross-fetch";
 /* This component returns one Card representing a movie searched */
 function Filters(props) {
   const [loaded, setLoaded] = useState(false);
-  const [watchProviders, setWatchProviders] = useState(props.watchProviders);
-  const [genres, setGenres] = useState(props.genres);
+  const watchProviders = props.watchProviders;
+  const genres = props.genres;
   const [expanded, setExpanded] = useState(false); //used when editing alias
   const inSearch = props.inSearch;
   const genresKeys = [
