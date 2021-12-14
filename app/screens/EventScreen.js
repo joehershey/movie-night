@@ -213,7 +213,7 @@ function EventScreen(props) {
       for (const [j, genre] of genresKeys.entries()) {
         if (genreNum === genre.id) {
           const newGenres = currentGenres;
-          newGenres.push(genre.name);
+          newGenres.push("\n\t" + genre.name);
           setGenres(newGenres);
         }
       }
@@ -243,7 +243,7 @@ function EventScreen(props) {
       for (const [j, platform] of servicesKeys.entries()) {
         if (platformNum === platform.id) {
           const newPlatforms = currentPlatforms;
-          newPlatforms.push(platform.name);
+          newPlatforms.push("\n\t" + platform.name);
           setPlatforms(newPlatforms);
         }
       }
@@ -422,40 +422,11 @@ function EventScreen(props) {
       });
   }
 
-  function checkVotingAPI() {
-    fetch(props.url + "group/" + props.group_id + "/events", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: "Bearer " + props.token,
-      },
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        let flag = false;
-        for (const [i, event] of responseJson.entries()) {
-          if (event.event_id != props.event_id && event.voting_mode == 1) {
-            alert(
-              "Another event is voting. Please finish or cancel that voting session."
-            );
-            flag = true;
-          }
-        }
-        if (!flag) {
-          setVoting(1);
-          getMovies();
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   // function for starting voting
   function startVoting() {
-    checkVotingAPI();
+    setVoting(1);
+    getMovies();
+    // must not work if others are voting
   }
 
   // function for finishing votings
@@ -539,7 +510,7 @@ function EventScreen(props) {
             </View>
           )}
 
-          <View>
+          <View style={{ width: "80%" }}>
             <Text
               style={{
                 fontSize: 25,
