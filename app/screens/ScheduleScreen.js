@@ -26,7 +26,6 @@ function ScheduleScreen(props) {
   const [genres, setGenres] = useState([]);
   const [isLoaded, toggleLoaded] = useState(false);
 
-  const [name, setName] = useState("");
   const [location, setLocation] = useState("");
 
   // date time test
@@ -91,9 +90,7 @@ function ScheduleScreen(props) {
   function onSubmit() {
     const currentTime = new Date();
     // create event w api
-    if (name.trim() <= 0) {
-      alert("Please enter a name.");
-    } else if (location.trim() <= 0) {
+    if (location.trim() <= 0) {
       alert("Please enter a location.");
     } else if (date.getTime() > currentTime.getTime) {
       alert("Please enter a date in the future.");
@@ -101,7 +98,6 @@ function ScheduleScreen(props) {
       createEventAPI();
 
       setDate(new Date());
-      setName("");
       setLocation("");
       setGenres([]);
       setWatchProviders([]);
@@ -110,7 +106,6 @@ function ScheduleScreen(props) {
 
   function onClear() {
     setDate(new Date());
-    setName("");
     setLocation("");
     setGenres([]);
     setWatchProviders([]);
@@ -144,6 +139,7 @@ function ScheduleScreen(props) {
 
   function createEventAPI() {
     console.log(genres);
+    console.log(watchProviders);
     fetch(props.url + "event/", {
       headers: {
         Accept: "application/json",
@@ -238,28 +234,31 @@ function ScheduleScreen(props) {
               style={{
                 backgroundColor: "lightgrey",
                 padding: 5,
-                alignItems: "stretch",
+                alignItems: "center",
+                alignContent: "center",
                 marginTop: 20,
                 width: 300,
+                borderRadius: 20,
               }}
             >
-              <Text style={{ fontSize: 30 }}>New Movie Night</Text>
+              <Text
+                style={{
+                  fontSize: 30,
+                  margin: 20,
+                  fontWeight: "bold",
+                }}
+              >
+                New Movie Night
+              </Text>
 
               <TextInput
                 style={STYLES.formInput}
-                placeholder="Name"
-                onChangeText={setName}
-                value={name}
-                testID="MovieNightName"
-              />
-              <TextInput
-                style={STYLES.formInput}
-                placeholder={"Location (ex. 'Griffin's house')"}
+                placeholder={"Location"}
                 onChangeText={setLocation}
                 value={location}
                 testID="MovieNightLocation"
               />
-              <View style={{}}>
+              <View style={{ width: "100%", paddingLeft: 30, margin: 20 }}>
                 <DateTimePicker
                   testID="dateTimePicker"
                   value={date}
