@@ -25,10 +25,10 @@ function VotingScreen(props) {
         message="Event"
       ></TopBar>
       {/* Content */}
-      <View style={[STYLES.content]}>
+      <View style={[STYLES.content, { backgroundColor: COLORS.primary }]}>
         <Vote
           url={props.url}
-          event_id={props.event}
+          event_id={props.event_id}
           user_id={props.user_id}
           group_id={props.group_id}
           token={props.token}

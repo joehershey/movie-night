@@ -74,6 +74,8 @@ function EventScreen(props) {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log("in getEventInfoAPI() &^");
+        console.log(responseJson);
         setEvent(responseJson);
         setDateTime(new Date(responseJson.start_time));
         getGenres(responseJson.genres);
@@ -330,6 +332,7 @@ function EventScreen(props) {
         movies = [];
         for (const [i, movie] of responseJson.entries()) {
           movies.push(movie);
+          console.log("in get movies");
           console.log(movie);
           addMovieData(movie, i, i == responseJson.length - 1);
         }
@@ -359,14 +362,13 @@ function EventScreen(props) {
         const top3 = [];
         var count = 0;
         for (const [i, movie] of movies.entries()) {
-          console.log("*****");
           if (count == 3) {
             break;
           }
           count = count + 1;
           top3.push(movie.tmdb_movie_id);
         }
-        console.log("&&&");
+        console.log("The movies in Event Screen**");
         console.log(top3);
         setEventMoviesAPI(top3);
       })
@@ -375,11 +377,10 @@ function EventScreen(props) {
       });
   }
 
-  function setEventMoviesAPI(movies) {
+  function setEventMoviesAPI(t3) {
     //call post to set the 3 movies locked in for this event
-    console.log(movies);
-    console.log("^^");
-    /* fetch(props.url + "event/" + props.event_id + "/movies", {
+    console.log(t3 + " before post call %%%" + props.event_id);
+    fetch(props.url + "event/" + props.event_id + "/movies", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json; charset=utf-8",
@@ -387,16 +388,53 @@ function EventScreen(props) {
       },
       method: "POST",
       body: JSON.stringify({
-        tmdb_movie_id: movies, // need to figure this out
+        //movie_ids: t3, //array of movie ids
+        tmdb_movie_ids: t3, //array of movie ids
       }),
     })
-      .then((response) => response.json())
+      .then((response) => response.json()) // i believe the response is null
       .then((responseJson) => {
-        toggleLoaded(false);
+        console.log("$$$set events api returns:");
+        console.log(responseJson);
+        setVoting(1);
+        //toggleLoaded(false);
       })
       .catch((error) => {
         console.error(error);
-      }); */
+      });
+  }
+
+  function getMovieRatingsAPI() {
+    //call post to set the 3 movies locked in for this event
+    console.log("acquiring ratings");
+    fetch(props.url + "event/" + props.event_id + "/rating", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "GET",
+    })
+      .then((response) => response.json()) // i believe the response is null
+      .then((responseJson) => {
+        let ranked = [];
+        if (responseJson?.length <= 0) return;
+
+        for (const [i, movie] of responseJson.entries()) {
+          ranked.push(movie);
+          console.log(movie);
+        }
+        ranked.sort((a, b) => (a.avg_rating < b.avg_rating ? 1 : -1));
+        //setSelectedMovie(ranked[0]);  **** need this
+
+        console.log("$$$set events api returns:");
+        console.log(responseJson);
+        setVoting(0);
+        //toggleLoaded(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   //changes voting mode on database
@@ -424,14 +462,13 @@ function EventScreen(props) {
 
   // function for starting voting
   function startVoting() {
-    setVoting(1);
     getMovies();
     // must not work if others are voting
   }
 
   // function for finishing votings
   function finishVoting() {
-    setVoting(0);
+    getMovieRatingsAPI();
     // set the group's movie to selected one
   }
 
@@ -472,7 +509,7 @@ function EventScreen(props) {
               <TouchableWithoutFeedback
                 testID="VoteButton"
                 onPress={() => {
-                  getMovies();
+                  //getMovies();
                   props.navigation.navigate("Voting");
                 }}
               >
