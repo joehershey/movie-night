@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Platform, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -18,7 +18,7 @@ import VotingScreen from "./app/screens/VotingScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const URL = "https://movienightapi2.azurewebsites.net/"; //FIXME: Update with URL for APU calls
+  const URL = "https://movienightapi212.azurewebsites.net/"; //FIXME: Update with URL for APU calls
 
   //save states that need to be accessed throughout app
   //state.abcd -> access here, props.abcd access in screens

@@ -9,8 +9,8 @@ import {
   Keyboard,
 } from "react-native";
 
-import { COLORS, STYLES } from "../assets/saved";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { STYLES } from "../assets/saved";
+
 import Modal from "modal-react-native-web";
 
 import fetch from "cross-fetch";
@@ -43,16 +43,33 @@ function ChangePassword(props) {
     }
     // check if current password is correct -- database call
     else {
-      toggleShowPopup(false);
-
       // here we would do a backend request to create a new group
 
-      toggleShowConfirm(true);
+      fetch(props.url + "user/" + props.user_id + "/password", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Bearer " + props.token,
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          password: newPassword,
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          toggleShowPopup(false);
+          toggleShowConfirm(true);
 
-      // erase values or else they will be stored
-      changeCurrentPassword("");
-      changeConfirmPassword("");
-      changeNewPassword("");
+          // erase values or else they will be stored
+          changeCurrentPassword("");
+          changeConfirmPassword("");
+          changeNewPassword("");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
@@ -137,7 +154,10 @@ function ChangePassword(props) {
                   ></TextInput>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <TouchableWithoutFeedback testID="WebSubmitButton" onPress={onSubmit}>
+                  <TouchableWithoutFeedback
+                    testID="WebSubmitButton"
+                    onPress={onSubmit}
+                  >
                     <View style={[STYLES.submitButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -150,7 +170,10 @@ function ChangePassword(props) {
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback testID="WebCloseButton" onPress={onClose}>
+                  <TouchableWithoutFeedback
+                    testID="WebCloseButton"
+                    onPress={onClose}
+                  >
                     <View style={[STYLES.closeButton, STYLES.btn]}>
                       <Text
                         style={{
@@ -182,7 +205,10 @@ function ChangePassword(props) {
                   </Text>
                 </View>
 
-                <TouchableWithoutFeedback testID="WebConfirmButton" onPress={() => toggleShowConfirm(!showConfirm)}>
+                <TouchableWithoutFeedback
+                  testID="WebConfirmButton"
+                  onPress={() => toggleShowConfirm(!showConfirm)}
+                >
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{
@@ -267,7 +293,10 @@ function ChangePassword(props) {
                     ></TextInput>
                   </View>
                   <View style={{ flexDirection: "row" }}>
-                    <TouchableWithoutFeedback testID="MobileSubmitButton" onPress={onSubmit}>
+                    <TouchableWithoutFeedback
+                      testID="MobileSubmitButton"
+                      onPress={onSubmit}
+                    >
                       <View style={[STYLES.submitButton, STYLES.btn]}>
                         <Text
                           style={{
@@ -280,7 +309,10 @@ function ChangePassword(props) {
                         </Text>
                       </View>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback testID="MobileCloseButton" onPress={onClose}>
+                    <TouchableWithoutFeedback
+                      testID="MobileCloseButton"
+                      onPress={onClose}
+                    >
                       <View style={[STYLES.closeButton, STYLES.btn]}>
                         <Text
                           style={{
@@ -312,7 +344,10 @@ function ChangePassword(props) {
                     You have changed your password!
                   </Text>
                 </View>
-                <TouchableWithoutFeedback testID="MobileConfirmButton" onPress={() => toggleShowConfirm(!showConfirm)}>
+                <TouchableWithoutFeedback
+                  testID="MobileConfirmButton"
+                  onPress={() => toggleShowConfirm(!showConfirm)}
+                >
                   <View style={[STYLES.closeButton, STYLES.btn]}>
                     <Text
                       style={{
