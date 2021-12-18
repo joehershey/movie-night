@@ -301,86 +301,63 @@ function GroupSettingsScreen(props) {
       ></TopBar>
       {/* Content */}
       <View style={[STYLES.content, { backgroundColor: COLORS.primary }]}>
-        {groupCode.length < 1 ? (
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: COLORS.primary,
-            }}
-          >
-            <Text
+        <ScrollView
+          style={{
+            backgroundColor: COLORS.primary,
+            flexDirection: "column",
+          }}
+          contentContainerStyle={{
+            justifyContent: "flex-start",
+            alignItems: "stretch",
+          }}
+        >
+          {/* Groups preferences edit/view based on admin status */}
+          <GroupSettings
+            maxMovies={maxMovies}
+            groupName={groupName}
+            isAdmin={isAdmin}
+            url={props.url}
+            group_id={props.group_id}
+            group_code={groupCode}
+            token={props.token}
+            setMaxMovies={(set) => setMaxMovies(set)}
+            setGroupName={(set) => setGroupName(set)}
+            changeGroupSettingsAPI={() => changeGroupSettingsAPI()}
+            setCode={() => getGroupInfoAPI()}
+          ></GroupSettings>
+
+          <View style={{ alignItems: "center" }}>
+            <View
               style={{
-                color: "white",
-                alignSelf: "center",
-                fontSize: 20,
-                margin: 20,
+                marginTop: 20,
+                flexDirection: "column",
               }}
             >
-              Loading...
-            </Text>
-          </View>
-        ) : (
-          <ScrollView
-            style={{
-              backgroundColor: COLORS.primary,
-              flexDirection: "column",
-            }}
-            contentContainerStyle={{
-              justifyContent: "flex-start",
-              alignItems: "stretch",
-            }}
-          >
-            {/* Groups preferences edit/view based on admin status */}
-            <GroupSettings
-              maxMovies={maxMovies}
-              groupName={groupName}
-              isAdmin={isAdmin}
-              url={props.url}
-              group_id={props.group_id}
-              group_code={groupCode}
-              token={props.token}
-              setMaxMovies={(set) => setMaxMovies(set)}
-              setGroupName={(set) => setGroupName(set)}
-              changeGroupSettingsAPI={() => changeGroupSettingsAPI()}
-              setCode={() => getGroupInfoAPI()}
-            ></GroupSettings>
-
-            <View style={{ alignItems: "center" }}>
-              <View
+              <Text
                 style={{
-                  marginTop: 20,
-                  flexDirection: "column",
+                  fontSize: 35,
+                  fontWeight: "bold",
+                  color: "white",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 35,
-                    fontWeight: "bold",
-                    color: "white",
-                  }}
-                >
-                  Members
-                </Text>
-              </View>
+                Members
+              </Text>
             </View>
-            {/* View/edit group members based on admin status */}
-            <View>
-              {/* note currentUser is displayed before other users */}
-              {currentUserRenderHTML}
-              {usersToRenderHTML}
-            </View>
+          </View>
+          {/* View/edit group members based on admin status */}
+          <View>
+            {/* note currentUser is displayed before other users */}
+            {currentUserRenderHTML}
+            {usersToRenderHTML}
+          </View>
 
-            {/* Delete group button if admin */}
-            {isAdmin && (
-              <DeleteGroup
-                deleteGroupAPI={() => deleteGroupAPI()}
-              ></DeleteGroup>
-            )}
+          {/* Delete group button if admin */}
+          {isAdmin && (
+            <DeleteGroup deleteGroupAPI={() => deleteGroupAPI()}></DeleteGroup>
+          )}
 
-            <View style={{ height: 50 }}></View>
-          </ScrollView>
-        )}
+          <View style={{ height: 50 }}></View>
+        </ScrollView>
       </View>
       {/* Tabs */}
       <TabBar navigation={props.navigation} screen="settings"></TabBar>

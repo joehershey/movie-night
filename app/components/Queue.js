@@ -156,30 +156,16 @@ function Queue(props) {
 
   return (
     <View style={{ flex: 11 }}>
-      {moviesToRender.length < 1 ? (
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Text
-            style={{
-              color: "white",
-              alignSelf: "center",
-              fontSize: 20,
-              margin: 20,
-            }}
-          >
-            Waiting for movies...
-          </Text>
-        </View>
-      ) : (
-        <ScrollView
-          style={{
-            flexDirection: "column",
-          }}
-          contentContainerStyle={{
-            justifyContent: "flex-start",
-            alignItems: "stretch",
-          }}
-        >
-          {/* <Filters
+      <ScrollView
+        style={{
+          flexDirection: "column",
+        }}
+        contentContainerStyle={{
+          justifyContent: "flex-start",
+          alignItems: "stretch",
+        }}
+      >
+        {/* <Filters
           genres={genres}
           watchProviders={watchProviders}
           setGenres={() => setGenres}
@@ -188,11 +174,10 @@ function Queue(props) {
           setPage={(a) => console.log("N/A")}
         ></Filters> */}
 
-          {moviesToRender}
+        {moviesToRender}
 
-          <View style={{ height: 50 }}></View>
-        </ScrollView>
-      )}
+        <View style={{ height: 50 }}></View>
+      </ScrollView>
     </View>
   );
 }
