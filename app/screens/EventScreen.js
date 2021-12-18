@@ -83,6 +83,9 @@ function EventScreen(props) {
         setIsVoting(responseJson.voting_mode);
         getUsersAPI();
         getRSVPListAPI();
+        if (responseJson.tmdb_movie_id != 1) {
+          getMovieDetails(responseJson.tmdb_movie_id, true);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -330,6 +333,7 @@ function EventScreen(props) {
       .then((response) => response.json())
       .then((responseJson) => {
         movies = [];
+
         for (const [i, movie] of responseJson.entries()) {
           movies.push(movie);
           console.log("in get movies");
@@ -345,6 +349,7 @@ function EventScreen(props) {
   const BASEURL = "https://api.themoviedb.org/3/";
   const APIKEY = "?api_key=3eb4bede8c2782fba9b6b7cd9c56b62c";
 
+  sortedMovies = [];
   function addMovieData(movie, idx, set = false) {
     let TEST = BASEURL + "movie/" + movie.tmdb_movie_id + APIKEY;
     //let TEST = BASEURL + "movie/" + 72 + APIKEY;
@@ -454,7 +459,7 @@ function EventScreen(props) {
       });
   }
 
-  function getMovieDetails(id) {
+  function getMovieDetails(id, load = false) {
     let TEST = BASEURL + "movie/" + id + APIKEY;
     //let TEST = BASEURL + "movie/" + 72 + APIKEY;
     fetch(TEST, {
@@ -469,6 +474,7 @@ function EventScreen(props) {
         console.log("movieDetails********");
         console.log(responseJson);
         setMovie(responseJson);
+        if (load) return;
         setVoting(0);
         toggleShowPopup(true);
       });
