@@ -18,7 +18,26 @@ function FinishVoting(props) {
   var title = props.title;
   var poster = "https://image.tmdb.org/t/p/w500" + props.poster_path;
   const onConfirm = () => {
+    console.log("ayo");
+    console.log(
+      props.url + "group/" + props.group_id + "/movie/" + props.tmdb_id
+    );
     // access the database, delete the movie from the queue
+    fetch(props.url + "group/" + props.group_id + "/movie/" + props.tmdb_id, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + props.token,
+      },
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     toggleShowPopup(false);
   };
 
@@ -38,12 +57,23 @@ function FinishVoting(props) {
                   style={{
                     marginLeft: 20,
                     paddingBottom: 30,
+                    alignItems: "center",
                   }}
                 >
-                  <Text style={{ fontSize: 20 }}>
-                    {"Your group voted for\n" +
-                      title +
-                      "! \nWould you like to delete it from the queue?"}
+                  <Text style={{ fontSize: 20, textAlign: "center" }}>
+                    Your group voted for
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {title}
+                  </Text>
+                  <Text style={{ fontSize: 20, textAlign: "center" }}>
+                    Would you like to delete it from the queue?
                   </Text>
                 </View>
                 <View style={{ alignSelf: "center", flex: 3 }}>
@@ -106,15 +136,25 @@ function FinishVoting(props) {
                     marginLeft: 20,
                   }}
                 >
-                  <Text style={{ fontSize: 20 }}>
-                    {"Your group voted for: \n" +
-                      title +
-                      "!\nWould you like to delete it from the queue?"}
+                  <Text style={{ fontSize: 20, textAlign: "center" }}>
+                    Your group voted for
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      textAlign: "center",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {title}
+                  </Text>
+                  <Text style={{ fontSize: 20, textAlign: "center" }}>
+                    Would you like to delete it from the queue?
                   </Text>
                 </View>
                 <View style={{ alignSelf: "center", flex: 3 }}>
                   <Image
-                    style={{ width: 200 * 0.5, height: 300 * 0.5, margin: 10 }}
+                    style={{ width: 200 * 0.6, height: 300 * 0.6, margin: 10 }}
                     source={{
                       uri: poster,
                       //uri:
