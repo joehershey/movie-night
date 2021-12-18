@@ -139,8 +139,6 @@ function ScheduleScreen(props) {
   }
 
   function createEventAPI() {
-    console.log(genres);
-    console.log(watchProviders);
     fetch(props.url + "event/", {
       headers: {
         Accept: "application/json",
@@ -165,6 +163,7 @@ function ScheduleScreen(props) {
         getEventsAPI();
       })
       .catch((error) => {
+
         console.log(error);
         getEventsAPI();
       });

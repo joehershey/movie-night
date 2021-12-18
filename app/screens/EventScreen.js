@@ -83,6 +83,9 @@ function EventScreen(props) {
         setIsVoting(responseJson.voting_mode);
         getUsersAPI();
         getRSVPListAPI();
+        if (responseJson.tmdb_movie_id != 1) {
+          getMovieDetails(responseJson.tmdb_movie_id, true);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -330,6 +333,7 @@ function EventScreen(props) {
       .then((response) => response.json())
       .then((responseJson) => {
         movies = [];
+
         for (const [i, movie] of responseJson.entries()) {
           movies.push(movie);
           console.log("in get movies");
@@ -345,6 +349,7 @@ function EventScreen(props) {
   const BASEURL = "https://api.themoviedb.org/3/";
   const APIKEY = "?api_key=3eb4bede8c2782fba9b6b7cd9c56b62c";
 
+  sortedMovies = [];
   function addMovieData(movie, idx, set = false) {
     let TEST = BASEURL + "movie/" + movie.tmdb_movie_id + APIKEY;
     //let TEST = BASEURL + "movie/" + 72 + APIKEY;
@@ -454,7 +459,7 @@ function EventScreen(props) {
       });
   }
 
-  function getMovieDetails(id) {
+  function getMovieDetails(id, load = false) {
     let TEST = BASEURL + "movie/" + id + APIKEY;
     //let TEST = BASEURL + "movie/" + 72 + APIKEY;
     fetch(TEST, {
@@ -469,6 +474,7 @@ function EventScreen(props) {
         console.log("movieDetails********");
         console.log(responseJson);
         setMovie(responseJson);
+        if (load) return;
         setVoting(0);
         toggleShowPopup(true);
       });
@@ -561,328 +567,309 @@ function EventScreen(props) {
       ></TopBar>
       {/* Content */}
       <View style={[STYLES.content]}>
-        {currentEvent?.location == undefined ? (
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <ScrollView
+          style={{ width: "100%", marginTop: 20, marginBottom: 20 }}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
+          <FinishVoting
+            showPopup={showPopup}
+            toggleShowPopup={toggleShowPopup}
+            poster_path={movie.poster_path} // example, movie.poster_path
+            title={movie.title} // example, movie.original_title
+            tmdb_id={movie.id}
+            group_id={props.group_id}
+            url={props.url}
+            token={props.token}
+          ></FinishVoting>
+          {movie.title.length < 1 && (
+            <View style={{ width: "100%", alignItems: "center" }}>
+              {isAdmin && isVoting == 0 && (
+                <TouchableWithoutFeedback
+                  testID="StartVoteButton"
+                  onPress={startVoting}
+                >
+                  <View style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}>
+                    <Text style={[{ color: "white", fontSize: 30 }]}>
+                      Start vote!
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              )}
+              {isVoting == 1 && (
+                <TouchableWithoutFeedback
+                  testID="VoteButton"
+                  onPress={() => {
+                    //getMovies();
+                    props.navigation.navigate("Voting");
+                  }}
+                >
+                  <View style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}>
+                    <Text style={[{ color: "white", fontSize: 30 }]}>
+                      Vote!
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              )}
+
+              {isVoting == 1 && isAdmin && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 30,
+                    marginTop: 30,
+                  }}
+                >
+                  <TouchableWithoutFeedback
+                    testID="FinishVotingButton"
+                    onPress={finishVoting}
+                  >
+                    <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
+                      <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
+                        Finish Voting
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    testID="CancelVotingButton"
+                    onPress={cancelVoting}
+                  >
+                    <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
+                      <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
+                        Cancel Voting
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
+              )}
+            </View>
+          )}
+          <View style={{ width: "90%", alignItems: "center", margin: 10 }}>
             <Text
               style={{
-                color: "white",
-                alignSelf: "center",
                 fontSize: 20,
-                margin: 20,
+                marginTop: 30,
+                textAlign: "left",
+                color: "white",
               }}
             >
-              Loading...
+              {"Date: " + getDate(dateTime)}
+            </Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+              }}
+            >
+              {"Time: " + getTime(dateTime)}
+            </Text>
+            {currentEvent?.location == undefined ? (
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                }}
+              >
+                {"Location: " + currentEvent.location}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                }}
+              >
+                {"Location: " + currentEvent.location}
+              </Text>
+            )}
+            {movie.title.length < 1 ? (
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                }}
+              >
+                {"Movie: undecided"}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                }}
+              >
+                {"Movie: " + movie.title}
+              </Text>
+            )}
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+                marginTop: 13,
+              }}
+            >
+              {"Genres"}
+            </Text>
+
+            <Text
+              style={{
+                fontSize: 15,
+                color: "white",
+                fontStyle: "italic",
+                textAlign: "center",
+              }}
+            >
+              {currentGenres.toString()}
+            </Text>
+
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+                marginTop: 13,
+              }}
+            >
+              {"Streaming Platforms"}
+            </Text>
+
+            <Text
+              style={{
+                fontSize: 15,
+                color: "white",
+                fontStyle: "italic",
+                textAlign: "center",
+              }}
+            >
+              {currentPlatforms.toString()}
             </Text>
           </View>
-        ) : (
-          <ScrollView
-            style={{ width: "100%", marginTop: 20, marginBottom: 20 }}
-            contentContainerStyle={{ alignItems: "center" }}
-          >
-            <FinishVoting
-              showPopup={showPopup}
-              toggleShowPopup={toggleShowPopup}
-              poster_path={movie.poster_path} // example, movie.poster_path
-              title={movie.title} // example, movie.original_title
-              tmdb_id={movie.id}
-              group_id={props.group_id}
-              url={props.url}
-              token={props.token}
-            ></FinishVoting>
-            {movie.title.length < 1 && (
-              <View style={{ width: "100%", alignItems: "center" }}>
-                {isAdmin && isVoting == 0 && (
-                  <TouchableWithoutFeedback
-                    testID="StartVoteButton"
-                    onPress={startVoting}
-                  >
-                    <View
-                      style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}
-                    >
-                      <Text style={[{ color: "white", fontSize: 30 }]}>
-                        Start vote!
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )}
-                {isVoting == 1 && (
-                  <TouchableWithoutFeedback
-                    testID="VoteButton"
-                    onPress={() => {
-                      //getMovies();
-                      props.navigation.navigate("Voting");
-                    }}
-                  >
-                    <View
-                      style={[STYLES.lgButton, STYLES.btn, { padding: 10 }]}
-                    >
-                      <Text style={[{ color: "white", fontSize: 30 }]}>
-                        Vote!
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )}
 
-                {isVoting == 1 && isAdmin && (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginBottom: 30,
-                      marginTop: 30,
-                    }}
-                  >
-                    <TouchableWithoutFeedback
-                      testID="FinishVotingButton"
-                      onPress={finishVoting}
-                    >
-                      <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
-                        <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
-                          Finish Voting
-                        </Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback
-                      testID="CancelVotingButton"
-                      onPress={cancelVoting}
-                    >
-                      <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
-                        <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
-                          Cancel Voting
-                        </Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  </View>
-                )}
+          <View style={{ flexDirection: "row", marginBottom: 30 }}>
+            <TouchableWithoutFeedback testID="GoingButton" onPress={isGoing}>
+              <View style={[STYLES.goingButton, STYLES.btn]}>
+                <Text style={[{ color: "white", fontSize: 20 }]}>Going</Text>
               </View>
-            )}
-            <View style={{ width: "90%", alignItems: "center", margin: 10 }}>
-              <Text
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              testID="NotGoingButton"
+              onPress={isNotGoing}
+            >
+              <View style={[STYLES.notGoingButton, STYLES.btn]}>
+                <Text style={[{ color: "white", fontSize: 20 }]}>
+                  Not Going
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+
+          {/* RSVP list table */}
+          <Grid style={{ width: "90%", alignSelf: "center" }}>
+            <Row
+              style={{
+                height: 30,
+                borderColor: "white",
+                borderWidth: 1,
+                alignSelf: "center",
+                width: "100%",
+              }}
+            >
+              <Col
                 style={{
-                  fontSize: 20,
-                  marginTop: 30,
-                  textAlign: "left",
-                  color: "white",
+                  height: 30,
+                  borderColor: "white",
+                  borderWidth: 1,
+                  borderLeftWidth: 0,
+                  borderRightWidth: 0,
+                  alignSelf: "center",
                 }}
               >
-                {"Date: " + getDate(dateTime)}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "white",
-                }}
-              >
-                {"Time: " + getTime(dateTime)}
-              </Text>
-              {currentEvent?.location == undefined ? (
                 <Text
                   style={{
+                    textAlign: "center",
+                    marginTop: 1,
                     fontSize: 20,
                     color: "white",
                   }}
                 >
-                  {"Location: " + currentEvent.location}
+                  Going
                 </Text>
-              ) : (
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: "white",
-                  }}
-                >
-                  {"Location: " + currentEvent.location}
-                </Text>
-              )}
-              {movie.title.length < 1 ? (
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: "white",
-                  }}
-                >
-                  {"Movie: undecided"}
-                </Text>
-              ) : (
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: "white",
-                  }}
-                >
-                  {"Movie: " + movie.title}
-                </Text>
-              )}
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "white",
-                  marginTop: 13,
-                }}
-              >
-                {"Genres"}
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "white",
-                  fontStyle: "italic",
-                  textAlign: "center",
-                }}
-              >
-                {currentGenres.toString()}
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "white",
-                  marginTop: 13,
-                }}
-              >
-                {"Streaming Platforms"}
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "white",
-                  fontStyle: "italic",
-                  textAlign: "center",
-                }}
-              >
-                {currentPlatforms.toString()}
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row", marginBottom: 30 }}>
-              <TouchableWithoutFeedback testID="GoingButton" onPress={isGoing}>
-                <View style={[STYLES.goingButton, STYLES.btn]}>
-                  <Text style={[{ color: "white", fontSize: 20 }]}>Going</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback
-                testID="NotGoingButton"
-                onPress={isNotGoing}
-              >
-                <View style={[STYLES.notGoingButton, STYLES.btn]}>
-                  <Text style={[{ color: "white", fontSize: 20 }]}>
-                    Not Going
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-
-            {/* RSVP list table */}
-            <Grid style={{ width: "90%", alignSelf: "center" }}>
-              <Row
+              </Col>
+              <Col
                 style={{
                   height: 30,
                   borderColor: "white",
                   borderWidth: 1,
                   alignSelf: "center",
-                  width: "100%",
                 }}
               >
-                <Col
+                <Text
                   style={{
-                    height: 30,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    borderLeftWidth: 0,
-                    borderRightWidth: 0,
-                    alignSelf: "center",
+                    textAlign: "center",
+                    marginTop: 1,
+                    fontSize: 20,
+                    color: "white",
                   }}
                 >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      marginTop: 1,
-                      fontSize: 20,
-                      color: "white",
-                    }}
-                  >
-                    Going
-                  </Text>
-                </Col>
-                <Col
+                  Not Going
+                </Text>
+              </Col>
+              <Col
+                style={{
+                  height: 30,
+                  borderColor: "white",
+                  borderWidth: 1,
+                  borderLeftWidth: 0,
+                  borderRightWidth: 0,
+                  alignSelf: "center",
+                }}
+              >
+                <Text
                   style={{
-                    height: 30,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    alignSelf: "center",
+                    textAlign: "center",
+                    marginTop: 3,
+                    fontSize: 17,
+                    color: "white",
                   }}
                 >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      marginTop: 1,
-                      fontSize: 20,
-                      color: "white",
-                    }}
-                  >
-                    Not Going
-                  </Text>
-                </Col>
-                <Col
-                  style={{
-                    height: 30,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    borderLeftWidth: 0,
-                    borderRightWidth: 0,
-                    alignSelf: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      marginTop: 3,
-                      fontSize: 17,
-                      color: "white",
-                    }}
-                  >
-                    No Response
-                  </Text>
-                </Col>
-              </Row>
-              <Row style={{ minHeight: 200, borderColor: "white" }}>
-                <Col
-                  style={{
-                    minHeight: 200,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    borderRightWidth: 0,
-                    alignSelf: "center",
-                  }}
-                >
-                  <View>{usersGoing}</View>
-                </Col>
-                <Col
-                  style={{
-                    minHeight: 200,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    alignSelf: "center",
-                  }}
-                >
-                  <View>{usersNotGoing}</View>
-                </Col>
-                <Col
-                  style={{
-                    minHeight: 200,
-                    borderColor: "white",
-                    borderWidth: 1,
-                    borderLeftWidth: 0,
-                    alignSelf: "center",
-                  }}
-                >
-                  <View>{usersNoResponse}</View>
-                </Col>
-              </Row>
-            </Grid>
-          </ScrollView>
-        )}
+                  No Response
+                </Text>
+              </Col>
+            </Row>
+            <Row style={{ minHeight: 200, borderColor: "white" }}>
+              <Col
+                style={{
+                  minHeight: 200,
+                  borderColor: "white",
+                  borderWidth: 1,
+                  borderRightWidth: 0,
+                  alignSelf: "center",
+                }}
+              >
+                <View>{usersGoing}</View>
+              </Col>
+              <Col
+                style={{
+                  minHeight: 200,
+                  borderColor: "white",
+                  borderWidth: 1,
+                  alignSelf: "center",
+                }}
+              >
+                <View>{usersNotGoing}</View>
+              </Col>
+              <Col
+                style={{
+                  minHeight: 200,
+                  borderColor: "white",
+                  borderWidth: 1,
+                  borderLeftWidth: 0,
+                  alignSelf: "center",
+                }}
+              >
+                <View>{usersNoResponse}</View>
+              </Col>
+            </Row>
+          </Grid>
+        </ScrollView>
       </View>
       {/* Tabs */}
     </SafeAreaView>

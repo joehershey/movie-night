@@ -11,6 +11,8 @@ import {
 import { COLORS, STYLES } from "../assets/saved";
 import Modal from "modal-react-native-web";
 
+import fetch from "cross-fetch";
+
 function FinishVoting(props) {
   const showPopup = props.showPopup;
   const toggleShowPopup = props.toggleShowPopup;
