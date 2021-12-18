@@ -163,7 +163,9 @@ function ScheduleScreen(props) {
         getEventsAPI();
       })
       .catch((error) => {
-        console.error(error);
+
+        console.log(error);
+        getEventsAPI();
       });
   }
 

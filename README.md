@@ -11,7 +11,9 @@ To run:
 3a) install Expo Go app on phone
 
 3b*) Scan qr code from camera that is in bottom left of the expo server website
-##App should start to run when you press the link from qr code in your camera app (not sure about Android)
+##App should start to run when you press the link from qr code in your camera app
+## the ideal version of the Movie Night app is as a mobile app, using either Android or iOS devices. The desktop version may be used,
+## but features might not be ideal.
 
 After expo and expo go are installed, all you need to do is steps 2b & 3b to get it running
 
