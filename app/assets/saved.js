@@ -64,7 +64,7 @@ export const STYLES = StyleSheet.create({
     top: 10,
     width: "40%",
     height: 50,
-    backgroundColor: COLORS.primary,
+    backgroundColor: "white",
   },
   settingsButtons: {
     top: 10,
@@ -114,7 +114,6 @@ export const STYLES = StyleSheet.create({
   },
   content: {
     flex: 11,
-    backgroundColor: "white",
   },
   container: {
     backgroundColor: COLORS.primary,

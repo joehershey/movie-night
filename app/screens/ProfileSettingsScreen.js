@@ -3,25 +3,17 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   SafeAreaView,
 } from "react-native";
 
 import { COLORS, STYLES } from "../assets/saved";
-import { FontAwesome5 } from "@expo/vector-icons";
 
-import TabBar from "../components/TabBar";
 import TopBar from "../components/TopBar";
 import ChangePassword from "../components/ChangePassword";
-import DeleteAccount from "../components/DeleteAccount";
-import { useLinkProps } from "@react-navigation/native";
-
-import fetch from "cross-fetch";
 
 function ProfileSettingsScreen(props) {
   const [showPopup, toggleShowPopup] = React.useState(false);
-  const [showDelete, toggleShowDelete] = React.useState(false);
 
   return (
     <SafeAreaView style={STYLES.container}>
@@ -35,25 +27,29 @@ function ProfileSettingsScreen(props) {
         showPopup={showPopup}
         token={props.token}
         toggleShowPopup={toggleShowPopup}
+        url={props.url}
+        user_id={props.user_id}
       />
-      <DeleteAccount
-        showPopup={showDelete}
-        toggleShowPopup={toggleShowDelete}
-        navigation={props.navigation}
-        token={props.token}
-      ></DeleteAccount>
+
       {/* Content */}
       <View style={styles.content}>
-        <Text style={{ fontSize: 50 }}>{"Profile Settings"}</Text>
-        <Text style={{ fontSize: 30 }}>{"Username: " + props.username}</Text>
+        <Text style={{ fontSize: 50, color: "white" }}>
+          {"Profile Settings"}
+        </Text>
+        <Text style={{ fontSize: 30, color: "white" }}>
+          {"Username: " + props.username}
+        </Text>
 
         <View style={{ width: "100%", alignItems: "center" }}>
-          <TouchableWithoutFeedback testID="ChangePasswordButton" onPress={() => toggleShowPopup(!showPopup)}>
+          <TouchableWithoutFeedback
+            testID="ChangePasswordButton"
+            onPress={() => toggleShowPopup(!showPopup)}
+          >
             <View
               style={[
                 STYLES.settingsButtons,
                 STYLES.btn,
-                { backgroundColor: COLORS.primary },
+                { backgroundColor: COLORS.secondary },
               ]}
             >
               <Text style={[{ color: "white", fontSize: 20 }]}>
@@ -62,31 +58,19 @@ function ProfileSettingsScreen(props) {
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback testID="NavigateButton"
+          <TouchableWithoutFeedback
+            testID="NavigateButton"
             onPress={() => props.navigation.navigate("Welcome")}
           >
             <View
               style={[
                 STYLES.settingsButtons,
                 STYLES.btn,
-                { backgroundColor: COLORS.primary },
+                { backgroundColor: "white" },
               ]}
             >
-              <Text style={[{ color: "white", fontSize: 20 }]}>Log out</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback testID="DeleteAccountButton"
-            onPress={() => toggleShowDelete(!showDelete)}
-          >
-            <View
-              style={[
-                STYLES.settingsButtons,
-                STYLES.btn,
-                { backgroundColor: COLORS.danger },
-              ]}
-            >
-              <Text style={[{ color: "white", fontSize: 20 }]}>
-                Delete Account
+              <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
+                Log out
               </Text>
             </View>
           </TouchableWithoutFeedback>
@@ -99,7 +83,6 @@ function ProfileSettingsScreen(props) {
 const styles = StyleSheet.create({
   content: {
     flex: 12,
-    backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",

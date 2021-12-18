@@ -4,29 +4,22 @@ import {
   Text,
   TouchableWithoutFeedback,
   Modal as MobileModal,
-  TextInput,
   Platform,
+  Image,
 } from "react-native";
 
 import { COLORS, STYLES } from "../assets/saved";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Modal from "modal-react-native-web";
 
-import fetch from "cross-fetch";
-
-function DeleteAccount(props) {
+function FinishVoting(props) {
   const showPopup = props.showPopup;
   const toggleShowPopup = props.toggleShowPopup;
 
-  const [showConfirm, toggleShowConfirm] = React.useState(false);
-  const [currentPassword, changeCurrentPassword] = React.useState("");
-  const [confirmPassword, changeConfirmPassword] = React.useState("");
-  const [newPassword, changeNewPassword] = React.useState("");
-
+  var title = props.title;
+  var poster = "https://image.tmdb.org/t/p/w500" + props.poster_path;
   const onConfirm = () => {
-    // access the database, delete the users account and then send them to welcome screen logged out
-    toggleShowConfirm(false);
-    props.navigation.navigate("Welcome");
+    // access the database, delete the movie from the queue
+    toggleShowPopup(false);
   };
 
   return (
@@ -47,9 +40,21 @@ function DeleteAccount(props) {
                     paddingBottom: 30,
                   }}
                 >
-                  <Text style={{ fontSize: 30 }}>
-                    Are you sure you would like to delete your account?
+                  <Text style={{ fontSize: 20 }}>
+                    {"Your group voted for\n" +
+                      title +
+                      "! \nWould you like to delete it from the queue?"}
                   </Text>
+                </View>
+                <View style={{ alignSelf: "center", flex: 3 }}>
+                  <Image
+                    style={{ width: 200 * 0.3, height: 300 * 0.3, margin: 10 }}
+                    source={{
+                      uri: poster,
+                      //uri:
+                      //  "https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg",
+                    }}
+                  />
                 </View>
                 <View style={{ flexDirection: "row" }}>
                   <TouchableWithoutFeedback onPress={onConfirm}>
@@ -67,7 +72,7 @@ function DeleteAccount(props) {
                           alignContent: "center",
                         }}
                       >
-                        Confirm
+                        Yes
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -82,7 +87,7 @@ function DeleteAccount(props) {
                           alignContent: "center",
                         }}
                       >
-                        Close
+                        No
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -99,14 +104,25 @@ function DeleteAccount(props) {
                 <View
                   style={{
                     marginLeft: 20,
-                    paddingBottom: 30,
                   }}
                 >
-                  <Text style={{ fontSize: 30 }}>
-                    Are you sure you would like to delete your account?
+                  <Text style={{ fontSize: 20 }}>
+                    {"Your group voted for: \n" +
+                      title +
+                      "!\nWould you like to delete it from the queue?"}
                   </Text>
                 </View>
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ alignSelf: "center", flex: 3 }}>
+                  <Image
+                    style={{ width: 200 * 0.5, height: 300 * 0.5, margin: 10 }}
+                    source={{
+                      uri: poster,
+                      //uri:
+                      //  "https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg",
+                    }}
+                  />
+                </View>
+                <View style={{ flexDirection: "row", marginLeft: 20 }}>
                   <TouchableWithoutFeedback onPress={onConfirm}>
                     <View
                       style={[
@@ -122,7 +138,7 @@ function DeleteAccount(props) {
                           alignContent: "center",
                         }}
                       >
-                        Confirm
+                        Yes
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -137,7 +153,7 @@ function DeleteAccount(props) {
                           alignContent: "center",
                         }}
                       >
-                        Close
+                        No
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
@@ -151,4 +167,4 @@ function DeleteAccount(props) {
   );
 }
 
-export default DeleteAccount;
+export default FinishVoting;

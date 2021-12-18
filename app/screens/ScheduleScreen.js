@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   TextInput,
+  Platform,
 } from "react-native";
 
 import { Card } from "react-native-elements";
@@ -258,16 +259,39 @@ function ScheduleScreen(props) {
                 value={location}
                 testID="MovieNightLocation"
               />
-              <View style={{ width: "100%", paddingLeft: 30, margin: 20 }}>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={date}
-                  mode={mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChangeTimeDate}
-                  testID="DateTimePick"
-                />
+              <View style={{ width: "100%", margin: 20, paddingLeft: 30 }}>
+                {Platform.OS == "ios" ? (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={"datetime"}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChangeTimeDate}
+                    testID="DateTimePick"
+                  />
+                ) : (
+                  <View>
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={date}
+                      mode={"date"}
+                      is24Hour={true}
+                      display="default"
+                      testID="DateTimePick"
+                      onChange={onChangeTimeDate}
+                    />
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={date}
+                      mode={"time"}
+                      is24Hour={true}
+                      display="default"
+                      testID="DateTimePick"
+                      onChange={onChangeTimeDate}
+                    />
+                  </View>
+                )}
               </View>
               <Filters
                 genres={genres}
@@ -314,12 +338,12 @@ function ScheduleScreen(props) {
                     padding: 5,
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: COLORS.primary,
+                    backgroundColor: "lightgrey",
                   }}
                 >
                   <Text
                     style={{
-                      color: "white",
+                      color: COLORS.primary,
                       fontSize: 20,
                       alignContent: "center",
                     }}

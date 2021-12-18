@@ -7,9 +7,10 @@ import {
   ScrollView,
 } from "react-native";
 
-import { STYLES } from "../assets/saved";
+import { STYLES, COLORS } from "../assets/saved";
 import TopBar from "../components/TopBar";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import FinishVoting from "../components/FinishVoting";
 
 import fetch from "cross-fetch";
 
@@ -23,6 +24,7 @@ function EventScreen(props) {
   const [isLoaded, toggleLoaded] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isVoting, setIsVoting] = useState(0);
+  const [showPopup, toggleShowPopup] = useState(false);
 
   const genresKeys = [
     { name: "Action", id: 28 },
@@ -283,13 +285,13 @@ function EventScreen(props) {
 
         if (rsvp.is_coming) {
           usersGoing.push(
-            <Text key={i} style={{ padding: 5 }}>
+            <Text key={i} style={{ padding: 5, color: "white" }}>
               {user.display_name}
             </Text>
           );
         } else {
           usersNotGoing.push(
-            <Text key={i} style={{ padding: 5 }}>
+            <Text key={i} style={{ padding: 5, color: "white" }}>
               {user.display_name}
             </Text>
           );
@@ -299,7 +301,7 @@ function EventScreen(props) {
     }
     if (!status) {
       usersNoResponse.push(
-        <Text key={i} style={{ padding: 5 }}>
+        <Text key={i} style={{ padding: 5, color: "white" }}>
           {user.display_name}
         </Text>
       );
@@ -462,13 +464,15 @@ function EventScreen(props) {
 
   // function for starting voting
   function startVoting() {
-    getMovies();
+    setVoting(1);
+    //getMovies();
     // must not work if others are voting
   }
 
   // function for finishing votings
   function finishVoting() {
-    getMovieRatingsAPI();
+    toggleShowPopup(true);
+    //getMovieRatingsAPI();
     // set the group's movie to selected one
   }
 
@@ -492,6 +496,12 @@ function EventScreen(props) {
           style={{ width: "100%", marginTop: 20, marginBottom: 20 }}
           contentContainerStyle={{ alignItems: "center" }}
         >
+          <FinishVoting
+            showPopup={showPopup}
+            toggleShowPopup={toggleShowPopup}
+            poster_path={"/1BIoJGKbXjdFDAqUEiA2VHqkK1Z.jpg"} // example, movie.poster_path
+            title={"Shang-Chi and the Legend of the Ten Rings"} // example, movie.original_title
+          ></FinishVoting>
           <View style={{ width: "100%", alignItems: "center" }}>
             {isAdmin && isVoting == 0 && (
               <TouchableWithoutFeedback
@@ -529,7 +539,7 @@ function EventScreen(props) {
                 onPress={finishVoting}
               >
                 <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
-                  <Text style={[{ color: "white", fontSize: 20 }]}>
+                  <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
                     Finish Voting
                   </Text>
                 </View>
@@ -539,7 +549,7 @@ function EventScreen(props) {
                 onPress={cancelVoting}
               >
                 <View style={[STYLES.cancelVotingButton, STYLES.btn]}>
-                  <Text style={[{ color: "white", fontSize: 20 }]}>
+                  <Text style={[{ color: COLORS.primary, fontSize: 20 }]}>
                     Cancel Voting
                   </Text>
                 </View>
@@ -553,6 +563,7 @@ function EventScreen(props) {
                 fontSize: 25,
                 marginTop: 30,
                 textAlign: "left",
+                color: "white",
               }}
             >
               {"Date: " + getDate(dateTime)}
@@ -560,6 +571,7 @@ function EventScreen(props) {
             <Text
               style={{
                 fontSize: 25,
+                color: "white",
               }}
             >
               {"Time: " + getTime(dateTime)}
@@ -567,6 +579,7 @@ function EventScreen(props) {
             <Text
               style={{
                 fontSize: 25,
+                color: "white",
               }}
             >
               {"Location: " + currentEvent.location}
@@ -574,6 +587,7 @@ function EventScreen(props) {
             <Text
               style={{
                 fontSize: 25,
+                color: "white",
               }}
             >
               {
@@ -583,6 +597,7 @@ function EventScreen(props) {
             <Text
               style={{
                 fontSize: 25,
+                color: "white",
               }}
             >
               {"Genres: " + currentGenres}
@@ -591,6 +606,7 @@ function EventScreen(props) {
             <Text
               style={{
                 fontSize: 25,
+                color: "white",
               }}
             >
               {"Streaming Platforms: " + currentPlatforms}
@@ -618,22 +634,18 @@ function EventScreen(props) {
           {/* RSVP list table */}
           <Grid style={{ width: "90%", alignSelf: "center" }}>
             <Row
-              style={{ height: 40, borderColor: "black", alignSelf: "center" }}
-            >
-              <Text style={{ fontSize: 30 }}>RSVP List</Text>
-            </Row>
-            <Row
               style={{
                 height: 30,
-                borderColor: "black",
+                borderColor: "white",
                 borderWidth: 1,
                 alignSelf: "center",
+                width: "100%",
               }}
             >
               <Col
                 style={{
                   height: 30,
-                  borderColor: "black",
+                  borderColor: "white",
                   borderWidth: 1,
                   borderLeftWidth: 0,
                   borderRightWidth: 0,
@@ -641,7 +653,12 @@ function EventScreen(props) {
                 }}
               >
                 <Text
-                  style={{ textAlign: "center", marginTop: 1, fontSize: 20 }}
+                  style={{
+                    textAlign: "center",
+                    marginTop: 1,
+                    fontSize: 20,
+                    color: "white",
+                  }}
                 >
                   Going
                 </Text>
@@ -649,13 +666,18 @@ function EventScreen(props) {
               <Col
                 style={{
                   height: 30,
-                  borderColor: "black",
+                  borderColor: "white",
                   borderWidth: 1,
                   alignSelf: "center",
                 }}
               >
                 <Text
-                  style={{ textAlign: "center", marginTop: 1, fontSize: 20 }}
+                  style={{
+                    textAlign: "center",
+                    marginTop: 1,
+                    fontSize: 20,
+                    color: "white",
+                  }}
                 >
                   Not Going
                 </Text>
@@ -663,7 +685,7 @@ function EventScreen(props) {
               <Col
                 style={{
                   height: 30,
-                  borderColor: "black",
+                  borderColor: "white",
                   borderWidth: 1,
                   borderLeftWidth: 0,
                   borderRightWidth: 0,
@@ -671,17 +693,22 @@ function EventScreen(props) {
                 }}
               >
                 <Text
-                  style={{ textAlign: "center", marginTop: 3, fontSize: 17 }}
+                  style={{
+                    textAlign: "center",
+                    marginTop: 3,
+                    fontSize: 17,
+                    color: "white",
+                  }}
                 >
                   No Response
                 </Text>
               </Col>
             </Row>
-            <Row style={{ minHeight: 200, borderColor: "black" }}>
+            <Row style={{ minHeight: 200, borderColor: "white" }}>
               <Col
                 style={{
                   minHeight: 200,
-                  borderColor: "black",
+                  borderColor: "white",
                   borderWidth: 1,
                   borderRightWidth: 0,
                   alignSelf: "center",
@@ -692,7 +719,7 @@ function EventScreen(props) {
               <Col
                 style={{
                   minHeight: 200,
-                  borderColor: "black",
+                  borderColor: "white",
                   borderWidth: 1,
                   alignSelf: "center",
                 }}
@@ -702,7 +729,7 @@ function EventScreen(props) {
               <Col
                 style={{
                   minHeight: 200,
-                  borderColor: "black",
+                  borderColor: "white",
                   borderWidth: 1,
                   borderLeftWidth: 0,
                   alignSelf: "center",

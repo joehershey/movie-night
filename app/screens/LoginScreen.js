@@ -1,10 +1,8 @@
 import React from "react";
 import {
-  ImageBackground,
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   TextInput,
   Keyboard,
@@ -49,16 +47,36 @@ function LoginScreen(props) {
       });
   }
 
+  function forgotPasswordAPI() {
+    if (username == "") {
+      alert("Please enter your username");
+    } else {
+      fetch(props.url + "user/" + "/forgot_password", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Bearer " + props.token,
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          username: username,
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          alert(responseJson.message);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert(error);
+        });
+    }
+  }
+
   //called by the login button
   function checkCredentials() {
     //loginAPITest(username, password);
     loginAPI(username, password);
-  }
-
-  //just testing where the information goes, and that it comes in correct
-  function loginAPITest(user, pass) {
-    props.setUser(1, user); // 1 as a test for user_id
-    props.navigation.navigate("Landing");
   }
 
   const keyboardControl = () => {
@@ -89,14 +107,32 @@ function LoginScreen(props) {
             testID="EnterPassword"
           />
 
-          <TouchableWithoutFeedback testID="LogInButton"
+          <TouchableWithoutFeedback
+            testID="LogInButton"
             onPress={() => checkCredentials()} //checking w/ API and navigating
           >
             <View style={[STYLES.lgButton, STYLES.btn]}>
               <Text style={[{ color: "white", fontSize: 30 }]}>Log In</Text>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback testID="NavigateButton"
+          <TouchableWithoutFeedback onPress={() => forgotPasswordAPI()}>
+            <View style={[styles.registerButton, STYLES.btn]}>
+              <Text
+                style={[
+                  styles.font,
+                  {
+                    color: COLORS.secondary,
+                    fontSize: 20,
+                    fontStyle: "italic",
+                  },
+                ]}
+              >
+                Forgot your password?
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            testID="NavigateButton"
             onPress={() => props.navigation.navigate("Welcome")}
           >
             <View style={[STYLES.returnBtn]}>
@@ -131,6 +167,11 @@ const styles = StyleSheet.create({
     width: 275,
     height: 200,
     margin: 30,
+  },
+  registerButton: {
+    top: 10,
+    width: "60%",
+    height: 70,
   },
 });
 
